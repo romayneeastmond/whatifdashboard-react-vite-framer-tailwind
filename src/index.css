@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    @apply antialiased bg-[#F7F7F4] text-slate-900 transition-colors duration-300;
+  }
+
+  .dark body {
+    @apply bg-[#0A0A0A] text-white;
+  }
+}
+
+@layer base {
+  :root {
+    --brand-primary: #387E67;
+    --brand-secondary: #C14539;
+    --brand-tertiary: #C5A059;
+    --brand-quaternary: #40916C;
+    
+    --chart-primary: #387E67;
+    --chart-secondary: #064E3B;
+    --chart-tertiary: #A3E635;
+    --chart-grid: #E2E8F0;
+  }
+
+  .dark {
+    --brand-primary: #52B788;
+    --brand-secondary: #E5383B;
+    --brand-tertiary: #D4A373;
+    --brand-quaternary: #74C69D;
+
+    --chart-primary: #52B788;
+    --chart-secondary: #081C15;
+    --chart-tertiary: #D8F3DC;
+    --chart-grid: #1A2E26;
+  }
+}
+
+@layer base {
+  .recharts-text {
+    @apply fill-slate-400;
+  }
+  .dark .recharts-text {
+    @apply fill-slate-500;
+  }
+  .dark .recharts-legend-item-text {
+    color: #94A3B8 !important;
+  }
+  .dark .recharts-default-tooltip {
+    @apply !bg-black !border-white/10;
+  }
+  .dark .recharts-tooltip-item {
+    @apply !text-white;
+  }
+}
+
+@media print {
+  /* Force white background and black text */
+  body, 
+  .dark body,
+  .min-h-screen,
+  div[class*="bg-[#F7F7F4]"] {
+    background: white !important;
+    background-color: white !important;
+    color: black !important;
+    padding: 0 !important;
+  }
+
+  /* Hide non-content UI elements */
+  header, 
+  footer, 
+  aside,
+  nav,
+  button,
+  .lg\:hidden {
+    display: none !important;
+  }
+
+  /* Reset main content spacing */
+  main {
+    padding: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure cards look good on white paper */
+  .bg-white, .dark .dark\:bg-\[#121212\], .dark .bg-\[#121212\], .dark .bg-\[#0A0A0A\] {
+    background: white !important;
+    border: 1px solid #e1e1de !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  /* Force labels and titles to be black/visible */
+  .text-black, .dark .dark\:text-white\/60, .text-\[\#8f969d\], .dark .dark\:text-white\/40 {
+    color: black !important;
+  }
+
+  /* Adjust charts for print */
+  .recharts-surface {
+    overflow: visible !important;
+  }
+
+  /* Avoid breaking cards across pages */
+  div {
+    page-break-inside: avoid;
+  }
+}
+
