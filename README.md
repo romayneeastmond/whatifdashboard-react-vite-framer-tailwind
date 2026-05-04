@@ -59,6 +59,14 @@ This project is open-source and available under the **MIT License**. Feel free t
 ---
 *Created for portfolio demonstration purposes.*
 
-## 📈 Screenshot
+## 📈 Screenshots
 
 <img alt="Image" src="https://github.com/user-attachments/assets/ef42634a-a0da-4a31-b1db-ba17174b10c0" />
+
+<img alt="Image" src="https://github.com/user-attachments/assets/ca626144-6c9b-48f5-b3b0-b9798d2328bd" />
+
+<img alt="Image" src="https://github.com/user-attachments/assets/d53cf423-e250-462b-9f22-e6fb59b42e81" />
+
+<img alt="Image" src="https://github.com/user-attachments/assets/db737551-a63a-4241-8e9b-b3be72c3a4d7" />
+
+<img alt="Image" src="https://github.com/user-attachments/assets/f6055ebf-5d1a-430b-a103-991cc952b39e" />
