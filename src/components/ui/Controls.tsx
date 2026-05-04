@@ -74,3 +74,48 @@ export const Slider = ({
 		/>
 	</div>
 );
+
+import { motion, AnimatePresence } from 'motion/react';
+import { X } from 'lucide-react';
+
+export const Modal = ({ 
+	isOpen, 
+	onClose, 
+	title, 
+	children 
+}: { 
+	isOpen: boolean; 
+	onClose: () => void; 
+	title: string; 
+	children: React.ReactNode;
+}) => (
+	<AnimatePresence>
+		{isOpen && (
+			<div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+				<motion.div 
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					onClick={onClose}
+					className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+				/>
+				<motion.div
+					initial={{ opacity: 0, scale: 0.95, y: 20 }}
+					animate={{ opacity: 1, scale: 1, y: 0 }}
+					exit={{ opacity: 0, scale: 0.95, y: 20 }}
+					className="relative w-full max-w-md bg-white dark:bg-[#121212] border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+				>
+					<div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-white/5">
+						<h3 className="text-sm font-medium text-slate-900 dark:text-white uppercase tracking-widest">{title}</h3>
+						<button onClick={onClose} className="p-1 text-slate-400 hover:text-black dark:hover:text-white transition-colors">
+							<X size={18} />
+						</button>
+					</div>
+					<div className="p-6">
+						{children}
+					</div>
+				</motion.div>
+			</div>
+		)}
+	</AnimatePresence>
+);
