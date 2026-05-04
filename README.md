@@ -52,6 +52,13 @@ A premium, data-dense financial and time-management dashboard built for high-lev
    npm run build
    ```
 
-## 📝 License
+## 📄 License
 
-This project is open source and available under the MIT License.
+This project is open-source and available under the **MIT License**. Feel free to use, modify, and distribute it as you see fit.
+
+---
+*Created for portfolio demonstration purposes.*
+
+## 📈 Screenshot
+
+<img alt="Image" src="https://github.com/user-attachments/assets/ef42634a-a0da-4a31-b1db-ba17174b10c0" />
