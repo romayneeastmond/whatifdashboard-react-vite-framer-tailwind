@@ -197,7 +197,16 @@ export default function App() {
 					</AnimatePresence>
 
 					<footer className="mt-20 pb-12 border-t border-slate-200 dark:border-white/5 pt-8">
-						<div className="flex flex-col md:flex-row justify-center items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-black dark:text-slate-500 font-normal">
+						<div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-black dark:text-slate-500 font-normal">
+							<a 
+								href="https://github.com/romayneeastmond/whatifdashboard-react-vite-framer-tailwind"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-2 text-slate-400 hover:text-black dark:text-white/30 dark:hover:text-white transition-colors"
+							>
+								<Github size={12} />
+								<span>Source Code</span>
+							</a>
 							<p>&copy; 2026 What-If Dashboard</p>
 						</div>
 					</footer>
