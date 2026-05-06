@@ -151,7 +151,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
 											</div>
 											<button 
 												onClick={() => removeGoal(goal.id)}
-												className="ml-4 p-2 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
+												className="ml-4 p-2 text-slate-300 hover:text-red-500 transition-all cursor-pointer"
 											>
 												<Trash2 size={16} />
 											</button>

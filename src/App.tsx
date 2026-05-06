@@ -15,7 +15,9 @@ import {
 	Menu,
 	Sun,
 	Moon,
-	Target
+	Target,
+	Download,
+	Upload
 } from 'lucide-react';
 import { CalculatorType } from './types';
 import { SalaryCalculator } from './components/calculators/SalaryCalculator';
@@ -55,6 +57,44 @@ export default function App() {
 	}, [isDarkMode]);
 
 	const toggleTheme = () => setIsDarkMode(!isDarkMode);
+
+	const handleExport = () => {
+		const data: Record<string, string> = {};
+		for (let i = 0; i < localStorage.length; i++) {
+			const key = localStorage.key(i);
+			if (key) {
+				data[key] = localStorage.getItem(key) || '';
+			}
+		}
+		const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = `whatif-backup-${new Date().toISOString().split('T')[0]}.json`;
+		a.click();
+		URL.revokeObjectURL(url);
+	};
+
+	const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+
+		const reader = new FileReader();
+		reader.onload = (event) => {
+			try {
+				const data = JSON.parse(event.target?.result as string);
+				localStorage.clear();
+				Object.entries(data).forEach(([key, value]) => {
+					localStorage.setItem(key, value as string);
+				});
+				window.location.reload();
+			} catch (err) {
+				console.error('Import error:', err);
+				alert('Invalid backup file');
+			}
+		};
+		reader.readAsText(file);
+	};
 
 	const renderCalculator = () => {
 		switch (activeTab) {
@@ -202,15 +242,35 @@ export default function App() {
 
 					<footer className="mt-20 pb-12 border-t border-slate-200 dark:border-white/5 pt-8">
 						<div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-black dark:text-slate-500 font-normal">
-							<a
-								href="https://github.com/romayneeastmond/whatifdashboard-react-vite-framer-tailwind"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="flex items-center gap-2 text-slate-400 hover:text-black dark:text-white/30 dark:hover:text-white transition-colors"
-							>
-								<Github size={12} />
-								<span>Source Code</span>
-							</a>
+							<div className="flex items-center gap-6">
+								<a
+									href="https://github.com/romayneeastmond/whatifdashboard-react-vite-framer-tailwind"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="flex items-center gap-2 text-slate-400 hover:text-black dark:text-white/30 dark:hover:text-white transition-colors"
+								>
+									<Github size={12} />
+									<span>Source Code</span>
+								</a>
+
+								<div className="w-px h-3 bg-slate-200 dark:bg-white/10" />
+
+								<div className="flex items-center gap-6">
+									<button
+										onClick={handleExport}
+										className="flex items-center gap-2 text-slate-400 hover:text-black dark:text-white/30 dark:hover:text-white transition-colors cursor-pointer"
+									>
+										<Download size={12} />
+										<span>Export</span>
+									</button>
+
+									<label className="flex items-center gap-2 text-slate-400 hover:text-black dark:text-white/30 dark:hover:text-white transition-colors cursor-pointer">
+										<Upload size={12} />
+										<span>Import</span>
+										<input type="file" accept=".json" onChange={handleImport} className="hidden" />
+									</label>
+								</div>
+							</div>
 							<p>&copy; 2026 What-If Dashboard</p>
 						</div>
 					</footer>

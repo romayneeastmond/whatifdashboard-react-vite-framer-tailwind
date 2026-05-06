@@ -16,6 +16,10 @@
   .dark body {
     @apply bg-[#0A0A0A] text-white;
   }
+
+  button {
+    @apply cursor-pointer;
+  }
 }
 
 @layer base {
