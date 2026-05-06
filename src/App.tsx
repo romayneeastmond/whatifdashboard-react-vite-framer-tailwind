@@ -14,19 +14,22 @@ import {
 	X,
 	Menu,
 	Sun,
-	Moon
+	Moon,
+	Target
 } from 'lucide-react';
 import { CalculatorType } from './types';
 import { SalaryCalculator } from './components/calculators/SalaryCalculator';
 import { MortgageCalculator } from './components/calculators/MortgageCalculator';
 import { InvestmentCalculator } from './components/calculators/InvestmentCalculator';
 import { TimeCalculator } from './components/calculators/TimeCalculator';
+import { GoalsCalculator } from './components/calculators/GoalsCalculator';
 import { cn } from './lib/utils';
 
 const NAV_ITEMS = [
 	{ id: 'salary', label: 'Salary & Taxes', icon: Wallet },
 	{ id: 'mortgage', label: 'Mortgage Equity', icon: Home },
 	{ id: 'investing', label: 'Wealth Growth', icon: BarChart3 },
+	{ id: 'goals', label: 'Goals Tracking', icon: Target },
 	{ id: 'time', label: 'Time Allocation', icon: Clock },
 ] as const;
 
@@ -59,6 +62,7 @@ export default function App() {
 			case 'mortgage': return <MortgageCalculator />;
 			case 'investing': return <InvestmentCalculator />;
 			case 'time': return <TimeCalculator />;
+			case 'goals': return <GoalsCalculator />;
 			default: return null;
 		}
 	};
@@ -198,7 +202,7 @@ export default function App() {
 
 					<footer className="mt-20 pb-12 border-t border-slate-200 dark:border-white/5 pt-8">
 						<div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-black dark:text-slate-500 font-normal">
-							<a 
+							<a
 								href="https://github.com/romayneeastmond/whatifdashboard-react-vite-framer-tailwind"
 								target="_blank"
 								rel="noopener noreferrer"
