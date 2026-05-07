@@ -28,13 +28,18 @@ const CHART_COLORS = [
 	'#40916C', // Mid Green
 ];
 
-const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: { 
-	profile: GoalsProfile, 
+const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
+	profile: GoalsProfile,
 	onUpdate: (data: GoalsData) => void,
 	onRemove: () => void,
 	isOnly: boolean
 }) => {
 	const data = profile.data;
+	const [goalDeleteModalOpen, setGoalDeleteModalOpen] = React.useState(false);
+	const [goalToDelete, setGoalToDelete] = React.useState<Goal | null>(null);
+	const [isAddGoalModalOpen, setIsAddGoalModalOpen] = React.useState(false);
+	const [newGoalName, setNewGoalName] = React.useState('');
+	const [newGoalTarget, setNewGoalTarget] = React.useState<string>('5000');
 
 	const stats = useMemo(() => {
 		const totalTarget = data.goals.reduce((acc, g) => acc + g.target, 0);
@@ -57,24 +62,43 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
 	}, [data.goals]);
 
 	const updateGoal = (goalId: string, updates: Partial<Goal>) => {
-		const newGoals = data.goals.map(g => 
+		const newGoals = data.goals.map(g =>
 			g.id === goalId ? { ...g, ...updates } : g
 		);
 		onUpdate({ goals: newGoals });
 	};
 
 	const addGoal = () => {
+		setNewGoalName('');
+		setNewGoalTarget('5000');
+		setIsAddGoalModalOpen(true);
+	};
+
+	const handleAddGoalSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		if (!newGoalName.trim()) return;
+
 		const newGoal: Goal = {
 			id: Date.now().toString(),
-			name: 'New Goal',
-			target: 5000,
+			name: newGoalName.trim(),
+			target: Number(newGoalTarget) || 0,
 			current: 0,
 		};
 		onUpdate({ goals: [...data.goals, newGoal] });
+		setIsAddGoalModalOpen(false);
 	};
 
-	const removeGoal = (goalId: string) => {
-		onUpdate({ goals: data.goals.filter(g => g.id !== goalId) });
+	const removeGoal = (goal: Goal) => {
+		setGoalToDelete(goal);
+		setGoalDeleteModalOpen(true);
+	};
+
+	const confirmRemoveGoal = () => {
+		if (goalToDelete) {
+			onUpdate({ goals: data.goals.filter(g => g.id !== goalToDelete.id) });
+			setGoalDeleteModalOpen(false);
+			setGoalToDelete(null);
+		}
 	};
 
 	return (
@@ -87,7 +111,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
 					<h3 className="text-lg font-medium text-slate-900 dark:text-white">{profile.name}'s Goals</h3>
 				</div>
 				{!isOnly && (
-					<button 
+					<button
 						onClick={onRemove}
 						className="p-2 text-slate-400 hover:text-red-500 transition-colors"
 						title="Remove Profile"
@@ -102,7 +126,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
 					<Card>
 						<CardHeader className="flex flex-row items-center justify-between">
 							<h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Active Goals</h3>
-							<button 
+							<button
 								onClick={addGoal}
 								className="text-[10px] uppercase tracking-widest text-[#387E67] dark:text-[#52B788] font-medium hover:opacity-70 transition-opacity flex items-center gap-1"
 							>
@@ -123,7 +147,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
 												<div className="flex gap-4">
 													<div className="flex-1">
 														<Label>Goal Name</Label>
-														<Input 
+														<Input
 															value={goal.name}
 															onChange={(e) => updateGoal(goal.id, { name: e.target.value })}
 															placeholder="e.g. Dream House"
@@ -131,7 +155,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
 													</div>
 													<div className="w-32">
 														<Label>Target ($)</Label>
-														<Input 
+														<Input
 															type="number"
 															value={goal.target}
 															onChange={(e) => updateGoal(goal.id, { target: Number(e.target.value) })}
@@ -149,8 +173,8 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
 													onChange={(v) => updateGoal(goal.id, { current: v })}
 												/>
 											</div>
-											<button 
-												onClick={() => removeGoal(goal.id)}
+											<button
+												onClick={() => removeGoal(goal)}
 												className="ml-4 p-2 text-slate-300 hover:text-red-500 transition-all cursor-pointer"
 											>
 												<Trash2 size={16} />
@@ -185,18 +209,18 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
 												<Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
 											))}
 										</Pie>
-										<Tooltip 
-											contentStyle={{ 
-												borderRadius: '12px', 
-												border: 'none', 
-												boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', 
+										<Tooltip
+											contentStyle={{
+												borderRadius: '12px',
+												border: 'none',
+												boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
 												fontSize: '12px',
 												backgroundColor: 'rgba(255, 255, 255, 0.95)'
 											}}
 											formatter={(value: number) => `$${value.toLocaleString()}`}
 										/>
-										<Legend 
-											verticalAlign="bottom" 
+										<Legend
+											verticalAlign="bottom"
 											height={36}
 											iconType="circle"
 											iconSize={8}
@@ -206,7 +230,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
 								</ResponsiveContainer>
 							) : (
 								<div className="h-full flex items-center justify-center">
-									<p className="text-sm text-slate-500 dark:text-white/40 italic">Add goal targets to see allocation</p>
+									<p className="text-sm text-slate-500 dark:text-white/40">Add goal targets to see allocation</p>
 								</div>
 							)}
 						</CardContent>
@@ -225,7 +249,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
 										<p className="text-xl font-light tracking-tighter text-white/80">{Math.round(stats.overallProgress)}%</p>
 									</div>
 								</div>
-								
+
 								<div className="pt-6 border-t border-white/10 flex justify-between items-center">
 									<div>
 										<p className="text-white/60 text-[10px] uppercase tracking-[0.2em] font-normal mb-1">Amount Saved</p>
@@ -247,6 +271,66 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
 					</Card>
 				</div>
 			</div>
+
+			<Modal
+				isOpen={goalDeleteModalOpen}
+				onClose={() => setGoalDeleteModalOpen(false)}
+				title="Confirm Goal Deletion"
+			>
+				<div className="space-y-6">
+					<p className="text-sm text-slate-600 dark:text-white/60 leading-relaxed">
+						Are you sure you want to remove the goal <span className="font-semibold text-slate-900 dark:text-white">"{goalToDelete?.name}"</span>? This will permanently delete the goal and its progress.
+					</p>
+					<div className="flex gap-3">
+						<button
+							onClick={() => setGoalDeleteModalOpen(false)}
+							className="flex-1 py-3 bg-slate-100 dark:bg-white/5 text-slate-900 dark:text-white rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-white/10 transition-colors"
+						>
+							Cancel
+						</button>
+						<button
+							onClick={confirmRemoveGoal}
+							className="flex-1 py-3 bg-[#A4161A] text-white rounded-xl text-sm font-medium hover:bg-[#8B1215] transition-colors shadow-lg shadow-red-500/20"
+						>
+							Delete
+						</button>
+					</div>
+				</div>
+			</Modal>
+
+			<Modal
+				isOpen={isAddGoalModalOpen}
+				onClose={() => setIsAddGoalModalOpen(false)}
+				title="Add New Financial Goal"
+			>
+				<form onSubmit={handleAddGoalSubmit} className="space-y-6">
+					<div>
+						<Label>Goal Name</Label>
+						<Input
+							autoFocus
+							value={newGoalName}
+							onChange={(e) => setNewGoalName(e.target.value)}
+							placeholder="e.g. Vacation Fund"
+						/>
+					</div>
+					<div>
+						<Label>Target Amount ($)</Label>
+						<Input
+							type="number"
+							value={newGoalTarget}
+							onChange={(e) => setNewGoalTarget(e.target.value)}
+							placeholder="5000"
+						/>
+					</div>
+					<button
+						type="submit"
+						disabled={!newGoalName.trim()}
+						className="w-full py-3 bg-[#387E67] dark:bg-[#52B788] text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50 cursor-pointer"
+					>
+						Create Goal
+					</button>
+				</form>
+			</Modal>
 		</div>
 	);
 };
@@ -305,7 +389,7 @@ export const GoalsCalculator = () => {
 			<div className="space-y-32">
 				{profiles.map(profile => (
 					<React.Fragment key={profile.id}>
-						<GoalsPersonView 
+						<GoalsPersonView
 							profile={profile}
 							isOnly={profiles.length === 1}
 							onUpdate={(data) => updateProfileData(profile.id, data)}
@@ -316,7 +400,7 @@ export const GoalsCalculator = () => {
 			</div>
 
 			<div className="flex justify-center pt-12 border-t border-slate-100 dark:border-white/5">
-				<button 
+				<button
 					onClick={addProfile}
 					className="flex items-center gap-2 px-8 py-4 bg-white dark:bg-white/5 text-slate-900 dark:text-white border border-slate-200 dark:border-white/10 rounded-2xl text-sm font-medium hover:bg-slate-50 dark:hover:bg-white/10 transition-all shadow-sm group"
 				>
@@ -325,22 +409,22 @@ export const GoalsCalculator = () => {
 				</button>
 			</div>
 
-			<Modal 
-				isOpen={isModalOpen} 
+			<Modal
+				isOpen={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
 				title="Add New Profile"
 			>
 				<form onSubmit={handleModalSubmit} className="space-y-6">
 					<div>
 						<Label>Profile Name</Label>
-						<Input 
+						<Input
 							autoFocus
 							value={newProfileName}
 							onChange={(e) => setNewProfileName(e.target.value)}
 							placeholder="e.g. Partner"
 						/>
 					</div>
-					<button 
+					<button
 						type="submit"
 						disabled={!newProfileName.trim()}
 						className="w-full py-3 bg-[#387E67] dark:bg-[#52B788] text-white rounded-xl text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
@@ -360,13 +444,13 @@ export const GoalsCalculator = () => {
 						Are you sure you want to remove <span className="font-semibold text-slate-900 dark:text-white">"{profileToDelete?.name}"</span>? This action cannot be undone and all goal data for this person will be lost.
 					</p>
 					<div className="flex gap-3">
-						<button 
+						<button
 							onClick={() => setDeleteModalOpen(false)}
 							className="flex-1 py-3 bg-slate-100 dark:bg-white/5 text-slate-900 dark:text-white rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-white/10 transition-colors"
 						>
 							Cancel
 						</button>
-						<button 
+						<button
 							onClick={confirmDelete}
 							className="flex-1 py-3 bg-[#A4161A] text-white rounded-xl text-sm font-medium hover:bg-[#8B1215] transition-colors shadow-lg shadow-red-500/20"
 						>
