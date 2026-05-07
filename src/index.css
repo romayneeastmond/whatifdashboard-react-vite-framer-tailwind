@@ -9,6 +9,11 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
+  html {
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+  }
+
   body {
     @apply antialiased bg-[#F7F7F4] text-slate-900 transition-colors duration-300;
   }
