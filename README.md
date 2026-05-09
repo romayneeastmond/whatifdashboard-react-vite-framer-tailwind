@@ -2,6 +2,14 @@
 
 A premium, data-dense financial and time-management dashboard built for high-level "what-if" scenario modeling. This application provides a suite of interactive calculators designed to help users visualize financial trajectories and time allocation with precision.
 
+---
+
+## 🌎 Live Demo
+
+Live demo hosted on Vercel [What-If Dashboard](https://whatifdashboard-react-vite-framer-t.vercel.app/).
+
+---
+
 ## ✨ Features
 
 - **📊 Comprehensive Calculators**:
