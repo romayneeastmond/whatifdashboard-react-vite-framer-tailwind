@@ -25,7 +25,8 @@ Live demo hosted on Vercel [What-If Dashboard](https://whatifdashboard-react-vit
 - **🖨️ Professional Reporting**: Optimized print-only CSS for generating clean, white-background PDF or physical reports.
 - **⚡ Real-Time Feedback**: Interactive sliders and charts provide instant visual feedback on scenario changes.
 - **📤 Import / Export**: Save and restore your entire dashboard state as a JSON file for backup or sharing.
-- **🏠 Landing Page**: Animated entry page with a multi-option selector for choosing which calculator suite to open.
+- **🏠 Landing Page**: Animated entry page with quick-access cards for each calculator.
+- **🧩 Custom Dashboard**: A build-your-own view at `/multi` — toggle any combination of calculators to appear together on a single page, letting you compare scenarios side-by-side. Selection is persisted to `localStorage`.
 
 ## 🛠️ Technology Stack
 

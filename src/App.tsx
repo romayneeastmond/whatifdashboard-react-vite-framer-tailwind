@@ -187,7 +187,7 @@ export default function App() {
 		}
 	}, [isDarkMode]);
 
-	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time'];
+	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/multi'];
 
 	React.useEffect(() => {
 		let styleEl: HTMLStyleElement | null = null;

@@ -198,6 +198,16 @@
     font-weight: 600;
   }
 
+  /* ── Multi-option page: separator between stacked calculators ── */
+  .space-y-10 > * + * {
+    padding-top: 14pt;
+    margin-top: 14pt;
+    background-image: linear-gradient(to right, #d1d5db 0%, #d1d5db 100%) !important;
+    background-size: 100% 1px !important;
+    background-repeat: no-repeat !important;
+    background-position: top !important;
+  }
+
   /* ── Page-break rules ── */
   section,
   article,
