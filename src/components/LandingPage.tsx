@@ -123,11 +123,9 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 					className={`shrink-0 text-slate-400 dark:text-white/30 group-hover:text-slate-600 dark:group-hover:text-white/60 transition-all duration-200 ${open ? 'rotate-180' : ''}`}
 				/>
 			</button>
-			{open && (
-				<p className="pb-4 px-3 pt-3 text-sm text-slate-500 dark:text-white/40 leading-relaxed">
-					{a}
-				</p>
-			)}
+			<p className={`faq-answer pb-4 px-3 pt-3 text-sm text-slate-500 dark:text-white/40 leading-relaxed${open ? '' : ' hidden'}`}>
+				{a}
+			</p>
 		</div>
 	);
 }

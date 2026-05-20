@@ -72,55 +72,174 @@
 }
 
 @media print {
-  /* Force white background and black text */
-  body, 
-  .dark body,
-  .min-h-screen,
-  div[class*="bg-[#F7F7F4]"] {
-    background: white !important;
-    background-color: white !important;
-    color: black !important;
-    padding: 0 !important;
+  /* ── Page setup ── */
+  @page {
+    size: A4 portrait;
+    margin: 16mm 14mm;
   }
 
-  /* Hide non-content UI elements */
-  header, 
-  footer, 
-  aside,
+  /* ── Override dark mode — force light everywhere ── */
+  html, html.dark {
+    color-scheme: light !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    background-color: white !important;
+    color: #111 !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Override dark-mode CSS variables ── */
+  html, html.dark, :root {
+    --brand-primary: #387E67 !important;
+    --brand-secondary: #C14539 !important;
+    --brand-tertiary: #C5A059 !important;
+    --chart-primary: #387E67 !important;
+    --chart-secondary: #064E3B !important;
+    --chart-grid: #E2E8F0 !important;
+  }
+
+  /* ── Hide chrome — nav, header, footer, controls ── */
+  header,
+  footer,
   nav,
+  aside,
   button,
-  .lg\:hidden {
+  [role="button"],
+  input[type="range"],
+  .back-to-top,
+  .cookie-banner {
     display: none !important;
   }
 
-  /* Reset main content spacing */
+  /* ── Main content ── */
+  body {
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+
   main {
     padding: 0 !important;
-    max-width: 100% !important;
     margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
   }
 
-  /* Ensure cards look good on white paper */
-  .bg-white, .dark .dark\:bg-\[#121212\], .dark .bg-\[#121212\], .dark .bg-\[#0A0A0A\] {
-    background: white !important;
-    border: 1px solid #e1e1de !important;
-    color: black !important;
-    box-shadow: none !important;
+  /* ── Strip decorative spacing ── */
+  .min-h-screen {
+    min-height: 0 !important;
   }
 
-  /* Force labels and titles to be black/visible */
-  .text-black, .dark .dark\:text-white\/60, .text-\[\#8f969d\], .dark .dark\:text-white\/40 {
-    color: black !important;
+  /* ── Cards: borderless, rounded corners ── */
+  .rounded-\[12px\],
+  .rounded-2xl,
+  [class*="rounded"] {
+    border-radius: 6px !important;
   }
 
-  /* Adjust charts for print */
+  /* Card summary variant (green bg) — keep colour for print */
+  .bg-\[#387E67\] {
+    background-color: #387E67 !important;
+    color: white !important;
+  }
+  .bg-\[#387E67\] * {
+    color: white !important;
+  }
+
+  /* ── FAQ: always show answers when printing ── */
+  .faq-answer {
+    display: block !important;
+  }
+
+  /* ── Compress grid/flex gaps ── */
+  .gap-6  { gap: 10pt !important; }
+  .gap-4  { gap: 8pt  !important; }
+  .gap-3  { gap: 6pt  !important; }
+  .gap-8  { gap: 12pt !important; }
+
+  /* ── Reduce internal card padding ── */
+  .p-6    { padding: 10pt !important; }
+  .p-5    { padding: 8pt  !important; }
+  .px-6   { padding-left: 10pt !important; padding-right: 10pt !important; }
+  .py-5   { padding-top: 8pt  !important; padding-bottom: 8pt  !important; }
+  .mb-6   { margin-bottom: 8pt  !important; }
+  .mb-4   { margin-bottom: 6pt  !important; }
+  .mt-6   { margin-top: 8pt    !important; }
+  .mt-4   { margin-top: 6pt    !important; }
+  .py-8   { padding-top: 12pt  !important; padding-bottom: 12pt !important; }
+
+  /* ── Recharts ── */
   .recharts-surface {
     overflow: visible !important;
   }
+  .recharts-text,
+  .recharts-legend-item-text {
+    fill: #374151 !important;
+    color: #374151 !important;
+  }
+  .recharts-cartesian-grid line,
+  .recharts-cartesian-axis line,
+  .recharts-cartesian-axis-tick line {
+    stroke: #E2E8F0 !important;
+  }
 
-  /* Avoid breaking cards across pages */
-  div {
-    page-break-inside: avoid;
+  /* ── Slider value badges — show the value, hide the track ── */
+  input[type="range"] + *,
+  .font-mono.bg-slate-100 {
+    display: inline !important;
+    background: transparent !important;
+    font-weight: 600;
+  }
+
+  /* ── Page-break rules ── */
+  section,
+  article,
+  .print-card {
+    break-inside: avoid;
+  }
+
+  /* Let grid columns collapse to a single column so content isn't crammed */
+  .grid {
+    display: block !important;
+  }
+  .grid > * {
+    margin-bottom: 10pt !important;
+    break-inside: avoid;
+  }
+
+  /* Restore two-column grid only where there's enough room */
+  @supports (display: grid) {
+    .lg\:grid-cols-2,
+    .md\:grid-cols-2 {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+    }
+    .lg\:grid-cols-3,
+    .md\:grid-cols-3 {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr 1fr !important;
+    }
+  }
+
+  /* ── Stat pills / badges ── */
+  .bg-slate-100,
+  .bg-slate-50,
+  .dark\:bg-white\/5 {
+    background-color: #f3f4f6 !important;
+    color: #111 !important;
+  }
+
+  /* ── Links — remove underline noise ── */
+  a {
+    text-decoration: none !important;
+    color: #111 !important;
   }
 }
 

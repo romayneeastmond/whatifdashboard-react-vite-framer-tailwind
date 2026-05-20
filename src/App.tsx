@@ -187,6 +187,32 @@ export default function App() {
 		}
 	}, [isDarkMode]);
 
+	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time'];
+
+	React.useEffect(() => {
+		let styleEl: HTMLStyleElement | null = null;
+
+		const onBefore = () => {
+			if (CALCULATOR_PATHS.includes(location.pathname)) {
+				styleEl = document.createElement('style');
+				styleEl.textContent = '@page { size: A4 landscape; margin: 12mm 14mm; }';
+				document.head.appendChild(styleEl);
+			}
+		};
+		const onAfter = () => {
+			styleEl?.remove();
+			styleEl = null;
+		};
+
+		window.addEventListener('beforeprint', onBefore);
+		window.addEventListener('afterprint', onAfter);
+		return () => {
+			window.removeEventListener('beforeprint', onBefore);
+			window.removeEventListener('afterprint', onAfter);
+			styleEl?.remove();
+		};
+	}, [location.pathname]);
+
 	const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
 	const handleExport = () => {
