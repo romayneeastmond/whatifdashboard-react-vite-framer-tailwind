@@ -1,4 +1,4 @@
-export type CalculatorType = 'salary' | 'mortgage' | 'investing' | 'time' | 'goals';
+export type CalculatorType = 'salary' | 'mortgage' | 'investing' | 'time' | 'goals' | 'bardal';
 
 export interface SalaryData {
   annualGross: number;
@@ -40,4 +40,22 @@ export interface Goal {
 
 export interface GoalsData {
 	goals: Goal[];
+}
+
+export interface BardalData {
+	annualSalary: number;
+	age: number;
+	yearsOfService: number;
+	positionLevel: string;
+	fieldAvailability: string;
+}
+
+export interface DebtData {
+	balance: number;
+	annualRate: number;
+	monthlyPayment: number;
+}
+
+export interface MultiOptionData {
+	selected: string[];
 }
