@@ -17,10 +17,15 @@ Live demo hosted on Vercel [What-If Dashboard](https://whatifdashboard-react-vit
   - **Mortgage Equity**: Amortization modeling with home price, down payment, and interest rate variables.
   - **Wealth Growth**: Multi-year investment projections showing compound interest and ROI over time.
   - **Time Allocation**: Weekly "time budget" visualization using radar charts to balance rest, career, and growth.
+  - **Bardal Factor**: Severance and job-search runway estimator based on age, years of service, position level, and field availability.
+  - **Debt Repayment**: Payoff timeline and total interest projection for revolving debt, with minimum-payment warnings.
+  - **Financial Goals**: Multi-goal tracker with per-goal progress bars and a pie chart showing target allocation across goals.
 - **🌓 Dynamic Themes**: Fully responsive dark and light modes with a neutral, professional aesthetic.
 - **💾 Persistence**: Automatically saves your progress to `localStorage` so your data remains across reloads and sessions.
 - **🖨️ Professional Reporting**: Optimized print-only CSS for generating clean, white-background PDF or physical reports.
 - **⚡ Real-Time Feedback**: Interactive sliders and charts provide instant visual feedback on scenario changes.
+- **📤 Import / Export**: Save and restore your entire dashboard state as a JSON file for backup or sharing.
+- **🏠 Landing Page**: Animated entry page with a multi-option selector for choosing which calculator suite to open.
 
 ## 🛠️ Technology Stack
 

@@ -494,17 +494,20 @@ export default function App() {
 								</div>
 							</div>
 							<div className="flex items-center gap-6">
-								<a
-									href="https://buymeacoffee.com/placeholder"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="flex items-center gap-2 text-slate-400 hover:text-[#FFDD00] dark:text-white/30 dark:hover:text-[#FFDD00] transition-colors"
-								>
-									{/* Replace placeholder with your Buy Me a Coffee username */}
-									<Coffee size={12} />
-									<span>Buy Me a Coffee</span>
-								</a>
-								<div className="w-px h-3 bg-slate-200 dark:bg-white/10" />
+								{import.meta.env.VITE_SHOW_BMC === 'true' && (
+									<>
+										<a
+											href="https://buymeacoffee.com/placeholder"
+											target="_blank"
+											rel="noopener noreferrer"
+											className="flex items-center gap-2 text-slate-400 hover:text-[#FFDD00] dark:text-white/30 dark:hover:text-[#FFDD00] transition-colors"
+										>
+											<Coffee size={12} />
+											<span>Buy Me a Coffee</span>
+										</a>
+										<div className="w-px h-3 bg-slate-200 dark:bg-white/10" />
+									</>
+								)}
 								<p>&copy; 2026 What-If Dashboard</p>
 							</div>
 						</div>
