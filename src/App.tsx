@@ -27,6 +27,7 @@ import {
 	ChevronDown,
 	Dumbbell,
 	Flame,
+	CalendarDays,
 } from 'lucide-react';
 import { SalaryCalculator } from './components/calculators/SalaryCalculator';
 import { MortgageCalculator } from './components/calculators/MortgageCalculator';
@@ -37,6 +38,7 @@ import { BardalCalculator } from './components/calculators/BardalCalculator';
 import { DebtCalculator } from './components/calculators/DebtCalculator';
 import { ProteinCalculator } from './components/calculators/ProteinCalculator';
 import { WeightLossCalculator } from './components/calculators/WeightLossCalculator';
+import { DaysBetweenCalculator } from './components/calculators/DaysBetweenCalculator';
 import { MultiOptionPage } from './components/MultiOptionPage';
 import { LandingPage } from './components/LandingPage';
 import { CookieBanner } from './components/CookieBanner';
@@ -57,6 +59,7 @@ type MoreEntry = MoreNavItem | MoreDivider;
 const MORE_ITEMS: MoreEntry[] = [
 	{ path: '/bardal', label: 'Bardal Factor', icon: Scale },
 	{ path: '/time', label: 'Time Allocation', icon: Clock },
+	{ path: '/daysbetween', label: 'Days Between', icon: CalendarDays },
 	{ path: '/weightloss', label: 'Weight Loss', icon: Flame },
 	{ path: '/protein', label: 'Protein Intake', icon: Dumbbell },
 	{ divider: true },
@@ -193,7 +196,7 @@ export default function App() {
 		}
 	}, [isDarkMode]);
 
-	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/weightloss', '/protein', '/multi'];
+	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/multi'];
 
 	React.useEffect(() => {
 		let styleEl: HTMLStyleElement | null = null;
@@ -489,6 +492,7 @@ export default function App() {
 								<Route path="/time" element={<TimeCalculator />} />
 								<Route path="/bardal" element={<BardalCalculator />} />
 								<Route path="/debt" element={<DebtCalculator />} />
+								<Route path="/daysbetween" element={<DaysBetweenCalculator />} />
 								<Route path="/weightloss" element={<WeightLossCalculator />} />
 								<Route path="/protein" element={<ProteinCalculator />} />
 								<Route path="/multi" element={<MultiOptionPage />} />

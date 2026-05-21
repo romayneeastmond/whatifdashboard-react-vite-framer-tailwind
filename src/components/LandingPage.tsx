@@ -5,7 +5,7 @@
 
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame } from 'lucide-react';
+import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays } from 'lucide-react';
 import { useState } from 'react';
 
 const TOOLS = [
@@ -71,6 +71,15 @@ const TOOLS = [
 		bg: 'bg-amber-50 dark:bg-amber-950/40',
 		description:
 			'Audit how you spend your 24 hours. Allocate time across sleep, work, fitness, chores, learning, and leisure to find a balance that works for you.',
+	},
+	{
+		path: '/daysbetween',
+		label: 'Days Between',
+		icon: CalendarDays,
+		color: 'text-sky-600 dark:text-sky-400',
+		bg: 'bg-sky-50 dark:bg-sky-950/40',
+		description:
+			'Calculate the exact number of days, weeks, months, and years between any two dates. Shows both a total and a broken-down remainder for each unit.',
 	},
 	{
 		path: '/weightloss',

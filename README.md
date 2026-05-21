@@ -20,6 +20,7 @@ Live demo hosted on Vercel [What-If Dashboard](https://whatifdashboard-react-vit
   - **Bardal Factor**: Severance and job-search runway estimator based on age, years of service, position level, and field availability.
   - **Debt Repayment**: Payoff timeline and total interest projection for revolving debt, with minimum-payment warnings.
   - **Financial Goals**: Multi-goal tracker with per-goal progress bars and a pie chart showing target allocation across goals.
+  - **Days Between**: Calculates the exact number of days, weeks, months, and years between any two dates, with whole-unit and remainder breakdowns (e.g. 3 weeks + 4 days). Works in both directions and labels results as "Days Until" or "Days Since" accordingly.
   - **Weight Loss**: Calculates BMR via Mifflin-St Jeor, applies a safe calorie deficit (250–1,000 kcal), and projects weekly fat loss and weeks to reach a target weight. Supports lbs/kg and inches/cm.
   - **Protein Intake**: Recommends daily protein in grams and protein powder scoops based on age, weight, and activity level, with an upward adjustment for adults 50+. Supports lbs/kg.
 - **🌓 Dynamic Themes**: Fully responsive dark and light modes with a neutral, professional aesthetic.
