@@ -66,7 +66,7 @@ export function MultiOptionPage() {
 				<p className="text-[10px] uppercase tracking-[0.2em] text-slate-400 dark:text-white/30 mb-4 font-normal">
 					Select calculators to display
 				</p>
-				<div className="flex flex-wrap gap-2">
+				<div className="flex flex-col sm:flex-row sm:flex-wrap gap-2">
 					{REGISTRY.map(calc => {
 						const Icon = calc.icon;
 						const active = selected.includes(calc.id);
@@ -76,7 +76,7 @@ export function MultiOptionPage() {
 								onClick={() => toggle(calc.id)}
 								aria-pressed={active}
 								className={cn(
-									'flex items-center gap-2 px-4 py-2 text-xs font-normal border transition-all duration-150 cursor-pointer',
+									'flex items-center gap-2 px-4 py-2 text-xs font-normal border transition-all duration-150 cursor-pointer w-full sm:w-auto',
 									active
 										? 'bg-[#387E67] dark:bg-[#52B788] border-[#387E67] dark:border-[#52B788] text-white'
 										: 'bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-white/60 hover:border-slate-400 dark:hover:border-white/30'
