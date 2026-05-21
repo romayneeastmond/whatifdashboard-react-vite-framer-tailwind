@@ -57,23 +57,50 @@ export const Slider = ({
 	step?: number;
 	onChange: (val: number) => void;
 	suffix?: string;
-}) => (
-	<div className="mb-6">
-		<div className="flex justify-between items-center mb-2">
-			<Label>{label}</Label>
-			<span className="text-xs font-mono font-medium text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded-md">{value.toLocaleString()}{suffix}</span>
+}) => {
+	const decrement = () => onChange(Math.max(min, parseFloat((value - step).toFixed(10))));
+	const increment = () => onChange(Math.min(max, parseFloat((value + step).toFixed(10))));
+
+	return (
+		<div className="mb-6">
+			<div className="flex justify-between items-center mb-2">
+				<Label>{label}</Label>
+				<div className="flex items-center gap-1">
+					<button
+						type="button"
+						onClick={decrement}
+						disabled={value <= min}
+						aria-label={`Decrease ${label}`}
+						className="w-6 h-6 flex items-center justify-center rounded text-slate-500 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-25 disabled:cursor-not-allowed transition-colors text-sm leading-none select-none"
+					>
+						−
+					</button>
+					<span className="text-xs font-mono font-medium text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded-md min-w-[4rem] text-center">
+						{value.toLocaleString()}{suffix}
+					</span>
+					<button
+						type="button"
+						onClick={increment}
+						disabled={value >= max}
+						aria-label={`Increase ${label}`}
+						className="w-6 h-6 flex items-center justify-center rounded text-slate-500 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 disabled:opacity-25 disabled:cursor-not-allowed transition-colors text-sm leading-none select-none"
+					>
+						+
+					</button>
+				</div>
+			</div>
+			<input
+				type="range"
+				min={min}
+				max={max}
+				step={step}
+				value={value}
+				onChange={(e) => onChange(Number(e.target.value))}
+				className="w-full h-1.5 bg-slate-200 dark:bg-white/5 rounded-lg appearance-none cursor-pointer accent-[#387E67]"
+			/>
 		</div>
-		<input
-			type="range"
-			min={min}
-			max={max}
-			step={step}
-			value={value}
-			onChange={(e) => onChange(Number(e.target.value))}
-			className="w-full h-1.5 bg-slate-200 dark:bg-white/5 rounded-lg appearance-none cursor-pointer accent-[#387E67]"
-		/>
-	</div>
-);
+	);
+};
 
 import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';
