@@ -28,6 +28,7 @@ import {
 	Dumbbell,
 	Flame,
 	CalendarDays,
+	FolderOpen,
 } from 'lucide-react';
 import { SalaryCalculator } from './components/calculators/SalaryCalculator';
 import { MortgageCalculator } from './components/calculators/MortgageCalculator';
@@ -40,6 +41,7 @@ import { ProteinCalculator } from './components/calculators/ProteinCalculator';
 import { WeightLossCalculator } from './components/calculators/WeightLossCalculator';
 import { DaysBetweenCalculator } from './components/calculators/DaysBetweenCalculator';
 import { MultiOptionPage } from './components/MultiOptionPage';
+import { CategoriesPage } from './components/CategoriesPage';
 import { LandingPage } from './components/LandingPage';
 import { CookieBanner } from './components/CookieBanner';
 import { cn } from './lib/utils';
@@ -64,6 +66,7 @@ const MORE_ITEMS: MoreEntry[] = [
 	{ path: '/protein', label: 'Protein Intake', icon: Dumbbell },
 	{ divider: true },
 	{ path: '/multi', label: 'Multi-Option', icon: LayoutGrid },
+	{ path: '/categories', label: 'Categories', icon: FolderOpen },
 ];
 
 const MORE_PATHS = MORE_ITEMS
@@ -196,7 +199,7 @@ export default function App() {
 		}
 	}, [isDarkMode]);
 
-	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/multi'];
+	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/multi', '/categories'];
 
 	React.useEffect(() => {
 		let styleEl: HTMLStyleElement | null = null;
@@ -496,6 +499,7 @@ export default function App() {
 								<Route path="/weightloss" element={<WeightLossCalculator />} />
 								<Route path="/protein" element={<ProteinCalculator />} />
 								<Route path="/multi" element={<MultiOptionPage />} />
+								<Route path="/categories" element={<CategoriesPage />} />
 							</Routes>
 						</motion.div>
 					</AnimatePresence>

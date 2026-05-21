@@ -5,7 +5,7 @@
 
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays } from 'lucide-react';
+import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen } from 'lucide-react';
 import { useState } from 'react';
 
 const TOOLS = [
@@ -157,7 +157,49 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 	);
 }
 
+const CATEGORIES = [
+	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/salary', '/mortgage', '/debt', '/investing', '/goals'] },
+	{ name: 'Fitness', color: 'text-orange-600 dark:text-orange-400', paths: ['/weightloss', '/protein'] },
+	{ name: 'Productivity', color: 'text-amber-600 dark:text-amber-400', paths: ['/time', '/daysbetween'] },
+	{ name: 'Legal', color: 'text-slate-600 dark:text-slate-400', paths: ['/bardal'] },
+];
+
+function ToolCard({ tool, delay }: { tool: typeof TOOLS[number]; delay: number }) {
+	const Icon = tool.icon;
+	return (
+		<motion.div
+			key={tool.path}
+			initial={{ opacity: 0, y: 16 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay }}
+		>
+			<Link
+				to={tool.path}
+				className="group flex flex-col text-left p-6 rounded-xl border border-slate-200 dark:border-white/8 bg-white dark:bg-white/3 hover:border-slate-300 dark:hover:border-white/15 hover:shadow-sm transition-all duration-200 h-full"
+			>
+				<div className="flex items-start justify-between mb-4">
+					<div className={`p-2.5 rounded-lg ${tool.bg}`}>
+						<Icon size={18} className={tool.color} />
+					</div>
+					<ArrowRight
+						size={16}
+						className="text-slate-300 dark:text-white/20 group-hover:text-slate-500 dark:group-hover:text-white/50 group-hover:translate-x-0.5 transition-all mt-1"
+					/>
+				</div>
+				<h3 className="text-base font-medium text-slate-900 dark:text-white mb-2">
+					{tool.label}
+				</h3>
+				<p className="text-sm text-slate-500 dark:text-white/40 leading-relaxed">
+					{tool.description}
+				</p>
+			</Link>
+		</motion.div>
+	);
+}
+
 export function LandingPage() {
+	const [view, setView] = useState<'list' | 'categories'>('list');
+
 	return (
 		<div className="w-full px-6 lg:px-12 py-16 lg:py-24">
 			{/* Hero */}
@@ -180,42 +222,56 @@ export function LandingPage() {
 				</p>
 			</motion.div>
 
-			{/* Tool cards */}
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-				{TOOLS.map((tool, i) => {
-					const Icon = tool.icon;
-					return (
-						<motion.div
-							key={tool.path}
-							initial={{ opacity: 0, y: 16 }}
-							animate={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: 0.08 * i }}
-						>
-							<Link
-								to={tool.path}
-								className="group flex flex-col text-left p-6 rounded-xl border border-slate-200 dark:border-white/8 bg-white dark:bg-white/3 hover:border-slate-300 dark:hover:border-white/15 hover:shadow-sm transition-all duration-200 h-full"
-							>
-								<div className="flex items-start justify-between mb-4">
-									<div className={`p-2.5 rounded-lg ${tool.bg}`}>
-										<Icon size={18} className={tool.color} />
-									</div>
-									<ArrowRight
-										size={16}
-										className="text-slate-300 dark:text-white/20 group-hover:text-slate-500 dark:group-hover:text-white/50 group-hover:translate-x-0.5 transition-all mt-1"
-									/>
-								</div>
-								<h3 className="text-base font-medium text-slate-900 dark:text-white mb-2">
-									{tool.label}
-								</h3>
-								<p className="text-sm text-slate-500 dark:text-white/40 leading-relaxed">
-									{tool.description}
-								</p>
-							</Link>
-						</motion.div>
-					);
-				})}
-
+			{/* View toggle */}
+			<div className="flex items-center gap-1 mb-6">
+				<button
+					onClick={() => setView('list')}
+					aria-label="List view"
+					aria-pressed={view === 'list'}
+					className={`p-2 rounded-lg transition-colors ${view === 'list' ? 'text-[#387E67] dark:text-[#52B788] bg-slate-100 dark:bg-white/10' : 'text-slate-400 dark:text-white/30 hover:text-slate-600 dark:hover:text-white/60 hover:bg-slate-100 dark:hover:bg-white/5'}`}
+				>
+					<LayoutList size={16} />
+				</button>
+				<button
+					onClick={() => setView('categories')}
+					aria-label="Categories view"
+					aria-pressed={view === 'categories'}
+					className={`p-2 rounded-lg transition-colors ${view === 'categories' ? 'text-[#387E67] dark:text-[#52B788] bg-slate-100 dark:bg-white/10' : 'text-slate-400 dark:text-white/30 hover:text-slate-600 dark:hover:text-white/60 hover:bg-slate-100 dark:hover:bg-white/5'}`}
+				>
+					<FolderOpen size={16} />
+				</button>
 			</div>
+
+			{/* Tool cards — list view */}
+			{view === 'list' && (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					{TOOLS.map((tool, i) => (
+						<ToolCard key={tool.path} tool={tool} delay={0.06 * i} />
+					))}
+				</div>
+			)}
+
+			{/* Tool cards — categories view */}
+			{view === 'categories' && (
+				<div className="space-y-12">
+					{CATEGORIES.map((cat) => {
+						const catTools = TOOLS.filter(t => cat.paths.includes(t.path));
+						return (
+							<div key={cat.name}>
+								<p className={`text-xs uppercase tracking-[0.2em] font-normal mb-4 ${cat.color}`}>
+									{cat.name}
+								</p>
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+									{catTools.map((tool, i) => (
+										<ToolCard key={tool.path} tool={tool} delay={0.06 * i} />
+									))}
+								</div>
+							</div>
+						);
+					})}
+				</div>
+			)}
+
 
 			{/* FAQ */}
 			<motion.div
