@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Wallet, Home, BarChart3, Target, Clock, Scale, CreditCard, Check } from 'lucide-react';
+import { Wallet, Home, BarChart3, Target, Clock, Scale, CreditCard, Check, Dumbbell, Flame } from 'lucide-react';
 import { SalaryCalculator } from './calculators/SalaryCalculator';
 import { MortgageCalculator } from './calculators/MortgageCalculator';
 import { InvestmentCalculator } from './calculators/InvestmentCalculator';
@@ -13,6 +13,8 @@ import { GoalsCalculator } from './calculators/GoalsCalculator';
 import { TimeCalculator } from './calculators/TimeCalculator';
 import { BardalCalculator } from './calculators/BardalCalculator';
 import { DebtCalculator } from './calculators/DebtCalculator';
+import { ProteinCalculator } from './calculators/ProteinCalculator';
+import { WeightLossCalculator } from './calculators/WeightLossCalculator';
 import { cn } from '../lib/utils';
 
 const REGISTRY = [
@@ -23,6 +25,8 @@ const REGISTRY = [
 	{ id: 'time',     label: 'Time Allocation',    icon: Clock,      component: TimeCalculator      },
 	{ id: 'bardal',   label: 'Bardal Factor',      icon: Scale,      component: BardalCalculator    },
 	{ id: 'debt',     label: 'Debt Repayment',     icon: CreditCard, component: DebtCalculator      },
+	{ id: 'weightloss', label: 'Weight Loss',       icon: Flame,      component: WeightLossCalculator },
+	{ id: 'protein',  label: 'Protein Intake',     icon: Dumbbell,   component: ProteinCalculator   },
 ] as const;
 
 type CalcId = typeof REGISTRY[number]['id'];

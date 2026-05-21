@@ -20,6 +20,8 @@ Live demo hosted on Vercel [What-If Dashboard](https://whatifdashboard-react-vit
   - **Bardal Factor**: Severance and job-search runway estimator based on age, years of service, position level, and field availability.
   - **Debt Repayment**: Payoff timeline and total interest projection for revolving debt, with minimum-payment warnings.
   - **Financial Goals**: Multi-goal tracker with per-goal progress bars and a pie chart showing target allocation across goals.
+  - **Weight Loss**: Calculates BMR via Mifflin-St Jeor, applies a safe calorie deficit (250–1,000 kcal), and projects weekly fat loss and weeks to reach a target weight. Supports lbs/kg and inches/cm.
+  - **Protein Intake**: Recommends daily protein in grams and protein powder scoops based on age, weight, and activity level, with an upward adjustment for adults 50+. Supports lbs/kg.
 - **🌓 Dynamic Themes**: Fully responsive dark and light modes with a neutral, professional aesthetic.
 - **💾 Persistence**: Automatically saves your progress to `localStorage` so your data remains across reloads and sessions.
 - **🖨️ Professional Reporting**: Optimized print-only CSS for generating clean, white-background PDF or physical reports.

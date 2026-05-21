@@ -25,6 +25,8 @@ import {
 	CreditCard,
 	LayoutGrid,
 	ChevronDown,
+	Dumbbell,
+	Flame,
 } from 'lucide-react';
 import { SalaryCalculator } from './components/calculators/SalaryCalculator';
 import { MortgageCalculator } from './components/calculators/MortgageCalculator';
@@ -33,6 +35,8 @@ import { TimeCalculator } from './components/calculators/TimeCalculator';
 import { GoalsCalculator } from './components/calculators/GoalsCalculator';
 import { BardalCalculator } from './components/calculators/BardalCalculator';
 import { DebtCalculator } from './components/calculators/DebtCalculator';
+import { ProteinCalculator } from './components/calculators/ProteinCalculator';
+import { WeightLossCalculator } from './components/calculators/WeightLossCalculator';
 import { MultiOptionPage } from './components/MultiOptionPage';
 import { LandingPage } from './components/LandingPage';
 import { CookieBanner } from './components/CookieBanner';
@@ -53,6 +57,8 @@ type MoreEntry = MoreNavItem | MoreDivider;
 const MORE_ITEMS: MoreEntry[] = [
 	{ path: '/bardal', label: 'Bardal Factor', icon: Scale },
 	{ path: '/time', label: 'Time Allocation', icon: Clock },
+	{ path: '/weightloss', label: 'Weight Loss', icon: Flame },
+	{ path: '/protein', label: 'Protein Intake', icon: Dumbbell },
 	{ divider: true },
 	{ path: '/multi', label: 'Multi-Option', icon: LayoutGrid },
 ];
@@ -187,7 +193,7 @@ export default function App() {
 		}
 	}, [isDarkMode]);
 
-	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/multi'];
+	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/weightloss', '/protein', '/multi'];
 
 	React.useEffect(() => {
 		let styleEl: HTMLStyleElement | null = null;
@@ -483,6 +489,8 @@ export default function App() {
 								<Route path="/time" element={<TimeCalculator />} />
 								<Route path="/bardal" element={<BardalCalculator />} />
 								<Route path="/debt" element={<DebtCalculator />} />
+								<Route path="/weightloss" element={<WeightLossCalculator />} />
+								<Route path="/protein" element={<ProteinCalculator />} />
 								<Route path="/multi" element={<MultiOptionPage />} />
 							</Routes>
 						</motion.div>

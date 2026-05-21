@@ -5,7 +5,7 @@
 
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid } from 'lucide-react';
+import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame } from 'lucide-react';
 import { useState } from 'react';
 
 const TOOLS = [
@@ -71,6 +71,24 @@ const TOOLS = [
 		bg: 'bg-amber-50 dark:bg-amber-950/40',
 		description:
 			'Audit how you spend your 24 hours. Allocate time across sleep, work, fitness, chores, learning, and leisure to find a balance that works for you.',
+	},
+	{
+		path: '/weightloss',
+		label: 'Weight Loss',
+		icon: Flame,
+		color: 'text-red-600 dark:text-red-400',
+		bg: 'bg-red-50 dark:bg-red-950/40',
+		description:
+			'Calculate your recommended daily caloric intake, safe calorie deficit, and projected weekly weight loss to reach a target weight. Uses the Mifflin-St Jeor equation. Supports lbs and kg.',
+	},
+	{
+		path: '/protein',
+		label: 'Protein Intake',
+		icon: Dumbbell,
+		color: 'text-orange-600 dark:text-orange-400',
+		bg: 'bg-orange-50 dark:bg-orange-950/40',
+		description:
+			'Calculate your recommended daily protein intake based on your age, weight, and activity level. See results in grams and protein powder scoops. Supports lbs and kg.',
 	},
 	{
 		path: '/multi',
