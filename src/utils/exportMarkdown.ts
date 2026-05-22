@@ -867,3 +867,436 @@ export const exportObsidian = async (): Promise<void> => {
     const blob = await buildZip('---\ntags: [whatif]\n---');
     triggerDownload(blob, `whatif-obsidian-${new Date().toISOString().split('T')[0]}.zip`);
 };
+
+// ── MCP / RAG JSON export ─────────────────────────────────────────────────────
+
+type KV = Record<string, string>;
+type ProfileEntry = { profile: string; inputs: KV; results: KV };
+type SingleEntry  = { inputs: KV; results: KV };
+
+const dataFromSalary = (raw: string): ProfileEntry[] =>
+    (JSON.parse(raw) as SalaryProfile[]).map((p) => {
+        const d = p.data;
+        const annual401k     = (d.annualGross * d.contribution401k) / 100;
+        const taxableIncome  = d.annualGross - annual401k;
+        const annualTax      = (taxableIncome * d.taxRate) / 100;
+        const takeHomeAnnual = taxableIncome - annualTax;
+        const takeHomeMonthly = takeHomeAnnual / 12;
+        const monthlySavings  = takeHomeMonthly - d.monthlyExpenses;
+        return {
+            profile: p.name,
+            inputs: {
+                'Annual Gross Salary':       $(d.annualGross),
+                'Tax Rate':                  pct(d.taxRate),
+                'Retirement Contribution':   pct(d.contribution401k),
+                'Monthly Expenses':          $(d.monthlyExpenses),
+            },
+            results: {
+                'Annual Retirement Contribution': $(annual401k),
+                'Taxable Income':                 $(taxableIncome),
+                'Annual Tax':                     $(annualTax),
+                'Take-Home Pay (Annual)':         $(takeHomeAnnual),
+                'Take-Home Pay (Monthly)':        $(takeHomeMonthly),
+                'Monthly Savings After Expenses': monthlySavings >= 0 ? $(monthlySavings) : `-${$(-monthlySavings)}`,
+            },
+        };
+    });
+
+const dataFromMortgage = (raw: string): ProfileEntry[] =>
+    (JSON.parse(raw) as MortgageProfile[]).map((p) => {
+        const d = p.data;
+        const principal    = d.homePrice - d.downPayment;
+        const monthlyRate  = d.interestRate / 100 / 12;
+        const n            = d.termYears * 12;
+        const monthlyPI    = (principal * monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1);
+        const monthlyTaxes = d.annualTaxes / 12;
+        const totalMonthly = monthlyPI + monthlyTaxes;
+        const totalInterest = monthlyPI * n - principal;
+        const totalCost    = d.homePrice + totalInterest + d.annualTaxes * d.termYears;
+        return {
+            profile: p.name,
+            inputs: {
+                'Home Price':            $(d.homePrice),
+                'Down Payment':          `${$(d.downPayment)} (${((d.downPayment / d.homePrice) * 100).toFixed(1)}%)`,
+                'Interest Rate':         pct(d.interestRate),
+                'Loan Term':             `${d.termYears} years`,
+                'Annual Property Taxes': $(d.annualTaxes),
+            },
+            results: {
+                'Loan Amount':                   $(principal),
+                'Monthly Principal & Interest':  $d(monthlyPI),
+                'Monthly Taxes':                 $d(monthlyTaxes),
+                'Total Monthly Payment':         $d(totalMonthly),
+                'Total Interest Paid':           $(totalInterest),
+                'Total Cost of Home':            $(totalCost),
+            },
+        };
+    });
+
+const dataFromInvestment = (raw: string): ProfileEntry[] =>
+    (JSON.parse(raw) as InvestmentProfile[]).map((p) => {
+        const d = p.data;
+        let balance = d.initialAmount;
+        let invested = d.initialAmount;
+        const rate = d.annualReturn / 100 / 12;
+        for (let i = 0; i < d.years; i++)
+            for (let m = 0; m < 12; m++) { balance = (balance + d.monthlyContribution) * (1 + rate); invested += d.monthlyContribution; }
+        return {
+            profile: p.name,
+            inputs: {
+                'Initial Investment':     $(d.initialAmount),
+                'Monthly Contribution':   $(d.monthlyContribution),
+                'Expected Annual Return': pct(d.annualReturn),
+                'Time Horizon':           `${d.years} years`,
+            },
+            results: {
+                'Total Contributed':   $(invested),
+                'Investment Growth':   $(balance - invested),
+                'Final Portfolio Value': $(balance),
+                'Return Multiple':     `${(balance / invested).toFixed(2)}×`,
+            },
+        };
+    });
+
+const dataFromDebt = (raw: string): ProfileEntry[] =>
+    (JSON.parse(raw) as DebtScenario[]).map((s) => {
+        const d = s.data;
+        const monthlyRate = d.annualRate / 100 / 12;
+        const minPayment  = d.balance * monthlyRate;
+        if (d.monthlyPayment <= minPayment) return {
+            profile: s.name,
+            inputs: { 'Debt Balance': $(d.balance), 'Annual Interest Rate': pct(d.annualRate), 'Monthly Payment': $(d.monthlyPayment) },
+            results: { 'Warning': `Payment of ${$(d.monthlyPayment)} does not cover monthly interest of ${$d(minPayment)}` },
+        };
+        let balance = d.balance, totalPaid = 0, month = 0;
+        while (balance > 0.01 && month <= 360) {
+            const interest = balance * monthlyRate;
+            balance -= Math.min(d.monthlyPayment - interest, balance);
+            totalPaid += d.monthlyPayment;
+            month++;
+        }
+        const years = Math.floor(month / 12), months = month % 12;
+        return {
+            profile: s.name,
+            inputs: { 'Debt Balance': $(d.balance), 'Annual Interest Rate': pct(d.annualRate), 'Monthly Payment': $(d.monthlyPayment) },
+            results: {
+                'Time to Pay Off':        years > 0 ? `${years} yr${years !== 1 ? 's' : ''} ${months} mo` : `${months} months`,
+                'Total Paid':             $(totalPaid),
+                'Total Interest Paid':    $(totalPaid - d.balance),
+                'Interest as % of Balance': `${(((totalPaid - d.balance) / d.balance) * 100).toFixed(1)}%`,
+            },
+        };
+    });
+
+const dataFromGoals = (raw: string): ProfileEntry[] =>
+    (JSON.parse(raw) as GoalsProfile[]).map((p) => {
+        const goals = p.data.goals;
+        const totalTarget  = goals.reduce((a, g) => a + g.target, 0);
+        const totalCurrent = goals.reduce((a, g) => a + g.current, 0);
+        const goalSummary  = Object.fromEntries(goals.map((g) => {
+            const gpct = g.target > 0 ? ((g.current / g.target) * 100).toFixed(1) : '0';
+            const remaining = g.target - g.current;
+            return [g.name, `${$(g.current)} of ${$(g.target)} (${gpct}%)${remaining <= 0 ? ' — Complete' : ''}`];
+        }));
+        return {
+            profile: p.name,
+            inputs: goalSummary,
+            results: {
+                'Total Saved':     $(totalCurrent),
+                'Total Target':    $(totalTarget),
+                'Overall Progress': `${totalTarget > 0 ? ((totalCurrent / totalTarget) * 100).toFixed(1) : 0}%`,
+                'Remaining':       $(Math.max(totalTarget - totalCurrent, 0)),
+            },
+        };
+    });
+
+const dataFromTime = (raw: string): ProfileEntry[] =>
+    (JSON.parse(raw) as TimeProfile[]).map((p) => {
+        const d = p.data;
+        const total = d.sleep + d.work + d.chores + d.fitness + d.leisure + d.learning;
+        const pctOf = (h: number) => `${h} hrs (${((h / 168) * 100).toFixed(1)}%)`;
+        return {
+            profile: p.name,
+            inputs: {
+                'Sleep': pctOf(d.sleep), 'Work': pctOf(d.work), 'Chores / Errands': pctOf(d.chores),
+                'Fitness': pctOf(d.fitness), 'Leisure': pctOf(d.leisure), 'Learning': pctOf(d.learning),
+            },
+            results: {
+                'Total Allocated': `${total} hrs`,
+                'Unallocated':     `${168 - total} hrs`,
+                'Status':          total > 168 ? `Over by ${total - 168} hrs` : total === 168 ? 'Fully allocated' : `${168 - total} hrs free`,
+            },
+        };
+    });
+
+const dataFromBardal = (raw: string): SingleEntry => {
+    const d: BardalData = JSON.parse(raw);
+    const position     = BARDAL_POSITIONS.find((p) => p.id === d.positionLevel) ?? BARDAL_POSITIONS[2];
+    const availability = BARDAL_AVAILABILITY.find((a) => a.id === d.fieldAvailability) ?? BARDAL_AVAILABILITY[1];
+    const serviceMonths  = position.rate * d.yearsOfService;
+    const ageBonus       = bardalAgeFactor(d.age);
+    const noticeMonths   = Math.min(Math.max(Math.round((serviceMonths + ageBonus) * availability.multiplier * 2) / 2, 1), 24);
+    const noticeLow      = Math.max(noticeMonths - 1.5, 1);
+    const noticeHigh     = Math.min(noticeMonths + 1.5, 24);
+    const monthly        = d.annualSalary / 12;
+    return {
+        inputs: {
+            'Annual Salary': $(d.annualSalary), 'Age': `${d.age} years`,
+            'Years of Service': `${d.yearsOfService} years`, 'Position Level': position.label,
+            'Field Availability': availability.label,
+        },
+        results: {
+            'Estimated Notice Period': mo(noticeMonths),
+            'Notice Range':            `${noticeLow}–${noticeHigh} months`,
+            'Monthly Salary':          $(monthly),
+            'Estimated Severance':     $(monthly * noticeMonths),
+            'Severance Range':         `${$(monthly * noticeLow)} – ${$(monthly * noticeHigh)}`,
+        },
+    };
+};
+
+const dataFromWrongfulDismissal = (raw: string): SingleEntry => {
+    const d: WDData = JSON.parse(raw);
+    const position     = WD_POSITIONS.find((p) => p.id === d.positionLevel) ?? WD_POSITIONS[2];
+    const availability = WD_AVAILABILITY.find((a) => a.id === d.fieldAvailability) ?? WD_AVAILABILITY[1];
+    const monthly      = d.annualSalary / 12;
+    const rawMonths    = (position.rate * d.yearsOfService + bardalAgeFactor(d.age)) * availability.multiplier;
+    const noticeMonths = Math.min(Math.max(Math.round(rawMonths * 2) / 2, 1), 24);
+    const payInLieu    = monthly * noticeMonths;
+    const constructiveAdder = d.dismissalType === 'constructive' ? payInLieu * 0.10 : 0;
+    const badFaithAdder     = d.badFaithDamages ? monthly * 2 : 0;
+    const totalNet     = Math.max(payInLieu + constructiveAdder + badFaithAdder - monthly * d.mitigationMonths, 0);
+    const legalFees    = d.feeType === 'contingency' ? totalNet * (d.contingencyPct / 100) : d.flatFee;
+    return {
+        inputs: {
+            'Annual Salary': $(d.annualSalary), 'Age': `${d.age} years`,
+            'Years of Service': `${d.yearsOfService} years`, 'Position Level': position.label,
+            'Dismissal Type': WD_DISMISSAL.find((x) => x.id === d.dismissalType)?.label ?? d.dismissalType,
+            'Bad Faith Damages': d.badFaithDamages ? 'Yes' : 'No',
+            'Written Contract': d.writtenContract ? 'Yes' : 'No',
+            'Mitigation Income Earned': `${d.mitigationMonths} months`,
+        },
+        results: {
+            'Reasonable Notice Period': mo(noticeMonths),
+            'Total Damages (Net)':      $(totalNet),
+            'Settlement Range':         `${$(totalNet * 0.60)} – ${$(totalNet * 0.80)}`,
+            'Legal Fees':               $(legalFees),
+            'Estimated Net After Fees': $(Math.max(totalNet - legalFees, 0)),
+        },
+    };
+};
+
+const dataFromSeveranceEI = (raw: string): SingleEntry => {
+    const d: SeveranceEIData = JSON.parse(raw);
+    const province     = SEV_PROVINCES.find((p) => p.id === d.province) ?? SEV_PROVINCES[0];
+    const region       = SEV_EI_REGIONS.find((r) => r.id === d.eiRegion) ?? SEV_EI_REGIONS[1];
+    const weekly       = d.annualSalary / 52;
+    const termWeeks    = Math.min(Math.max(d.yearsOfService, 0), province.termMax);
+    const termPay      = weekly * termWeeks;
+    let sevWeeks = 0;
+    if (province.sevWeekPerYear > 0) {
+        const qualifies = d.yearsOfService >= province.sevMinYears && (!province.sevLargeEmployer || d.largeEmployer);
+        if (qualifies) sevWeeks = Math.min(d.yearsOfService * province.sevWeekPerYear, province.sevMax);
+    }
+    const totalESA       = termPay + weekly * sevWeeks;
+    const insurableHours = d.hoursPerWeek * d.weeksWorked;
+    const eiQualifies    = insurableHours >= region.minHours;
+    const weeklyBenefit  = Math.min(Math.min(weekly, EI_MAX_INSURABLE / 52) * EI_BENEFIT_RATE, EI_MAX_WEEKLY);
+    const clampedHours   = Math.min(Math.max(insurableHours, region.minHours), 1820);
+    const durationWeeks  = eiQualifies ? Math.round(14 + ((clampedHours - region.minHours) / (1820 - region.minHours)) * (region.maxWeeks - 14)) : 0;
+    const eiTotal        = weeklyBenefit * durationWeeks;
+    const totalIncome    = totalESA + eiTotal;
+    return {
+        inputs: {
+            'Annual Salary': $(d.annualSalary), 'Years of Service': `${d.yearsOfService} years`,
+            'Province': province.label, 'EI Region': region.label,
+            'Hours per Week': `${d.hoursPerWeek}`, 'Weeks Worked': `${d.weeksWorked}`,
+            'Receiving Pay in Lieu': d.receivingSeveranceInLieu ? 'Yes' : 'No',
+        },
+        results: {
+            'Termination Pay':     `${$(termPay)} (${termWeeks} weeks)`,
+            'Severance Pay':       sevWeeks > 0 ? `${$(weekly * sevWeeks)} (${sevWeeks} weeks)` : 'Not applicable',
+            'Total ESA':           $(totalESA),
+            'EI Qualification':    eiQualifies ? 'Qualifies' : 'Does not qualify',
+            'Weekly EI Benefit':   eiQualifies ? $(weeklyBenefit) : 'N/A',
+            'EI Duration':         eiQualifies ? `${durationWeeks} weeks` : 'N/A',
+            'Total EI':            eiQualifies ? $(eiTotal) : 'N/A',
+            'Total ESA + EI':      $(totalIncome),
+            'Financial Runway':    `~${(totalIncome / (d.annualSalary / 12)).toFixed(1)} months`,
+        },
+    };
+};
+
+const dataFromWeightLoss = (raw: string): SingleEntry => {
+    const d: WeightLossData = JSON.parse(raw);
+    const toKg  = (w: number) => d.weightUnit === 'lbs' ? w / 2.2046 : w;
+    const toCm  = (h: number) => d.heightUnit === 'in'  ? h * 2.54   : h;
+    const activity = WL_ACTIVITY.find((a) => a.id === d.activityLevel) ?? WL_ACTIVITY[2];
+    const weightKg = toKg(d.currentWeight), targetKg = toKg(d.targetWeight), heightCm = toCm(d.height);
+    const bmr  = d.sex === 'male' ? 10 * weightKg + 6.25 * heightCm - 5 * d.age + 5 : 10 * weightKg + 6.25 * heightCm - 5 * d.age - 161;
+    const tdee = Math.round(bmr * activity.multiplier);
+    const deficit      = Math.round(Math.min(Math.max(tdee * 0.20, 250), Math.min(tdee - 1200, 1000)));
+    const tolosKg      = Math.max(weightKg - targetKg, 0);
+    const weeklyLossKg = (deficit * 7) / 7700;
+    const weeksToGoal  = tolosKg > 0 ? Math.ceil(tolosKg / weeklyLossKg) : 0;
+    return {
+        inputs: {
+            'Current Weight': `${d.currentWeight} ${d.weightUnit}`, 'Target Weight': `${d.targetWeight} ${d.weightUnit}`,
+            'Height': `${d.height} ${d.heightUnit}`, 'Age': `${d.age} years`,
+            'Sex': d.sex === 'male' ? 'Male' : 'Female', 'Activity Level': activity.label,
+        },
+        results: {
+            'BMR':                 `${Math.round(bmr)} kcal/day`,
+            'TDEE':                `${tdee} kcal/day`,
+            'Daily Calorie Deficit': `${deficit} kcal`,
+            'Daily Calorie Target':  `${tdee - deficit} kcal`,
+            'Weekly Loss Estimate':  `${num(weeklyLossKg * (d.weightUnit === 'lbs' ? 2.2046 : 1), 2)} ${d.weightUnit}`,
+            'Weeks to Goal':         `${weeksToGoal} weeks`,
+            'Months to Goal':        `${(weeksToGoal / 4.33).toFixed(1)} months`,
+        },
+    };
+};
+
+const dataFromCalorieDeficit = (raw: string): SingleEntry => {
+    const d: CalorieData = JSON.parse(raw);
+    const toKg  = (w: number) => d.weightUnit === 'lbs' ? w / 2.2046 : w;
+    const toCm  = (h: number) => d.heightUnit === 'in'  ? h * 2.54   : h;
+    const activity = CD_ACTIVITY.find((a) => a.id === d.activityLevel) ?? CD_ACTIVITY[2];
+    const goal     = CD_GOALS.find((g) => g.id === d.weeklyGoal) ?? CD_GOALS[1];
+    const weightKg = toKg(d.currentWeight), heightCm = toCm(d.height);
+    const bmr  = d.sex === 'male' ? 10 * weightKg + 6.25 * heightCm - 5 * d.age + 5 : 10 * weightKg + 6.25 * heightCm - 5 * d.age - 161;
+    const tdee = Math.round(bmr * activity.multiplier);
+    const exercisePortion = Math.min(d.exerciseCalories, goal.deficit);
+    const safeDietPortion = Math.max(Math.min(goal.deficit - exercisePortion, tdee - 1200), 0);
+    const effectiveDeficit = safeDietPortion + exercisePortion;
+    return {
+        inputs: {
+            'Sex': d.sex === 'male' ? 'Male' : 'Female', 'Age': `${d.age} years`,
+            'Weight': `${d.currentWeight} ${d.weightUnit}`, 'Height': `${d.height} ${d.heightUnit}`,
+            'Activity Level': activity.label, 'Weekly Loss Goal': goal.label,
+            'Exercise Calories': d.exerciseCalories > 0 ? `${d.exerciseCalories} kcal/day` : 'None',
+        },
+        results: {
+            'BMR':                   `${Math.round(bmr)} kcal/day`,
+            'TDEE':                  `${tdee} kcal/day`,
+            'From Exercise':         `${exercisePortion} kcal/day`,
+            'From Diet':             `${safeDietPortion} kcal/day`,
+            'Daily Food Target':     `${tdee - safeDietPortion} kcal/day`,
+            'Effective Daily Deficit': `${effectiveDeficit} kcal/day`,
+        },
+    };
+};
+
+const dataFromProtein = (raw: string): SingleEntry => {
+    const d: ProteinData = JSON.parse(raw);
+    const toKg     = (w: number) => d.weightUnit === 'lbs' ? w / 2.2046 : w;
+    const activity = PR_ACTIVITY.find((a) => a.id === d.activityLevel) ?? PR_ACTIVITY[2];
+    const weightKg = toKg(d.weight);
+    const ageFactor   = prAgeFactor(d.age);
+    const rateGPerKg  = activity.rate + ageFactor;
+    const proteinG    = Math.round(weightKg * rateGPerKg);
+    const proteinLow  = Math.round(weightKg * (rateGPerKg - 0.15));
+    const proteinHigh = Math.round(weightKg * (rateGPerKg + 0.15));
+    return {
+        inputs: {
+            'Weight': `${d.weight} ${d.weightUnit}`, 'Age': `${d.age} years`, 'Activity Level': activity.label,
+        },
+        results: {
+            'Protein Rate': `${num(rateGPerKg, 2)} g/kg${ageFactor > 0 ? ` (includes +${ageFactor} age bonus)` : ''}`,
+            'Recommended Daily Protein': `${proteinG} g`,
+            'Recommended Range':         `${proteinLow} – ${proteinHigh} g`,
+            'Protein Powder Scoops (25g)': `${(proteinG / SCOOP_GRAMS).toFixed(1)} scoops`,
+        },
+    };
+};
+
+const dataFromDaysBetween = (raw: string): SingleEntry => {
+    const d: DaysBetweenData = JSON.parse(raw);
+    const start = new Date(d.startDate), end = new Date(d.endDate);
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) return { inputs: {}, results: { 'Error': 'Invalid dates' } };
+    const diffMs   = end.getTime() - start.getTime();
+    const days     = Math.round(diffMs / (1000 * 60 * 60 * 24));
+    const absDays  = Math.abs(days);
+    return {
+        inputs: { 'Start Date': d.startDate, 'End Date': d.endDate },
+        results: {
+            'Direction':   days === 0 ? 'Same day' : days > 0 ? 'Future' : 'Past',
+            'Total Days':  `${num(absDays)} days`,
+            'In Weeks':    `${Math.floor(absDays / 7)} weeks, ${absDays % 7} days`,
+            'In Months':   `~${Math.floor(absDays / 30.4375)} months`,
+            'In Years':    `~${Math.floor(absDays / 365.25)} years`,
+        },
+    };
+};
+
+const dataFromCareer = (raw: string): SingleEntry => {
+    const d: CareerData = JSON.parse(raw);
+    const stay    = projectCareer(d.currentSalary, d.yearsToModel, d.annualRaise, d.promotionEveryYears, d.promotionBump);
+    const hop     = projectCareer(d.currentSalary, d.yearsToModel, d.annualRaise, d.jobHopEveryYears, d.jobHopBump);
+    const noGrowth = projectCareer(d.currentSalary, d.yearsToModel, 0, 0, 0);
+    const lifetimeDiff = hop.lifetimeEarnings - stay.lifetimeEarnings;
+    return {
+        inputs: {
+            'Starting Salary': $(d.currentSalary), 'Annual Raise': pct(d.annualRaise),
+            'Years Modelled': `${d.yearsToModel} years`,
+            'Promotion Every': `${d.promotionEveryYears} years`, 'Promotion Bump': pct(d.promotionBump),
+            'Job Hop Every': `${d.jobHopEveryYears} years`, 'Job Hop Bump': pct(d.jobHopBump),
+        },
+        results: {
+            [`Stay & Promote — Salary at Year ${d.yearsToModel}`]: $(stay.finalSalary),
+            'Stay & Promote — Lifetime Earnings':                   $(stay.lifetimeEarnings),
+            [`Job Hop — Salary at Year ${d.yearsToModel}`]:         $(hop.finalSalary),
+            'Job Hop — Lifetime Earnings':                          $(hop.lifetimeEarnings),
+            'No Growth Baseline — Lifetime Earnings':               $(noGrowth.lifetimeEarnings),
+            'Lifetime Earnings Advantage':                          lifetimeDiff > 0
+                ? `Job Hop earns ${$(lifetimeDiff)} more`
+                : `Stay earns ${$(Math.abs(lifetimeDiff))} more`,
+        },
+    };
+};
+
+interface DataEntry {
+    label: string;
+    storageKey: string;
+    renderData: (raw: string) => ProfileEntry[] | SingleEntry;
+}
+
+const DATA_MAP: DataEntry[] = [
+    { label: 'Salary & Taxes',         storageKey: 'salary_profiles',        renderData: dataFromSalary },
+    { label: 'Mortgage Equity',         storageKey: 'mortgage_profiles',      renderData: dataFromMortgage },
+    { label: 'Wealth Growth',           storageKey: 'investment_profiles',    renderData: dataFromInvestment },
+    { label: 'Debt Repayment',          storageKey: 'debt_scenarios',         renderData: dataFromDebt },
+    { label: 'Goals Tracking',          storageKey: 'goals_profiles',         renderData: dataFromGoals },
+    { label: 'Time Allocation',         storageKey: 'time_profiles',          renderData: dataFromTime },
+    { label: 'Bardal Factor',           storageKey: 'bardal_data',            renderData: dataFromBardal },
+    { label: 'Wrongful Dismissal',      storageKey: 'wrongfuldismissal_data', renderData: dataFromWrongfulDismissal },
+    { label: 'Severance & EI',          storageKey: 'severanceei_data',       renderData: dataFromSeveranceEI },
+    { label: 'Weight Loss',             storageKey: 'weightloss_data',        renderData: dataFromWeightLoss },
+    { label: 'Calorie Deficit Planner', storageKey: 'caloriedeficit_data',    renderData: dataFromCalorieDeficit },
+    { label: 'Protein Intake',          storageKey: 'protein_data',           renderData: dataFromProtein },
+    { label: 'Days Between',            storageKey: 'daysbetween_data',       renderData: dataFromDaysBetween },
+    { label: 'Career Path Projection',  storageKey: 'careerpath_data',        renderData: dataFromCareer },
+];
+
+export const exportMcpRag = (): void => {
+    const calculators: Record<string, unknown> = {};
+
+    for (const entry of DATA_MAP) {
+        const raw = localStorage.getItem(entry.storageKey);
+        if (!raw) continue;
+        try {
+            calculators[entry.label] = entry.renderData(raw);
+        } catch {
+            // skip malformed data
+        }
+    }
+
+    const payload = {
+        source:    'What-If Dashboard',
+        exported:  new Date().toISOString().split('T')[0],
+        calculators,
+    };
+
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    triggerDownload(blob, `whatif-rag-${payload.exported}.json`);
+};

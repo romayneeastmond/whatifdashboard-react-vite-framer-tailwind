@@ -33,6 +33,13 @@ Whenever a new calculator is added to this project:
      { filename: 'Calculator Name.md', storageKey: 'my_calculator_key', render: renderMyCalculator },
      ```
 
+4. Add the calculator to the MCP / RAG JSON export in the same file (`src/utils/exportMarkdown.ts`):
+   - Write a `dataFrom<Name>` function returning a `SingleEntry` (`{ inputs: KV; results: KV }`) for single-object calculators, or `ProfileEntry[]` (`{ profile: string; inputs: KV; results: KV }[]`) for profile-array calculators. All values must be formatted strings (currency, percentages, units) — not raw numbers.
+   - Add a matching entry to the `DATA_MAP` array near the bottom of the file, before the `exportMcpRag` function:
+     ```ts
+     { label: 'Calculator Name', storageKey: 'my_calculator_key', renderData: dataFromMyCalculator },
+     ```
+
 ## Blog Posts
 
 Whenever a new blog post is added:

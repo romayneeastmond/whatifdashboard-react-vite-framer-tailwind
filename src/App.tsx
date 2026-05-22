@@ -31,7 +31,7 @@ import {
 	Banknote,
 	Trash2,
 } from 'lucide-react';
-import { exportNotion, exportObsidian } from './utils/exportMarkdown';
+import { exportNotion, exportObsidian, exportMcpRag } from './utils/exportMarkdown';
 import { SalaryCalculator } from './components/calculators/SalaryCalculator';
 import { MortgageCalculator } from './components/calculators/MortgageCalculator';
 import { InvestmentCalculator } from './components/calculators/InvestmentCalculator';
@@ -581,16 +581,17 @@ const App = () => {
 										{showExportMenu && (
 											<>
 												<div className="fixed inset-0 z-10" onClick={() => setShowExportMenu(false)} />
-												<div className="absolute bottom-full right-0 mb-3 z-20 py-1 bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/[0.08] shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+												<div className="absolute bottom-full right-0 mb-3 z-20 py-1 bg-white dark:bg-white/[0.03] border border-slate-100 dark:border-white/[0.08] shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
 													{([
-														{ label: 'JSON Backup', action: () => { handleExport(); setShowExportMenu(false); } },
-														{ label: 'Notion (.zip)', action: () => { exportNotion().then(() => setShowExportMenu(false)); } },
-														{ label: 'Obsidian (.zip)', action: () => { exportObsidian().then(() => setShowExportMenu(false)); } },
+														{ label: '🗂️  JSON Backup', action: () => { handleExport(); setShowExportMenu(false); } },
+														{ label: '📋  Notion (.zip)', action: () => { exportNotion().then(() => setShowExportMenu(false)); } },
+														{ label: '💎  Obsidian (.zip)', action: () => { exportObsidian().then(() => setShowExportMenu(false)); } },
+														{ label: '🤖  MCP / RAG (.json)', action: () => { exportMcpRag(); setShowExportMenu(false); } },
 													] as { label: string; action: () => void }[]).map(({ label, action }) => (
 														<button
 															key={label}
 															onClick={action}
-															className="block w-full text-left px-4 py-1.5 text-[11px] text-slate-500 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors cursor-pointer whitespace-nowrap"
+															className="block w-full text-left px-5 py-2 text-[11px] text-slate-500 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors cursor-pointer whitespace-nowrap"
 														>
 															{label}
 														</button>
