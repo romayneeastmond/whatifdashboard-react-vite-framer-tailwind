@@ -210,15 +210,14 @@ export function LandingPage() {
 				className="mb-20"
 			>
 				<p className="text-xs uppercase tracking-[0.2em] text-slate-400 dark:text-white/30 mb-4 font-normal">
-					Financial Modeling Tools
+					Life Decision Simulator
 				</p>
 				<h2 className="text-4xl lg:text-5xl font-medium tracking-tight text-slate-900 dark:text-white leading-tight mb-6">
 					What would happen<br />
 					<span className="text-[#387E67] dark:text-[#52B788]">if you changed one thing?</span>
 				</h2>
 				<p className="text-base text-slate-500 dark:text-white/50 max-w-xl leading-relaxed">
-					A set of quick, no-account-required modeling tools for everyday financial decisions.
-					All calculations happen in your browser — nothing is sent anywhere.
+					Most calculators answer one question in isolation. This connects the whole picture — salary, debt, health, time, and retirement — so you can see how one decision ripples across your life. No account. Nothing sent anywhere.
 				</p>
 			</motion.div>
 
