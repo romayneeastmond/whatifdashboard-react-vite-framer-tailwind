@@ -50,7 +50,7 @@ Whenever a new blog post is added:
 ```tsx
 const body = `[Blog Article Body]
 
-<div class="blog-links mt-5">
+<div class="blog-links">
     <h3>Try These Calculators</h3>
     <ul>
         <li><a href="/calculator-path">Calculator Name</a> — One-line description of what it does.</li>

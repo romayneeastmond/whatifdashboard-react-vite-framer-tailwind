@@ -18,7 +18,20 @@ const BlogPostFull = (props: BlogPostProps) => {
 				<span>•</span>
 				<span>{date}</span>
 			</div>
-			<article aria-labelledby="page-title" dangerouslySetInnerHTML={{ __html: body! }} />
+			{(() => {
+				const splitIdx = body!.indexOf('<div class="blog-links');
+				if (splitIdx === -1) {
+					return <article aria-labelledby="page-title" dangerouslySetInnerHTML={{ __html: body! }} />;
+				}
+				const articleHtml = body!.slice(0, splitIdx);
+				const linksHtml = body!.slice(splitIdx);
+				return (
+					<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+						<article aria-labelledby="page-title" className="lg:col-span-8" dangerouslySetInnerHTML={{ __html: articleHtml }} />
+						<aside className="lg:col-span-4" dangerouslySetInnerHTML={{ __html: linksHtml }} />
+					</div>
+				);
+			})()}
 		</>
 	);
 };
