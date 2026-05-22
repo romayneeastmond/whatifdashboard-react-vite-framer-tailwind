@@ -73,13 +73,13 @@ const DebtScenarioView = ({
                     <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-[#387E67] dark:text-[#52B788]">
                         <CreditCard size={16} />
                     </div>
-                    <h3 className="text-lg font-medium text-slate-900 dark:text-white">{scenario.name}</h3>
+                    <h2 className="text-lg font-medium text-slate-900 dark:text-white">{scenario.name}</h2>
                 </div>
                 {!isOnly && (
                     <button
                         onClick={onRemove}
                         className="p-2 text-slate-400 hover:text-red-500 transition-colors"
-                        title="Remove Scenario"
+                        aria-label="Remove Scenario"
                     >
                         <Trash2 size={18} />
                     </button>
@@ -309,8 +309,9 @@ export const DebtCalculator = ({ compact }: { compact?: boolean }) => {
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add New Scenario">
                 <form onSubmit={handleModalSubmit} className="space-y-6">
                     <div>
-                        <label className="text-[10px] uppercase tracking-widest text-slate-500 mb-2 block">Name</label>
+                        <label htmlFor="debt-new-scenario-name" className="text-[10px] uppercase tracking-widest text-slate-500 mb-2 block">Name</label>
                         <Input
+                            id="debt-new-scenario-name"
                             autoFocus
                             value={newScenarioName}
                             onChange={e => setNewScenarioName(e.target.value)}

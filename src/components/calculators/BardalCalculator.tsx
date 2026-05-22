@@ -127,9 +127,9 @@ export const BardalCalculator = ({ compact }: { compact?: boolean }) => {
                 {/* Inputs */}
                 <Card>
                     <CardHeader>
-                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                        <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                             Employee Details
-                        </h3>
+                        </h2>
                     </CardHeader>
                     <CardContent>
                         <Slider
@@ -176,9 +176,9 @@ export const BardalCalculator = ({ compact }: { compact?: boolean }) => {
                 <div className="space-y-6">
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                                 Factor Breakdown (Months)
-                            </h3>
+                            </h2>
                         </CardHeader>
                         <CardContent className="h-[220px]">
                             <ResponsiveContainer width="100%" height="100%">
@@ -248,9 +248,9 @@ export const BardalCalculator = ({ compact }: { compact?: boolean }) => {
             {!compact && (
                 <Card>
                     <CardHeader>
-                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                        <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                             Calculation Detail
-                        </h3>
+                        </h2>
                     </CardHeader>
                     <CardContent>
                         <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">

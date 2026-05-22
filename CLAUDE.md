@@ -1,5 +1,30 @@
 # Claude Instructions
 
+## Accessibility
+
+These rules must be followed whenever adding or editing any component, calculator, or page.
+
+### Heading hierarchy
+- Every page must have exactly one `<h1>`. On calculator/blog/tool pages, App.tsx renders the `<h1>` automatically from `pageTitle` — do **not** add a second `<h1>` inside the component.
+- The home page (`LandingPage`) has no App.tsx `<h1>`, so the hero heading must be `<h1>`.
+- Blog post body files must **not** contain an `<h1>` — the page title is already rendered as `<h1>` by App.tsx.
+- Headings must descend in order without skipping levels: `h1 → h2 → h3`. Never jump from `h1` directly to `h3`.
+- **Single-entity calculators** (no profile/scenario switcher): use `<h2>` for all section labels (there is no intermediate `<h2>` profile name).
+- **Multi-profile calculators** (Salary, Mortgage, Time, Investment, Debt, Goals): use `<h2>` for the profile/scenario name, `<h3>` for section labels within that profile.
+- Category labels on LandingPage and CategoriesPage use `<h2>` (styled as small caps); tool card names within a category use `<h3>`.
+- The `Modal` component (`src/components/ui/Controls.tsx`) renders its title as `<h2>` — do not change it to `<h3>`.
+
+### Buttons and interactive elements
+- Every icon-only button must have `aria-label` describing its action (e.g. `aria-label="Remove Profile"`). Do not use `title` alone — it is not reliably announced.
+- The `Slider` component already sets `aria-label={label}` on the range input. Custom range inputs must do the same.
+
+### Form labels
+- Every `<input>` must have a programmatically associated label. Use one of:
+  - `<label htmlFor="id">` + `<input id="id">` (preferred for modal/form inputs)
+  - `aria-label="..."` directly on the input (acceptable for inline/repeated inputs such as per-item rows)
+- The `<Label>` component renders a visual `<label>` element but does **not** auto-connect to a sibling `<Input>`. You must either add matching `htmlFor`/`id` props or add `aria-label` to the `<Input>`.
+- The `Slider` component handles its own range input labelling internally — no extra work needed.
+
 ## Code Style
 
 - **No license headers.** Never add `@license`, `SPDX-License-Identifier`, or any license comment block to any file.

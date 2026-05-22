@@ -54,13 +54,13 @@ const TimePersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                     <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-[#387E67] dark:text-[#52B788]">
                         <User size={16} />
                     </div>
-                    <h3 className="text-lg font-medium text-slate-900 dark:text-white">{profile.name}</h3>
+                    <h2 className="text-lg font-medium text-slate-900 dark:text-white">{profile.name}</h2>
                 </div>
                 {!isOnly && (
                     <button 
                         onClick={onRemove}
                         className="p-2 text-slate-400 hover:text-red-500 transition-colors"
-                        title="Remove Profile"
+                        aria-label="Remove Profile"
                     >
                         <Trash2 size={18} />
                     </button>
@@ -254,8 +254,9 @@ export const TimeCalculator = () => {
             >
                 <form onSubmit={handleModalSubmit} className="space-y-6">
                     <div>
-                        <label className="text-[10px] uppercase tracking-widest text-slate-500 mb-2 block">Name</label>
-                        <Input 
+                        <label htmlFor="time-new-person-name" className="text-[10px] uppercase tracking-widest text-slate-500 mb-2 block">Name</label>
+                        <Input
+                            id="time-new-person-name"
                             autoFocus
                             value={newPersonName}
                             onChange={(e) => setNewPersonName(e.target.value)}

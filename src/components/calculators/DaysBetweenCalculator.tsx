@@ -69,9 +69,9 @@ export const DaysBetweenCalculator = ({ compact }: { compact?: boolean }) => {
                 {/* Inputs */}
                 <Card>
                     <CardHeader>
-                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                        <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                             Date Range
-                        </h3>
+                        </h2>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
@@ -154,9 +154,9 @@ export const DaysBetweenCalculator = ({ compact }: { compact?: boolean }) => {
 
                             <Card>
                                 <CardHeader>
-                                    <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                                    <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                                         Breakdown
-                                    </h3>
+                                    </h2>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="grid grid-cols-2 gap-4">
@@ -202,9 +202,9 @@ export const DaysBetweenCalculator = ({ compact }: { compact?: boolean }) => {
             {!compact && results && results.absDays > 0 && (
                 <Card>
                     <CardHeader>
-                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                        <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                             Calculation Detail
-                        </h3>
+                        </h2>
                     </CardHeader>
                     <CardContent>
                         <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">

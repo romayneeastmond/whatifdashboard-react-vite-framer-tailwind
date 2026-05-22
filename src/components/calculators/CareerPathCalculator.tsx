@@ -88,7 +88,7 @@ export const CareerPathCalculator = ({ compact }: { compact?: boolean }) => {
                 <div className="space-y-6">
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Current Position</h3>
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Current Position</h2>
                         </CardHeader>
                         <CardContent>
                             <Slider label="Current Annual Salary" value={data.currentSalary} min={30000} max={500000} step={1000} suffix="$" onChange={v => update({ currentSalary: v })} />
@@ -99,7 +99,7 @@ export const CareerPathCalculator = ({ compact }: { compact?: boolean }) => {
 
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Scenario A — Stay & Promote</h3>
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Scenario A — Stay & Promote</h2>
                         </CardHeader>
                         <CardContent>
                             <Slider label="Promotion Every" value={data.promotionEveryYears} min={1} max={10} suffix=" yrs" onChange={v => update({ promotionEveryYears: v })} />
@@ -109,7 +109,7 @@ export const CareerPathCalculator = ({ compact }: { compact?: boolean }) => {
 
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Scenario B — Job Hop</h3>
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Scenario B — Job Hop</h2>
                         </CardHeader>
                         <CardContent>
                             <Slider label="Change Companies Every" value={data.jobHopEveryYears} min={1} max={10} suffix=" yrs" onChange={v => update({ jobHopEveryYears: v })} />
@@ -122,7 +122,7 @@ export const CareerPathCalculator = ({ compact }: { compact?: boolean }) => {
                 <div className="space-y-6">
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Salary Projection</h3>
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Salary Projection</h2>
                         </CardHeader>
                         <CardContent className="h-[260px]">
                             <ResponsiveContainer width="100%" height="100%">
@@ -179,7 +179,7 @@ export const CareerPathCalculator = ({ compact }: { compact?: boolean }) => {
             {!compact && (
                 <Card>
                     <CardHeader>
-                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Milestone Comparison</h3>
+                        <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Milestone Comparison</h2>
                     </CardHeader>
                     <CardContent>
                         <div className="overflow-x-auto">

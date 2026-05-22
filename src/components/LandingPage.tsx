@@ -254,10 +254,10 @@ export const LandingPage = () => {
 					<p className="text-xs uppercase tracking-[0.2em] text-slate-400 dark:text-white/30 mb-4 font-normal">
 						Life Decision Simulator
 					</p>
-					<h2 className="text-4xl lg:text-5xl font-medium tracking-tight text-slate-900 dark:text-white leading-tight mb-6">
+					<h1 className="text-4xl lg:text-5xl font-medium tracking-tight text-slate-900 dark:text-white leading-tight mb-6">
 						What would happen<br />
 						<span className="text-[#387E67] dark:text-[#52B788]">if you changed one thing?</span>
-					</h2>
+					</h1>
 					<p className="text-base text-slate-500 dark:text-white/50 max-w-xl leading-relaxed">
 						Most calculators answer one question in isolation. This connects the whole picture — salary, debt, health, time, and retirement — so you can see how one decision ripples across your life. No account. Nothing sent anywhere.
 					</p>
@@ -270,9 +270,9 @@ export const LandingPage = () => {
 						<p className="text-xs uppercase tracking-[0.2em] text-[#387E67] dark:text-[#52B788] font-normal">
 							From the Blog
 						</p>
-						<h3 className="text-2xl font-medium tracking-tight text-slate-900 dark:text-white leading-snug">
+						<h2 className="text-2xl font-medium tracking-tight text-slate-900 dark:text-white leading-snug">
 							Make better decisions<br />with better information.
-						</h3>
+						</h2>
 						<p className="text-sm text-slate-500 dark:text-white/40 leading-relaxed">
 							Guides on personal finance, career moves, fitness, and the math behind life's biggest choices.
 						</p>
@@ -319,9 +319,9 @@ export const LandingPage = () => {
 						const catTools = TOOLS.filter(t => cat.paths.includes(t.path)).sort((a, b) => a.label.localeCompare(b.label));
 						return (
 							<div key={cat.name}>
-								<p className={`text-xs uppercase tracking-[0.2em] font-normal mb-4 ${cat.color}`}>
+								<h2 className={`text-xs uppercase tracking-[0.2em] font-normal mb-4 ${cat.color}`}>
 									{cat.name}
-								</p>
+								</h2>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									{catTools.map((tool, i) => (
 										<ToolCard key={tool.path} tool={tool} delay={0.06 * i} />

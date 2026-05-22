@@ -108,13 +108,13 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                     <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-[#387E67] dark:text-[#52B788]">
                         <User size={16} />
                     </div>
-                    <h3 className="text-lg font-medium text-slate-900 dark:text-white">{profile.name}'s Goals</h3>
+                    <h2 className="text-lg font-medium text-slate-900 dark:text-white">{profile.name}'s Goals</h2>
                 </div>
                 {!isOnly && (
                     <button
                         onClick={onRemove}
                         className="p-2 text-slate-400 hover:text-red-500 transition-colors"
-                        title="Remove Profile"
+                        aria-label="Remove Profile"
                     >
                         <Trash2 size={18} />
                     </button>
@@ -148,6 +148,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                                                     <div className="flex-1">
                                                         <Label>Goal Name</Label>
                                                         <Input
+                                                            aria-label="Goal Name"
                                                             value={goal.name}
                                                             onChange={(e) => updateGoal(goal.id, { name: e.target.value })}
                                                             placeholder="e.g. Dream House"
@@ -156,6 +157,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                                                     <div className="w-32">
                                                         <Label>Target ($)</Label>
                                                         <Input
+                                                            aria-label="Goal Target"
                                                             type="number"
                                                             value={goal.target}
                                                             onChange={(e) => updateGoal(goal.id, { target: Number(e.target.value) })}
@@ -176,6 +178,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                                             <button
                                                 onClick={() => removeGoal(goal)}
                                                 className="ml-4 p-2 text-slate-300 hover:text-red-500 transition-all cursor-pointer"
+                                                aria-label={`Delete ${goal.name} goal`}
                                             >
                                                 <Trash2 size={16} />
                                             </button>
@@ -307,6 +310,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                     <div>
                         <Label>Goal Name</Label>
                         <Input
+                            aria-label="Goal Name"
                             autoFocus
                             value={newGoalName}
                             onChange={(e) => setNewGoalName(e.target.value)}
@@ -316,6 +320,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                     <div>
                         <Label>Target Amount ($)</Label>
                         <Input
+                            aria-label="Target Amount"
                             type="number"
                             value={newGoalTarget}
                             onChange={(e) => setNewGoalTarget(e.target.value)}
@@ -418,6 +423,7 @@ export const GoalsCalculator = () => {
                     <div>
                         <Label>Profile Name</Label>
                         <Input
+                            aria-label="Profile Name"
                             autoFocus
                             value={newProfileName}
                             onChange={(e) => setNewProfileName(e.target.value)}

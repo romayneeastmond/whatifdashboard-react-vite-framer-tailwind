@@ -214,9 +214,9 @@ export const CategoriesPage = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: globalDelay * 0.06 }}
                 >
-                    <p className={`text-xs uppercase tracking-[0.2em] font-normal mb-4 ${cat.color}`}>
+                    <h2 className={`text-xs uppercase tracking-[0.2em] font-normal mb-4 ${cat.color}`}>
                         {cat.name}
-                    </p>
+                    </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {[...cat.tools].sort((a, b) => a.label.localeCompare(b.label)).map((tool) => {
                             const d = globalDelay++ * 0.06;

@@ -95,6 +95,7 @@ export const Slider = ({
                 max={max}
                 step={step}
                 value={value}
+                aria-label={label}
                 onChange={(e) => onChange(Number(e.target.value))}
                 className="w-full h-1.5 bg-slate-200 dark:bg-white/5 rounded-lg appearance-none cursor-pointer accent-[#387E67]"
             />
@@ -133,8 +134,8 @@ export const Modal = ({
                     className="relative w-full max-w-md bg-white dark:bg-[#121212] border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden"
                 >
                     <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-white/5">
-                        <h3 className="text-sm font-medium text-slate-900 dark:text-white uppercase tracking-widest">{title}</h3>
-                        <button onClick={onClose} className="p-1 text-slate-400 hover:text-black dark:hover:text-white transition-colors">
+                        <h2 className="text-sm font-medium text-slate-900 dark:text-white uppercase tracking-widest">{title}</h2>
+                        <button onClick={onClose} aria-label="Close" className="p-1 text-slate-400 hover:text-black dark:hover:text-white transition-colors">
                             <X size={18} />
                         </button>
                     </div>

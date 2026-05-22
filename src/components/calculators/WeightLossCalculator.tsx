@@ -179,9 +179,9 @@ export const WeightLossCalculator = ({ compact }: { compact?: boolean }) => {
                 {/* Inputs */}
                 <Card>
                     <CardHeader>
-                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                        <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                             Your Details
-                        </h3>
+                        </h2>
                     </CardHeader>
                     <CardContent>
                         <ButtonGroup
@@ -321,9 +321,9 @@ export const WeightLossCalculator = ({ compact }: { compact?: boolean }) => {
                     {/* Goal timeline */}
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                                 Goal Timeline
-                            </h3>
+                            </h2>
                         </CardHeader>
                         <CardContent>
                             {results.tolosKg > 0 ? (
@@ -357,9 +357,9 @@ export const WeightLossCalculator = ({ compact }: { compact?: boolean }) => {
             {!compact && (
                 <Card>
                     <CardHeader>
-                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                        <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                             Calculation Detail
-                        </h3>
+                        </h2>
                     </CardHeader>
                     <CardContent>
                         <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">

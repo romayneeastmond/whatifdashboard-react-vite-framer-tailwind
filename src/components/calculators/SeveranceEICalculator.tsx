@@ -96,6 +96,7 @@ const Toggle = ({ label, description, value, onChange }: {
                 value ? 'bg-[#387E67] dark:bg-[#52B788]' : 'bg-slate-200 dark:bg-white/20'
             )}
             aria-pressed={value}
+            aria-label={label}
         >
             <span className={cn('absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform', value ? 'left-5' : 'left-0.5')} />
         </button>
@@ -177,7 +178,7 @@ export const SeveranceEICalculator = ({ compact }: { compact?: boolean }) => {
                 <div className="space-y-6">
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Employment Details</h3>
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Employment Details</h2>
                         </CardHeader>
                         <CardContent>
                             <Slider label="Annual Salary" value={data.annualSalary} min={25000} max={300000} step={1000} suffix="$" onChange={v => update({ annualSalary: v })} />
@@ -196,7 +197,7 @@ export const SeveranceEICalculator = ({ compact }: { compact?: boolean }) => {
 
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">EI Eligibility</h3>
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">EI Eligibility</h2>
                         </CardHeader>
                         <CardContent>
                             <Slider label="Hours Worked per Week" value={data.hoursPerWeek} min={1} max={60} suffix=" hrs" onChange={v => update({ hoursPerWeek: v })} />
@@ -216,7 +217,7 @@ export const SeveranceEICalculator = ({ compact }: { compact?: boolean }) => {
                 <div className="space-y-6">
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Employment Standards Act (ESA) Minimums</h3>
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Employment Standards Act (ESA) Minimums</h2>
                         </CardHeader>
                         <CardContent>
                             <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">
@@ -239,7 +240,7 @@ export const SeveranceEICalculator = ({ compact }: { compact?: boolean }) => {
 
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Employment Insurance</h3>
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Employment Insurance</h2>
                         </CardHeader>
                         <CardContent>
                             <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">
@@ -299,7 +300,7 @@ export const SeveranceEICalculator = ({ compact }: { compact?: boolean }) => {
             {!compact && (
                 <Card>
                     <CardHeader>
-                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Full Breakdown</h3>
+                        <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Full Breakdown</h2>
                     </CardHeader>
                     <CardContent>
                         <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">

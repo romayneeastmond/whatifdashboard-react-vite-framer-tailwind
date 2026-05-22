@@ -1,6 +1,4 @@
 const body = ` <div id="blog-article">
-        <h1>Setting SMART Financial Goals That Actually Stick</h1>
-
         <h2 id="goal-setting-philosophy">The Difference Between Wishing and Planning</h2>
 
         <p>Many people set financial goals that sound wonderful on paper — "I want to be wealthy!" or "I want to travel the world!" — but these goals often fizzle out by the second week. Why? Because a vague desire is not a plan. Financial success requires shifting from the realm of wishing into the world of calculated, measurable action. The key to financial discipline is adopting the framework of SMART goals.</p>

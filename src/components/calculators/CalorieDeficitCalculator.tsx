@@ -163,7 +163,7 @@ export const CalorieDeficitCalculator = ({ compact }: { compact?: boolean }) => 
                 {/* Inputs */}
                 <Card>
                     <CardHeader>
-                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Your Details</h3>
+                        <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Your Details</h2>
                     </CardHeader>
                     <CardContent>
                         <ButtonGroup label="Biological Sex" options={BIOLOGICAL_SEX} value={data.sex} onChange={v => update({ sex: v })} />
@@ -213,7 +213,7 @@ export const CalorieDeficitCalculator = ({ compact }: { compact?: boolean }) => 
                     {/* Goal selector */}
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Weekly Loss Goal</h3>
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Weekly Loss Goal</h2>
                         </CardHeader>
                         <CardContent>
                             <ButtonGroup label="" options={WEEKLY_GOALS} value={data.weeklyGoal} onChange={v => update({ weeklyGoal: v })} />
@@ -254,7 +254,7 @@ export const CalorieDeficitCalculator = ({ compact }: { compact?: boolean }) => 
             {/* Strategy comparison table */}
             {!compact && <Card>
                 <CardHeader>
-                    <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Strategy Comparison</h3>
+                    <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Strategy Comparison</h2>
                 </CardHeader>
                 <CardContent>
                     <div className="overflow-x-auto">
@@ -300,7 +300,7 @@ export const CalorieDeficitCalculator = ({ compact }: { compact?: boolean }) => 
             {/* Detail */}
             {!compact && <Card>
                 <CardHeader>
-                    <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Calculation Detail</h3>
+                    <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Calculation Detail</h2>
                 </CardHeader>
                 <CardContent>
                     <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">

@@ -130,9 +130,9 @@ export const ProteinCalculator = ({ compact }: { compact?: boolean }) => {
                 {/* Inputs */}
                 <Card>
                     <CardHeader>
-                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                        <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                             Your Details
-                        </h3>
+                        </h2>
                     </CardHeader>
                     <CardContent>
                         {/* Weight with unit toggle */}
@@ -223,9 +223,9 @@ export const ProteinCalculator = ({ compact }: { compact?: boolean }) => {
                     {/* Rate card */}
                     <Card>
                         <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                            <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                                 Rate Applied
-                            </h3>
+                            </h2>
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-center gap-4">
@@ -251,9 +251,9 @@ export const ProteinCalculator = ({ compact }: { compact?: boolean }) => {
             {!compact && (
                 <Card>
                     <CardHeader>
-                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                        <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
                             Calculation Detail
-                        </h3>
+                        </h2>
                     </CardHeader>
                     <CardContent>
                         <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">

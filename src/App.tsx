@@ -32,34 +32,36 @@ import {
 	Trash2,
 } from 'lucide-react';
 import { exportNotion, exportObsidian, exportMcpRag } from './utils/exportMarkdown';
-import { SalaryCalculator } from './components/calculators/SalaryCalculator';
-import { MortgageCalculator } from './components/calculators/MortgageCalculator';
-import { InvestmentCalculator } from './components/calculators/InvestmentCalculator';
-import { TimeCalculator } from './components/calculators/TimeCalculator';
-import { GoalsCalculator } from './components/calculators/GoalsCalculator';
-import { BardalCalculator } from './components/calculators/BardalCalculator';
-import { DebtCalculator } from './components/calculators/DebtCalculator';
-import { ProteinCalculator } from './components/calculators/ProteinCalculator';
-import { WeightLossCalculator } from './components/calculators/WeightLossCalculator';
-import { DaysBetweenCalculator } from './components/calculators/DaysBetweenCalculator';
-import { MultiOptionPage } from './components/MultiOptionPage';
-import { CategoriesPage } from './components/CategoriesPage';
-import { LandingPage } from './components/LandingPage';
-import { CalorieDeficitCalculator } from './components/calculators/CalorieDeficitCalculator';
-import { CareerPathCalculator } from './components/calculators/CareerPathCalculator';
-import { WrongfulDismissalCalculator } from './components/calculators/WrongfulDismissalCalculator';
-import { SeveranceEICalculator } from './components/calculators/SeveranceEICalculator';
-import { CookieBanner } from './components/CookieBanner';
-import { BlogPage } from './components/BlogPage';
-import { BlogPostPage } from './components/BlogPostPage';
 import { BLOG_POSTS } from './components/BlogPosts/registry';
-import wrongfulDismissalBody from './components/BlogPosts/WrongfulDismissalBlogPost';
-import careerPathBody from './components/BlogPosts/CareerPathBlogPost';
-import goalsBody from './components/BlogPosts/GoalsBlogPost';
-import salaryBody from './components/BlogPosts/SalaryBlogPost';
-import debtBody from './components/BlogPosts/DebtBlogPost';
-import investmentBody from './components/BlogPosts/InvestmentBlogPost';
-import severanceEIBody from './components/BlogPosts/SeveranceEIBlogPost';
+
+const SalaryCalculator = React.lazy(() => import('./components/calculators/SalaryCalculator').then(m => ({ default: m.SalaryCalculator })));
+const MortgageCalculator = React.lazy(() => import('./components/calculators/MortgageCalculator').then(m => ({ default: m.MortgageCalculator })));
+const InvestmentCalculator = React.lazy(() => import('./components/calculators/InvestmentCalculator').then(m => ({ default: m.InvestmentCalculator })));
+const TimeCalculator = React.lazy(() => import('./components/calculators/TimeCalculator').then(m => ({ default: m.TimeCalculator })));
+const GoalsCalculator = React.lazy(() => import('./components/calculators/GoalsCalculator').then(m => ({ default: m.GoalsCalculator })));
+const BardalCalculator = React.lazy(() => import('./components/calculators/BardalCalculator').then(m => ({ default: m.BardalCalculator })));
+const DebtCalculator = React.lazy(() => import('./components/calculators/DebtCalculator').then(m => ({ default: m.DebtCalculator })));
+const ProteinCalculator = React.lazy(() => import('./components/calculators/ProteinCalculator').then(m => ({ default: m.ProteinCalculator })));
+const WeightLossCalculator = React.lazy(() => import('./components/calculators/WeightLossCalculator').then(m => ({ default: m.WeightLossCalculator })));
+const DaysBetweenCalculator = React.lazy(() => import('./components/calculators/DaysBetweenCalculator').then(m => ({ default: m.DaysBetweenCalculator })));
+const MultiOptionPage = React.lazy(() => import('./components/MultiOptionPage').then(m => ({ default: m.MultiOptionPage })));
+const CategoriesPage = React.lazy(() => import('./components/CategoriesPage').then(m => ({ default: m.CategoriesPage })));
+const LandingPage = React.lazy(() => import('./components/LandingPage').then(m => ({ default: m.LandingPage })));
+const CalorieDeficitCalculator = React.lazy(() => import('./components/calculators/CalorieDeficitCalculator').then(m => ({ default: m.CalorieDeficitCalculator })));
+const CareerPathCalculator = React.lazy(() => import('./components/calculators/CareerPathCalculator').then(m => ({ default: m.CareerPathCalculator })));
+const WrongfulDismissalCalculator = React.lazy(() => import('./components/calculators/WrongfulDismissalCalculator').then(m => ({ default: m.WrongfulDismissalCalculator })));
+const SeveranceEICalculator = React.lazy(() => import('./components/calculators/SeveranceEICalculator').then(m => ({ default: m.SeveranceEICalculator })));
+const CookieBanner = React.lazy(() => import('./components/CookieBanner').then(m => ({ default: m.CookieBanner })));
+const BlogPage = React.lazy(() => import('./components/BlogPage').then(m => ({ default: m.BlogPage })));
+const BlogPostPage = React.lazy(() => import('./components/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
+
+const WrongfulDismissalBlogPost = React.lazy(() => import('./components/BlogPosts/WrongfulDismissalBlogPost').then(m => ({ default: () => <BlogPostPage body={m.default} /> })));
+const CareerPathBlogPost = React.lazy(() => import('./components/BlogPosts/CareerPathBlogPost').then(m => ({ default: () => <BlogPostPage body={m.default} /> })));
+const GoalsBlogPost = React.lazy(() => import('./components/BlogPosts/GoalsBlogPost').then(m => ({ default: () => <BlogPostPage body={m.default} /> })));
+const SalaryBlogPost = React.lazy(() => import('./components/BlogPosts/SalaryBlogPost').then(m => ({ default: () => <BlogPostPage body={m.default} /> })));
+const DebtBlogPost = React.lazy(() => import('./components/BlogPosts/DebtBlogPost').then(m => ({ default: () => <BlogPostPage body={m.default} /> })));
+const InvestmentBlogPost = React.lazy(() => import('./components/BlogPosts/InvestmentBlogPost').then(m => ({ default: () => <BlogPostPage body={m.default} /> })));
+const SeveranceEIBlogPost = React.lazy(() => import('./components/BlogPosts/SeveranceEIBlogPost').then(m => ({ default: () => <BlogPostPage body={m.default} /> })));
 import { cn } from './lib/utils';
 
 const NAV_ITEMS = [
@@ -523,6 +525,7 @@ const App = () => {
 							exit={{ opacity: 0, y: -10 }}
 							transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
 						>
+							<React.Suspense fallback={null}>
 							<Routes>
 								<Route path="/" element={<LandingPage />} />
 								<Route path="/salary" element={<SalaryCalculator />} />
@@ -542,14 +545,15 @@ const App = () => {
 								<Route path="/multi" element={<MultiOptionPage />} />
 								<Route path="/categories" element={<CategoriesPage />} />
 								<Route path="/blog" element={<BlogPage />} />
-								<Route path="/blog/what-your-severance-package-should-really-include" element={<BlogPostPage body={wrongfulDismissalBody} />} />
-								<Route path="/blog/career-path-projection-job-hopping-vs-staying-put" element={<BlogPostPage body={careerPathBody} />} />
-								<Route path="/blog/setting-smart-financial-goals-that-actually-stick" element={<BlogPostPage body={goalsBody} />} />
-								<Route path="/blog/master-your-salary-calculator-a-beginners-guide" element={<BlogPostPage body={salaryBody} />} />
-								<Route path="/blog/the-debt-repayment-strategy-that-saved-me-10000" element={<BlogPostPage body={debtBody} />} />
-								<Route path="/blog/compound-interest-the-eighth-wonder-of-the-world" element={<BlogPostPage body={investmentBody} />} />
-								<Route path="/blog/laid-off-heres-what-youre-actually-owed-in-canada" element={<BlogPostPage body={severanceEIBody} />} />
+								<Route path="/blog/what-your-severance-package-should-really-include" element={<WrongfulDismissalBlogPost />} />
+								<Route path="/blog/career-path-projection-job-hopping-vs-staying-put" element={<CareerPathBlogPost />} />
+								<Route path="/blog/setting-smart-financial-goals-that-actually-stick" element={<GoalsBlogPost />} />
+								<Route path="/blog/master-your-salary-calculator-a-beginners-guide" element={<SalaryBlogPost />} />
+								<Route path="/blog/the-debt-repayment-strategy-that-saved-me-10000" element={<DebtBlogPost />} />
+								<Route path="/blog/compound-interest-the-eighth-wonder-of-the-world" element={<InvestmentBlogPost />} />
+								<Route path="/blog/laid-off-heres-what-youre-actually-owed-in-canada" element={<SeveranceEIBlogPost />} />
 							</Routes>
+						</React.Suspense>
 						</motion.div>
 					</AnimatePresence>
 
