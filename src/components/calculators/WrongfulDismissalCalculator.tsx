@@ -260,12 +260,23 @@ export const WrongfulDismissalCalculator = ({ compact }: { compact?: boolean }) 
                                         Notice period: {fmtMo(results.noticeMonths)} (range: {results.noticeLow}–{results.noticeHigh})
                                     </p>
                                 </div>
-                                <div className="text-right">
-                                    <p className="text-white/40 text-[10px] uppercase tracking-widest font-normal mb-1">Typical Settlement</p>
-                                    <p className="text-xl font-light tracking-tighter text-white/90">
-                                        {fmt(results.settlementLow)} – {fmt(results.settlementHigh)}
-                                    </p>
-                                    <p className="text-white/40 text-[10px] mt-1 font-normal">60–80% of full damages</p>
+                                <div className="text-right space-y-3">
+                                    <div>
+                                        <p className="text-white/40 text-[10px] uppercase tracking-widest font-normal mb-1">Typical Settlement</p>
+                                        <p className="text-xl font-light tracking-tighter text-white/90">
+                                            {fmt(results.settlementLow)} – {fmt(results.settlementHigh)}
+                                        </p>
+                                        <p className="text-white/40 text-[10px] mt-1 font-normal">60–80% of full damages</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-white/40 text-[10px] uppercase tracking-widest font-normal mb-1">Net After Legal Fees</p>
+                                        <p className="text-xl font-light tracking-tighter text-white/90">
+                                            {fmt(results.netAfterLegal)}
+                                        </p>
+                                        <p className="text-white/40 text-[10px] mt-1 font-normal">
+                                            {data.feeType === 'contingency' ? `${data.contingencyPct}% contingency` : 'flat fee'}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </CardContent>
