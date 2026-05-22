@@ -25,6 +25,14 @@ Whenever a new calculator is added to this project:
 
    If no existing category fits, create a new one in both files and add it to this list.
 
+3. Add the calculator to the Notion / Obsidian markdown export in `src/utils/exportMarkdown.ts`:
+   - Write a `render<Name>` function that reads the stored data and returns formatted markdown (see existing renderers for the pattern).
+   - Determine the `localStorage` key the calculator writes to (check the calculator component).
+   - Add an entry to the `FILE_MAP` array at the bottom of the render-functions section, before the `// ── zip builder ──` comment:
+     ```ts
+     { filename: 'Calculator Name.md', storageKey: 'my_calculator_key', render: renderMyCalculator },
+     ```
+
 ## Blog Posts
 
 Whenever a new blog post is added:

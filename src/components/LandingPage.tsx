@@ -156,6 +156,10 @@ const FAQ = [
 		a: 'Clicking Export in the footer downloads a single JSON file containing all your saved inputs across every tool. Keep it anywhere you like.',
 	},
 	{
+		q: 'Can I use my exported data in Notion or Obsidian?',
+		a: 'Yes. The exported JSON file is plain, human-readable data. In Notion you can import it via a Notion integration or paste values manually. In Obsidian, drop the file into your vault and reference it from any note — community plugins like Dataview or JSON Importer can render the data inline.',
+	},
+	{
 		q: 'How does Import work?',
 		a: 'Clicking Import and selecting a previously exported JSON file restores all your inputs exactly as they were. This overwrites any current data, so export first if needed.',
 	},

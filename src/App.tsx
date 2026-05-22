@@ -31,6 +31,7 @@ import {
 	Banknote,
 	Trash2,
 } from 'lucide-react';
+import { exportNotion, exportObsidian } from './utils/exportMarkdown';
 import { SalaryCalculator } from './components/calculators/SalaryCalculator';
 import { MortgageCalculator } from './components/calculators/MortgageCalculator';
 import { InvestmentCalculator } from './components/calculators/InvestmentCalculator';
@@ -288,6 +289,7 @@ const App = () => {
 	};
 
 	const [showPurgeModal, setShowPurgeModal] = useState(false);
+	const [showExportMenu, setShowExportMenu] = useState(false);
 
 	const handlePurge = () => {
 		localStorage.clear();
@@ -567,13 +569,36 @@ const App = () => {
 								<div className="w-px h-3 bg-slate-200 dark:bg-white/10" />
 
 								<div className="flex items-center gap-6">
-									<button
-										onClick={handleExport}
-										className="flex items-center gap-2 text-slate-400 hover:text-black dark:text-white/30 dark:hover:text-white transition-colors cursor-pointer"
-									>
-										<Download size={12} />
-										<span>Export</span>
-									</button>
+									<div className="relative">
+										<button
+											onClick={() => setShowExportMenu(v => !v)}
+											className="flex items-center gap-2 text-slate-400 hover:text-black dark:text-white/30 dark:hover:text-white transition-colors cursor-pointer"
+										>
+											<Download size={12} />
+											<span>Export</span>
+											<ChevronDown size={10} className={`transition-transform duration-150 ${showExportMenu ? 'rotate-180' : ''}`} />
+										</button>
+										{showExportMenu && (
+											<>
+												<div className="fixed inset-0 z-10" onClick={() => setShowExportMenu(false)} />
+												<div className="absolute bottom-full right-0 mb-3 z-20 py-1 bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/[0.08] shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+													{([
+														{ label: 'JSON Backup', action: () => { handleExport(); setShowExportMenu(false); } },
+														{ label: 'Notion (.zip)', action: () => { exportNotion().then(() => setShowExportMenu(false)); } },
+														{ label: 'Obsidian (.zip)', action: () => { exportObsidian().then(() => setShowExportMenu(false)); } },
+													] as { label: string; action: () => void }[]).map(({ label, action }) => (
+														<button
+															key={label}
+															onClick={action}
+															className="block w-full text-left px-4 py-1.5 text-[11px] text-slate-500 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors cursor-pointer whitespace-nowrap"
+														>
+															{label}
+														</button>
+													))}
+												</div>
+											</>
+										)}
+									</div>
 
 									<label className="flex items-center gap-2 normal-case text-slate-400 hover:text-black dark:text-white/30 dark:hover:text-white transition-colors cursor-pointer">
 										<Upload size={12} />
