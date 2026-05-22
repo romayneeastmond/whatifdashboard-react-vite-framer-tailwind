@@ -29,6 +29,7 @@ import {
 	TrendingUp,
 	ShieldAlert,
 	Banknote,
+	Trash2,
 } from 'lucide-react';
 import { SalaryCalculator } from './components/calculators/SalaryCalculator';
 import { MortgageCalculator } from './components/calculators/MortgageCalculator';
@@ -284,6 +285,14 @@ const App = () => {
 			}
 		};
 		reader.readAsText(file);
+	};
+
+	const [showPurgeModal, setShowPurgeModal] = useState(false);
+
+	const handlePurge = () => {
+		localStorage.clear();
+		setShowPurgeModal(false);
+		window.location.reload();
 	};
 
 	const BLOG_POST_TITLES = Object.fromEntries(BLOG_POSTS.map(p => [p.href, p.title]));
@@ -571,6 +580,14 @@ const App = () => {
 										<span>Import</span>
 										<input type="file" accept=".json" onChange={handleImport} className="hidden" />
 									</label>
+
+									<button
+										onClick={() => setShowPurgeModal(true)}
+										className="flex items-center gap-2 text-red-400 hover:text-red-600 dark:text-red-500 dark:hover:text-red-400 transition-colors cursor-pointer"
+									>
+										<Trash2 size={12} />
+										<span>Purge</span>
+									</button>
 								</div>
 							</div>
 							<div className="flex items-center gap-6">
@@ -604,6 +621,36 @@ const App = () => {
 
 			<BackToTop />
 			<CookieBanner />
+
+			{showPurgeModal && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+					<div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 border border-red-200 dark:border-red-900">
+						<div className="flex items-center gap-3 mb-4">
+							<div className="flex items-center justify-center w-10 h-10 rounded-full bg-red-100 dark:bg-red-950">
+								<Trash2 size={20} className="text-red-600 dark:text-red-400" />
+							</div>
+							<h2 className="text-lg font-semibold text-slate-900 dark:text-white">Purge All Data</h2>
+						</div>
+						<p className="text-slate-600 dark:text-slate-400 text-sm mb-6">
+							This will permanently delete all saved inputs, preferences, and settings stored in your browser. This cannot be undone.
+						</p>
+						<div className="flex gap-3 justify-end">
+							<button
+								onClick={() => setShowPurgeModal(false)}
+								className="px-4 py-2 text-sm rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+							>
+								Cancel
+							</button>
+							<button
+								onClick={handlePurge}
+								className="px-4 py-2 text-sm rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors"
+							>
+								Purge Everything
+							</button>
+						</div>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
