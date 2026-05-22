@@ -1,7 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
 
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -29,6 +25,9 @@ import {
 	Flame,
 	CalendarDays,
 	FolderOpen,
+	Utensils,
+	TrendingUp,
+	ShieldAlert,
 } from 'lucide-react';
 import { SalaryCalculator } from './components/calculators/SalaryCalculator';
 import { MortgageCalculator } from './components/calculators/MortgageCalculator';
@@ -43,6 +42,9 @@ import { DaysBetweenCalculator } from './components/calculators/DaysBetweenCalcu
 import { MultiOptionPage } from './components/MultiOptionPage';
 import { CategoriesPage } from './components/CategoriesPage';
 import { LandingPage } from './components/LandingPage';
+import { CalorieDeficitCalculator } from './components/calculators/CalorieDeficitCalculator';
+import { CareerPathCalculator } from './components/calculators/CareerPathCalculator';
+import { WrongfulDismissalCalculator } from './components/calculators/WrongfulDismissalCalculator';
 import { CookieBanner } from './components/CookieBanner';
 import { cn } from './lib/utils';
 
@@ -60,10 +62,13 @@ type MoreEntry = MoreNavItem | MoreDivider;
 
 const MORE_ITEMS: MoreEntry[] = [
 	{ path: '/bardal', label: 'Bardal Factor', icon: Scale },
-	{ path: '/time', label: 'Time Allocation', icon: Clock },
+	{ path: '/calorie', label: 'Calorie Deficit', icon: Utensils },
+	{ path: '/careerpath', label: 'Career Path', icon: TrendingUp },
 	{ path: '/daysbetween', label: 'Days Between', icon: CalendarDays },
-	{ path: '/weightloss', label: 'Weight Loss', icon: Flame },
 	{ path: '/protein', label: 'Protein Intake', icon: Dumbbell },
+	{ path: '/time', label: 'Time Allocation', icon: Clock },
+	{ path: '/weightloss', label: 'Weight Loss', icon: Flame },
+	{ path: '/wrongfuldismissal', label: 'Wrongful Dismissal', icon: ShieldAlert },
 	{ divider: true },
 	{ path: '/multi', label: 'Multi-Option', icon: LayoutGrid },
 	{ path: '/categories', label: 'Categories', icon: FolderOpen },
@@ -199,7 +204,7 @@ export default function App() {
 		}
 	}, [isDarkMode]);
 
-	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/multi', '/categories'];
+	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/calorie', '/careerpath', '/wrongfuldismissal', '/multi', '/categories'];
 
 	React.useEffect(() => {
 		let styleEl: HTMLStyleElement | null = null;
@@ -498,6 +503,9 @@ export default function App() {
 								<Route path="/daysbetween" element={<DaysBetweenCalculator />} />
 								<Route path="/weightloss" element={<WeightLossCalculator />} />
 								<Route path="/protein" element={<ProteinCalculator />} />
+								<Route path="/calorie" element={<CalorieDeficitCalculator />} />
+								<Route path="/careerpath" element={<CareerPathCalculator />} />
+								<Route path="/wrongfuldismissal" element={<WrongfulDismissalCalculator />} />
 								<Route path="/multi" element={<MultiOptionPage />} />
 								<Route path="/categories" element={<CategoriesPage />} />
 							</Routes>

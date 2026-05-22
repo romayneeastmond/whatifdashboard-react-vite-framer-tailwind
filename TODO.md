@@ -2,16 +2,19 @@
 
 ## Existing Tools
 
-- Salary & Taxes
-- Mortgage Equity
-- Wealth Growth
-- Goals Tracking
-- Time Allocation
-- Bardal Factor
-- Debt Repayment
-- Days Between
-- Weight Loss
-- Protein Intake
+- ~~Salary & Taxes~~ ✓
+- ~~Mortgage Equity~~ ✓
+- ~~Wealth Growth~~ ✓
+- ~~Goals Tracking~~ ✓
+- ~~Time Allocation~~ ✓
+- ~~Bardal Factor~~ ✓
+- ~~Debt Repayment~~ ✓
+- ~~Days Between~~ ✓
+- ~~Weight Loss~~ ✓
+- ~~Protein Intake~~ ✓
+- ~~Calorie Deficit Planner~~ ✓
+- ~~Career Path Projection~~ ✓
+- ~~Wrongful Dismissal~~ ✓
 
 ---
 
@@ -43,7 +46,7 @@
 
 # Health & Fitness
 
-- Calorie Deficit Planner
+- ~~Calorie Deficit Planner~~ ✓
 - BMI + Body Fat Estimator
 - Running Pace Calculator
 - Macro Nutrient Planner
@@ -68,7 +71,7 @@
 - Layoff Survival Simulator
 - What If I Move? Calculator
 - What If I Take a Lower Paying Job?
-- Career Path Projection
+- ~~Career Path Projection~~ ✓
 - Lifestyle Inflation Simulator
 - AI Replacement Risk Estimator
 
@@ -97,7 +100,7 @@
 ## Employment & Workplace
 
 - Severance Estimator
-- Wrongful Dismissal Estimate
+- ~~Wrongful Dismissal Estimate~~ ✓
 - Overtime Pay Calculator
 - Contractor vs Employee Income Comparison
 - Vacation Pay Calculator
@@ -146,7 +149,8 @@
 - Weight Loss Plan → printable PDF or MyFitnessPal-compatible format
 - Days Between / Time Allocation → Google Calendar / iCal (.ics) export
 
-## Cross-Calculator Scenario Comparison (core brand moat)
+## ~~Cross-Calculator Scenario Comparison~~ (tried, rejected)
+- NOTE: Per-calculator multi-person comparison already covers this. A global scenario just duplicates that without adding immediate visual feedback. Removed.
 - NOTE: Debt and Mortgage calculators already support per-calculator scenario comparison (multiple people/scenarios within one calculator)
 - This idea is different: a *global* named life scenario that spans multiple calculators at once
 - e.g. "Scenario A: take lower-paying job" saves inputs across Salary, Debt, Wealth Growth, and Goals simultaneously

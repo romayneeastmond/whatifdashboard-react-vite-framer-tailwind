@@ -1,11 +1,7 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
 
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen } from 'lucide-react';
+import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert } from 'lucide-react';
 import { useState } from 'react';
 
 const TOOLS = [
@@ -100,6 +96,33 @@ const TOOLS = [
 			'Calculate your recommended daily caloric intake, safe calorie deficit, and projected weekly weight loss to reach a target weight. Uses the Mifflin-St Jeor equation. Supports lbs and kg.',
 	},
 	{
+		path: '/calorie',
+		label: 'Calorie Deficit Planner',
+		icon: Utensils,
+		color: 'text-lime-600 dark:text-lime-400',
+		bg: 'bg-lime-50 dark:bg-lime-950/40',
+		description:
+			'Plan your calorie deficit strategy. Set a weekly loss goal, split your deficit between diet and exercise, and compare conservative vs aggressive approaches side by side.',
+	},
+	{
+		path: '/careerpath',
+		label: 'Career Path Projection',
+		icon: TrendingUp,
+		color: 'text-teal-600 dark:text-teal-400',
+		bg: 'bg-teal-50 dark:bg-teal-950/40',
+		description:
+			'Project your salary over 5, 10, or 20 years. Compare staying in your current role with promotions against job-hopping for higher bumps, and see the lifetime earnings difference.',
+	},
+	{
+		path: '/wrongfuldismissal',
+		label: 'Wrongful Dismissal',
+		icon: ShieldAlert,
+		color: 'text-rose-700 dark:text-rose-400',
+		bg: 'bg-rose-50 dark:bg-rose-950/40',
+		description:
+			'Estimate your wrongful dismissal damages under Canadian employment law. Calculates common law notice, ESA minimums, bad faith damages, mitigation deductions, and a typical settlement range.',
+	},
+	{
 		path: '/multi',
 		label: 'Multi-Option Dashboard',
 		icon: LayoutGrid,
@@ -158,10 +181,11 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 }
 
 const CATEGORIES = [
-	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/salary', '/mortgage', '/debt', '/investing', '/goals'] },
-	{ name: 'Fitness', color: 'text-orange-600 dark:text-orange-400', paths: ['/weightloss', '/protein'] },
-	{ name: 'Productivity', color: 'text-amber-600 dark:text-amber-400', paths: ['/time', '/daysbetween'] },
-	{ name: 'Legal', color: 'text-slate-600 dark:text-slate-400', paths: ['/bardal'] },
+	{ name: 'Career',      color: 'text-teal-600 dark:text-teal-400',    paths: ['/careerpath'] },
+	{ name: 'Finance',    color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/goals', '/mortgage', '/salary', '/investing'] },
+	{ name: 'Fitness',    color: 'text-orange-600 dark:text-orange-400', paths: ['/calorie', '/protein', '/weightloss'] },
+	{ name: 'Legal',      color: 'text-slate-600 dark:text-slate-400',   paths: ['/bardal', '/wrongfuldismissal'] },
+	{ name: 'Productivity', color: 'text-amber-600 dark:text-amber-400', paths: ['/daysbetween', '/time'] },
 ];
 
 function ToolCard({ tool, delay }: { tool: typeof TOOLS[number]; delay: number }) {
@@ -244,7 +268,7 @@ export function LandingPage() {
 			{/* Tool cards — list view */}
 			{view === 'list' && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-					{TOOLS.map((tool, i) => (
+					{[...TOOLS].sort((a, b) => a.label.localeCompare(b.label)).map((tool, i) => (
 						<ToolCard key={tool.path} tool={tool} delay={0.06 * i} />
 					))}
 				</div>
@@ -254,7 +278,7 @@ export function LandingPage() {
 			{view === 'categories' && (
 				<div className="space-y-12">
 					{CATEGORIES.map((cat) => {
-						const catTools = TOOLS.filter(t => cat.paths.includes(t.path));
+						const catTools = TOOLS.filter(t => cat.paths.includes(t.path)).sort((a, b) => a.label.localeCompare(b.label));
 						return (
 							<div key={cat.name}>
 								<p className={`text-xs uppercase tracking-[0.2em] font-normal mb-4 ${cat.color}`}>

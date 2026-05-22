@@ -1,7 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
 
 import React, { useMemo } from 'react';
 import { Plus, Trash2, CreditCard } from 'lucide-react';

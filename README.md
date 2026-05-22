@@ -23,6 +23,9 @@ Live demo hosted on Vercel [What-If Dashboard](https://whatifdashboard-react-vit
   - **Days Between**: Calculates the exact number of days, weeks, months, and years between any two dates, with whole-unit and remainder breakdowns (e.g. 3 weeks + 4 days). Works in both directions and labels results as "Days Until" or "Days Since" accordingly.
   - **Weight Loss**: Calculates BMR via Mifflin-St Jeor, applies a safe calorie deficit (250–1,000 kcal), and projects weekly fat loss and weeks to reach a target weight. Supports lbs/kg and inches/cm.
   - **Protein Intake**: Recommends daily protein in grams and protein powder scoops based on age, weight, and activity level, with an upward adjustment for adults 50+. Supports lbs/kg.
+  - **Calorie Deficit Planner**: Plan how to achieve a calorie deficit by splitting it between diet and exercise. Compare conservative, moderate, and aggressive weekly loss strategies side by side.
+  - **Career Path Projection**: Model salary growth over 5–40 years. Compare staying in your current role (with periodic promotions) against job-hopping for salary bumps, and see cumulative lifetime earnings for each path.
+  - **Wrongful Dismissal**: Estimate wrongful dismissal damages under Canadian employment law. Calculates common law reasonable notice (Bardal), Ontario ESA minimums, bad faith/Wallace damages, mitigation deductions, a typical settlement range, and estimated net after legal fees.
 - **🌓 Dynamic Themes**: Fully responsive dark and light modes with a neutral, professional aesthetic.
 - **💾 Persistence**: Automatically saves your progress to `localStorage` so your data remains across reloads and sessions.
 - **🖨️ Professional Reporting**: Optimized print-only CSS for generating clean, white-background PDF or physical reports.

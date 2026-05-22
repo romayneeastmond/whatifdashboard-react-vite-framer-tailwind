@@ -1,11 +1,7 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
 
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Wallet, Home, BarChart3, Target, Clock, Scale, CreditCard, Check, Dumbbell, Flame, CalendarDays } from 'lucide-react';
+import { Wallet, Home, BarChart3, Target, Clock, Scale, CreditCard, Check, Dumbbell, Flame, CalendarDays, Utensils, TrendingUp, ShieldAlert } from 'lucide-react';
 import { SalaryCalculator } from './calculators/SalaryCalculator';
 import { MortgageCalculator } from './calculators/MortgageCalculator';
 import { InvestmentCalculator } from './calculators/InvestmentCalculator';
@@ -16,19 +12,25 @@ import { DebtCalculator } from './calculators/DebtCalculator';
 import { ProteinCalculator } from './calculators/ProteinCalculator';
 import { WeightLossCalculator } from './calculators/WeightLossCalculator';
 import { DaysBetweenCalculator } from './calculators/DaysBetweenCalculator';
+import { CalorieDeficitCalculator } from './calculators/CalorieDeficitCalculator';
+import { CareerPathCalculator } from './calculators/CareerPathCalculator';
+import { WrongfulDismissalCalculator } from './calculators/WrongfulDismissalCalculator';
 import { cn } from '../lib/utils';
 
 const REGISTRY = [
-	{ id: 'salary',   label: 'Salary & Taxes',    icon: Wallet,     component: SalaryCalculator    },
-	{ id: 'mortgage', label: 'Mortgage Equity',    icon: Home,       component: MortgageCalculator  },
-	{ id: 'investing',label: 'Wealth Growth',      icon: BarChart3,  component: InvestmentCalculator},
-	{ id: 'goals',    label: 'Goals Tracking',     icon: Target,     component: GoalsCalculator     },
-	{ id: 'time',     label: 'Time Allocation',    icon: Clock,      component: TimeCalculator      },
-	{ id: 'bardal',   label: 'Bardal Factor',      icon: Scale,      component: BardalCalculator    },
-	{ id: 'debt',     label: 'Debt Repayment',     icon: CreditCard, component: DebtCalculator      },
-	{ id: 'daysbetween', label: 'Days Between',     icon: CalendarDays, component: DaysBetweenCalculator },
-	{ id: 'weightloss', label: 'Weight Loss',       icon: Flame,      component: WeightLossCalculator },
-	{ id: 'protein',  label: 'Protein Intake',     icon: Dumbbell,   component: ProteinCalculator   },
+	{ id: 'salary',             label: 'Salary & Taxes',      icon: Wallet,      component: SalaryCalculator           },
+	{ id: 'mortgage',           label: 'Mortgage Equity',      icon: Home,        component: MortgageCalculator         },
+	{ id: 'investing',          label: 'Wealth Growth',        icon: BarChart3,   component: InvestmentCalculator       },
+	{ id: 'goals',              label: 'Goals Tracking',       icon: Target,      component: GoalsCalculator            },
+	{ id: 'time',               label: 'Time Allocation',      icon: Clock,       component: TimeCalculator             },
+	{ id: 'bardal',             label: 'Bardal Factor',        icon: Scale,       component: BardalCalculator           },
+	{ id: 'debt',               label: 'Debt Repayment',       icon: CreditCard,  component: DebtCalculator             },
+	{ id: 'daysbetween',        label: 'Days Between',         icon: CalendarDays,component: DaysBetweenCalculator      },
+	{ id: 'weightloss',         label: 'Weight Loss',          icon: Flame,       component: WeightLossCalculator       },
+	{ id: 'protein',            label: 'Protein Intake',       icon: Dumbbell,    component: ProteinCalculator          },
+	{ id: 'calorie',            label: 'Calorie Deficit',      icon: Utensils,    component: CalorieDeficitCalculator   },
+	{ id: 'careerpath',         label: 'Career Path',          icon: TrendingUp,  component: CareerPathCalculator       },
+	{ id: 'wrongfuldismissal',  label: 'Wrongful Dismissal',   icon: ShieldAlert, component: WrongfulDismissalCalculator},
 ] as const;
 
 type CalcId = typeof REGISTRY[number]['id'];
