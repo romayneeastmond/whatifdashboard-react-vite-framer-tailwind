@@ -1,4 +1,8 @@
 const body = `<div id="blog-article">
+        <div class="quick-answer">
+            <strong>Quick Answer:</strong> Compound interest means you earn returns on your returns — not just your original investment. $1,000 invested at 7% annually becomes roughly $1,967 after 10 years and $3,870 after 20 years through compounding alone. Starting 10 years earlier can double your final wealth without contributing an extra dollar.
+        </div>
+
         <h2 id="financial-power">Unlocking the Magic of Time and Money</h2>
 
         <p>In the world of finance, there is a concept so powerful, so foundational, that Albert Einstein is rumored to have called it "the eighth wonder of the world". That concept is compound interest. It’s not just about saving money; it’s about making your money work for you, generating returns that, in turn, generate even more returns. It is the magic of compounding.</p>
@@ -32,6 +36,23 @@ const body = `<div id="blog-article">
         <p>To master money is to master patience and discipline. Compound interest rewards consistency above all else. It doesn’t care if you are starting with $100 or $1,000; it only cares that you start, and that you keep contributing over time.</p>
 
         <p>By integrating these tools — using the <a href="/goals">Goals Tracker</a> to define the destination, the <a href="/debt">Debt Repayment Calculator</a> to clear the immediate obstacles, and trusting the power of compounding to get you there — you move from hoping for financial stability to actively engineering it. This combination of powerful math and disciplined planning is the true secret to building long-term, durable wealth.</p>
+
+        <section class="blog-faq" aria-labelledby="faq-heading">
+            <h2 id="faq-heading">Frequently Asked Questions</h2>
+            <dl>
+                <dt>What is compound interest and how does it work?</dt>
+                <dd>Compound interest is interest calculated on both your original principal and the interest you have already earned. For example, $1,000 at 7% annual interest grows to $1,070 after year one. In year two, you earn 7% on $1,070 — not just $1,000 — giving you $1,144.90. Over decades, this exponential effect dramatically outpaces simple interest.</dd>
+
+                <dt>How much does starting early matter for investing?</dt>
+                <dd>Starting 10 years earlier can roughly double your final investment value without contributing an extra dollar. Investing $300/month from age 25 to 65 at 7% grows to approximately $790,000. Starting at 35 instead yields only about $380,000 — less than half — despite only 10 fewer years of contributions. Time is the most powerful variable in compound growth.</dd>
+
+                <dt>Should I pay off debt or invest first?</dt>
+                <dd>The decision hinges on comparing your debt interest rate to your expected investment return. High-interest debt (credit cards at 19–24%) should almost always be paid first — its guaranteed cost exceeds realistic investment returns. Low-interest debt (mortgages at 3–5%) can coexist with investing, especially if you have employer matching on retirement contributions.</dd>
+
+                <dt>What is the Rule of 72?</dt>
+                <dd>The Rule of 72 is a quick mental math shortcut: divide 72 by your annual interest rate to estimate how many years it takes to double your money. At 6% annual return, your money doubles in 72 ÷ 6 = 12 years. At 9%, it doubles in 8 years. This rule works for any compounding rate and helps visualize long-term growth intuitively.</dd>
+            </dl>
+        </section>
     </div>
 
 <div class="blog-links">

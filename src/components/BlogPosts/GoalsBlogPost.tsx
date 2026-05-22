@@ -1,4 +1,8 @@
-const body = ` <div id="blog-article">
+const body = `<div id="blog-article">
+        <div class="quick-answer">
+            <strong>Quick Answer:</strong> SMART financial goals are Specific, Measurable, Achievable, Relevant, and Time-bound. A goal like "save $500/month toward a $20,000 emergency fund by December 2027" sticks because it has a concrete number, a deadline, and a trackable monthly milestone — unlike vague intentions like "save more money."
+        </div>
+
         <h2 id="goal-setting-philosophy">The Difference Between Wishing and Planning</h2>
 
         <p>Many people set financial goals that sound wonderful on paper — "I want to be wealthy!" or "I want to travel the world!" — but these goals often fizzle out by the second week. Why? Because a vague desire is not a plan. Financial success requires shifting from the realm of wishing into the world of calculated, measurable action. The key to financial discipline is adopting the framework of SMART goals.</p>
@@ -28,6 +32,23 @@ const body = ` <div id="blog-article">
         <p>Achieving lasting financial goals is not a single achievement; it is a continuous process of iteration. A financial plan that works today may fail next year if your income changes, your family situation changes, or the market shifts. Therefore, the biggest lesson from these tools is the need for regular review.</p>
 
         <p>Treat your financial planning like checking your car's oil — it needs consistent attention. Regularly running through these three calculations — setting the goal (<a href="/goals">Goals Tracker</a>), defining the available resources (<a href="/salary">Salary &amp; Tax Calculator</a>), and modeling the potential growth (<a href="/investing">Wealth Growth Calculator</a>) — ensures that your financial plan remains robust, achievable, and, most importantly, sticks.</p>
+
+        <section class="blog-faq" aria-labelledby="faq-heading">
+            <h2 id="faq-heading">Frequently Asked Questions</h2>
+            <dl>
+                <dt>What makes a financial goal SMART?</dt>
+                <dd>A SMART financial goal is Specific (a concrete dollar amount), Measurable (trackable monthly or quarterly), Achievable (realistic given your income), Relevant (aligned with your priorities), and Time-bound (with a clear deadline). Example: "Save $15,000 for an emergency fund by December 2026 by setting aside $500/month."</dd>
+
+                <dt>How do I set a realistic savings target?</dt>
+                <dd>Start by calculating your actual net (take-home) pay, not your gross salary. Then list fixed expenses and identify discretionary spending you can reduce. A realistic savings rate for most people is 10–20% of net income. Use a goals tracker to set a specific end date and work backward to a monthly contribution amount.</dd>
+
+                <dt>How do I track financial goals over time?</dt>
+                <dd>The most effective approach is to break large goals into quarterly milestones and review them monthly. A goals tracker automatically calculates required monthly contributions and shows your progress against the target. Linking your goal to an automated transfer on payday removes the decision from the equation.</dd>
+
+                <dt>What is the difference between a financial goal and a financial plan?</dt>
+                <dd>A financial goal is a specific target — saving $20,000 for a home down payment. A financial plan is the strategy for achieving it — the monthly contribution amount, the account type, and the investment approach. Goals without plans stay as wishes; plans without goals lack direction.</dd>
+            </dl>
+        </section>
     </div>
 
 <div class="blog-links">

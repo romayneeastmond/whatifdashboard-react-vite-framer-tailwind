@@ -60,6 +60,11 @@ export interface MultiOptionData {
 	selected: string[];
 }
 
+export interface BlogFaqItem {
+    question: string;
+    answer: string;
+}
+
 export interface BlogPostProps {
 	title: string;
 	excerpt: string;
@@ -70,4 +75,6 @@ export interface BlogPostProps {
 	body?: string;
 	author?: string;
 	image?: string;
+	keywords?: string[];
+	faq?: BlogFaqItem[];
 }

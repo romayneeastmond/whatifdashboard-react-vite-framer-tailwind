@@ -1,304 +1,376 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+	--font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
-  html {
-    overflow-y: scroll;
-    scrollbar-gutter: stable;
-  }
+	html {
+		overflow-y: scroll;
+		scrollbar-gutter: stable;
+	}
 
-  body {
-    @apply antialiased bg-[#F7F7F4] text-slate-900 transition-colors duration-300;
-  }
+	body {
+		@apply antialiased bg-[#F7F7F4] text-slate-900 transition-colors duration-300;
+	}
 
-  .dark body {
-    @apply bg-[#0A0A0A] text-white;
-  }
+	.dark body {
+		@apply bg-[#0A0A0A] text-white;
+	}
 
-  button {
-    @apply cursor-pointer;
-  }
+	button {
+		@apply cursor-pointer;
+	}
 
-  .blog-links {
-    @apply sticky top-6 rounded-2xl border border-slate-200 dark:border-white/8 bg-white dark:bg-white/3 p-6 flex flex-col gap-4;
-  }
+	.blog-links {
+		@apply sticky top-6 rounded-2xl border border-slate-200 dark:border-white/8 bg-white dark:bg-white/3 p-6 flex flex-col gap-4;
+	}
 
-  .blog-links h3 {
-    @apply text-xs uppercase tracking-[0.2em] text-[var(--brand-primary)] font-normal m-0;
-  }
+	.blog-links h3 {
+		@apply text-xs uppercase tracking-[0.2em] text-[var(--brand-primary)] font-normal m-0;
+	}
 
-  .blog-links ul {
-    @apply list-none p-0 m-0 flex flex-col gap-3;
-  }
+	.blog-links ul {
+		@apply list-none p-0 m-0 flex flex-col gap-3;
+	}
 
-  .blog-links li {
-    @apply m-0 p-0 text-sm mb-3;
-  }
+	.blog-links li {
+		@apply m-0 p-0 text-sm mb-3;
+	}
 
-  .blog-links a {
-    @apply underline text-[var(--brand-primary)] transition-colors duration-150;
-  }
+	.blog-links a {
+		@apply underline text-[var(--brand-primary)] transition-colors duration-150;
+	}
 
-  .blog-links a:hover {
-    @apply text-[var(--brand-quaternary)] no-underline;
-  }
+	.blog-links a:hover {
+		@apply text-[var(--brand-quaternary)] no-underline;
+	}
 
-  #blog-article a {
-    @apply underline text-[var(--brand-primary)] transition-colors duration-150;
-  }
+	#blog-article a {
+		@apply underline text-[var(--brand-primary)] transition-colors duration-150;
+	}
 
-  #blog-article a:hover {
-    @apply text-[var(--brand-quaternary)] no-underline;
-  }
+	#blog-article a:hover {
+		@apply text-[var(--brand-quaternary)] no-underline;
+	}
 }
 
 @layer base {
-  :root {
-    --brand-primary: #387E67;
-    --brand-secondary: #C14539;
-    --brand-tertiary: #C5A059;
-    --brand-quaternary: #40916C;
-    
-    --chart-primary: #387E67;
-    --chart-secondary: #064E3B;
-    --chart-tertiary: #A3E635;
-    --chart-grid: #E2E8F0;
-  }
+	:root {
+		--brand-primary: #387e67;
+		--brand-secondary: #c14539;
+		--brand-tertiary: #c5a059;
+		--brand-quaternary: #40916c;
 
-  .dark {
-    --brand-primary: #52B788;
-    --brand-secondary: #E5383B;
-    --brand-tertiary: #D4A373;
-    --brand-quaternary: #74C69D;
+		--chart-primary: #387e67;
+		--chart-secondary: #064e3b;
+		--chart-tertiary: #a3e635;
+		--chart-grid: #e2e8f0;
+	}
 
-    --chart-primary: #52B788;
-    --chart-secondary: #081C15;
-    --chart-tertiary: #D8F3DC;
-    --chart-grid: #1A2E26;
-  }
+	.dark {
+		--brand-primary: #52b788;
+		--brand-secondary: #e5383b;
+		--brand-tertiary: #d4a373;
+		--brand-quaternary: #74c69d;
+
+		--chart-primary: #52b788;
+		--chart-secondary: #081c15;
+		--chart-tertiary: #d8f3dc;
+		--chart-grid: #1a2e26;
+	}
 }
 
 @layer base {
-  .recharts-text {
-    @apply fill-slate-400;
-  }
-  .dark .recharts-text {
-    @apply fill-slate-500;
-  }
-  .dark .recharts-legend-item-text {
-    color: #94A3B8 !important;
-  }
-  .dark .recharts-default-tooltip {
-    @apply !bg-black !border-white/10;
-  }
-  .dark .recharts-tooltip-item {
-    @apply !text-white;
-  }
+	.recharts-text {
+		@apply fill-slate-400;
+	}
+	.dark .recharts-text {
+		@apply fill-slate-500;
+	}
+	.dark .recharts-legend-item-text {
+		color: #94a3b8 !important;
+	}
+	.dark .recharts-default-tooltip {
+		@apply !bg-black !border-white/10;
+	}
+	.dark .recharts-tooltip-item {
+		@apply !text-white;
+	}
+}
+
+/* ── Quick Answer box ── */
+.quick-answer {
+	@apply flex gap-3 rounded-xl border border-[var(--brand-primary)]/30 bg-[var(--brand-primary)]/5 px-5 py-4 mb-8 mt-4 text-sm text-slate-700 dark:text-white/70 leading-relaxed;
+}
+
+.quick-answer::before {
+	content: "";
+	@apply block shrink-0 w-0.5 self-stretch rounded-full bg-[var(--brand-primary)];
+}
+
+.quick-answer strong {
+	@apply text-[var(--brand-primary)] font-semibold not-italic;
+}
+
+/* ── FAQ section inside blog article ── */
+.blog-faq {
+	@apply mt-10 mb-2 rounded-2xl border border-slate-200 dark:border-white/8 bg-white dark:bg-white/3 overflow-hidden;
+}
+
+.blog-faq h2 {
+	@apply text-xs uppercase tracking-[0.2em] text-[var(--brand-primary)] font-normal m-0 px-6 py-4 border-b border-slate-100 dark:border-white/6;
+}
+
+.blog-faq dl {
+	@apply m-0 p-0 divide-y divide-slate-100 dark:divide-white/6;
+}
+
+.blog-faq dt {
+	@apply text-sm font-medium text-slate-800 dark:text-white/90 px-6 pt-4 pb-4 m-0;
+}
+
+.blog-faq dd {
+	@apply text-sm text-slate-600 dark:text-white/60 leading-relaxed px-6 pb-4 pt-3 m-0;
 }
 
 /* ── Blog article body typography ── */
 article p {
-    @apply text-sm text-slate-600 dark:text-white/60 leading-relaxed mb-4;
+	@apply text-sm text-slate-600 dark:text-white/60 leading-relaxed mb-4;
 }
 article h2 {
-    @apply text-lg font-medium text-slate-900 dark:text-white mt-8 mb-3;
+	@apply text-lg font-medium text-slate-900 dark:text-white mt-8 mb-3;
 }
 article h3 {
-    @apply text-base font-medium text-slate-800 dark:text-white/90 mt-6 mb-2;
+	@apply text-base font-medium text-slate-800 dark:text-white/90 mt-6 mb-2;
 }
-article ul, article ol {
-    @apply text-sm text-slate-600 dark:text-white/60 leading-relaxed mb-4 pl-5;
+article ul,
+article ol {
+	@apply text-sm text-slate-600 dark:text-white/60 leading-relaxed mb-4 pl-5;
 }
-article ul { @apply list-disc; }
-article ol { @apply list-decimal; }
-article li { @apply mb-1; }
-
+article ul {
+	@apply list-disc;
+}
+article ol {
+	@apply list-decimal;
+}
+article li {
+	@apply mb-1;
+}
 
 @media print {
-  /* ── Page setup ── */
-  @page {
-    size: A4 portrait;
-    margin: 16mm 14mm;
-  }
+	/* ── Page setup ── */
+	@page {
+		size: A4 portrait;
+		margin: 16mm 14mm;
+	}
 
-  /* ── Override dark mode — force light everywhere ── */
-  html, html.dark {
-    color-scheme: light !important;
-  }
+	/* ── Override dark mode — force light everywhere ── */
+	html,
+	html.dark {
+		color-scheme: light !important;
+	}
 
-  *,
-  *::before,
-  *::after {
-    background: transparent !important;
-    background-color: white !important;
-    color: #111 !important;
-    border: none !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+	*,
+	*::before,
+	*::after {
+		background: transparent !important;
+		background-color: white !important;
+		color: #111 !important;
+		border: none !important;
+		box-shadow: none !important;
+		text-shadow: none !important;
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
 
-  /* ── Override dark-mode CSS variables ── */
-  html, html.dark, :root {
-    --brand-primary: #387E67 !important;
-    --brand-secondary: #C14539 !important;
-    --brand-tertiary: #C5A059 !important;
-    --chart-primary: #387E67 !important;
-    --chart-secondary: #064E3B !important;
-    --chart-grid: #E2E8F0 !important;
-  }
+	/* ── Override dark-mode CSS variables ── */
+	html,
+	html.dark,
+	:root {
+		--brand-primary: #387e67 !important;
+		--brand-secondary: #c14539 !important;
+		--brand-tertiary: #c5a059 !important;
+		--chart-primary: #387e67 !important;
+		--chart-secondary: #064e3b !important;
+		--chart-grid: #e2e8f0 !important;
+	}
 
-  /* ── Hide chrome — nav, header, footer, controls ── */
-  header,
-  footer,
-  nav,
-  aside,
-  button,
-  [role="button"],
-  input[type="range"],
-  .back-to-top,
-  .cookie-banner {
-    display: none !important;
-  }
+	/* ── Hide chrome — nav, header, footer, controls ── */
+	header,
+	footer,
+	nav,
+	aside,
+	button,
+	[role="button"],
+	input[type="range"],
+	.back-to-top,
+	.cookie-banner {
+		display: none !important;
+	}
 
-  /* ── Main content ── */
-  body {
-    font-size: 11pt;
-    line-height: 1.4;
-  }
+	/* ── Main content ── */
+	body {
+		font-size: 11pt;
+		line-height: 1.4;
+	}
 
-  main {
-    padding: 0 !important;
-    margin: 0 !important;
-    max-width: 100% !important;
-    width: 100% !important;
-  }
+	main {
+		padding: 0 !important;
+		margin: 0 !important;
+		max-width: 100% !important;
+		width: 100% !important;
+	}
 
-  /* ── Strip decorative spacing ── */
-  .min-h-screen {
-    min-height: 0 !important;
-  }
+	/* ── Strip decorative spacing ── */
+	.min-h-screen {
+		min-height: 0 !important;
+	}
 
-  /* ── Cards: borderless, rounded corners ── */
-  .rounded-\[12px\],
-  .rounded-2xl,
-  [class*="rounded"] {
-    border-radius: 6px !important;
-  }
+	/* ── Cards: borderless, rounded corners ── */
+	.rounded-\[12px\],
+	.rounded-2xl,
+	[class*="rounded"] {
+		border-radius: 6px !important;
+	}
 
-  /* Card summary variant (green bg) — keep colour for print */
-  .bg-\[#387E67\] {
-    background-color: #387E67 !important;
-    color: white !important;
-  }
-  .bg-\[#387E67\] * {
-    color: white !important;
-  }
+	/* Card summary variant (green bg) — keep colour for print */
+	.bg-\[#387E67\] {
+		background-color: #387e67 !important;
+		color: white !important;
+	}
+	.bg-\[#387E67\] * {
+		color: white !important;
+	}
 
-  /* ── FAQ: always show answers when printing ── */
-  .faq-answer {
-    display: block !important;
-  }
+	/* ── FAQ: always show answers when printing ── */
+	.faq-answer {
+		display: block !important;
+	}
 
-  /* ── Compress grid/flex gaps ── */
-  .gap-6  { gap: 10pt !important; }
-  .gap-4  { gap: 8pt  !important; }
-  .gap-3  { gap: 6pt  !important; }
-  .gap-8  { gap: 12pt !important; }
+	/* ── Compress grid/flex gaps ── */
+	.gap-6 {
+		gap: 10pt !important;
+	}
+	.gap-4 {
+		gap: 8pt !important;
+	}
+	.gap-3 {
+		gap: 6pt !important;
+	}
+	.gap-8 {
+		gap: 12pt !important;
+	}
 
-  /* ── Reduce internal card padding ── */
-  .p-6    { padding: 10pt !important; }
-  .p-5    { padding: 8pt  !important; }
-  .px-6   { padding-left: 10pt !important; padding-right: 10pt !important; }
-  .py-5   { padding-top: 8pt  !important; padding-bottom: 8pt  !important; }
-  .mb-6   { margin-bottom: 8pt  !important; }
-  .mb-4   { margin-bottom: 6pt  !important; }
-  .mt-6   { margin-top: 8pt    !important; }
-  .mt-4   { margin-top: 6pt    !important; }
-  .py-8   { padding-top: 12pt  !important; padding-bottom: 12pt !important; }
+	/* ── Reduce internal card padding ── */
+	.p-6 {
+		padding: 10pt !important;
+	}
+	.p-5 {
+		padding: 8pt !important;
+	}
+	.px-6 {
+		padding-left: 10pt !important;
+		padding-right: 10pt !important;
+	}
+	.py-5 {
+		padding-top: 8pt !important;
+		padding-bottom: 8pt !important;
+	}
+	.mb-6 {
+		margin-bottom: 8pt !important;
+	}
+	.mb-4 {
+		margin-bottom: 6pt !important;
+	}
+	.mt-6 {
+		margin-top: 8pt !important;
+	}
+	.mt-4 {
+		margin-top: 6pt !important;
+	}
+	.py-8 {
+		padding-top: 12pt !important;
+		padding-bottom: 12pt !important;
+	}
 
-  /* ── Recharts ── */
-  .recharts-surface {
-    overflow: visible !important;
-  }
-  .recharts-text,
-  .recharts-legend-item-text {
-    fill: #374151 !important;
-    color: #374151 !important;
-  }
-  .recharts-cartesian-grid line,
-  .recharts-cartesian-axis line,
-  .recharts-cartesian-axis-tick line {
-    stroke: #E2E8F0 !important;
-  }
+	/* ── Recharts ── */
+	.recharts-surface {
+		overflow: visible !important;
+	}
+	.recharts-text,
+	.recharts-legend-item-text {
+		fill: #374151 !important;
+		color: #374151 !important;
+	}
+	.recharts-cartesian-grid line,
+	.recharts-cartesian-axis line,
+	.recharts-cartesian-axis-tick line {
+		stroke: #e2e8f0 !important;
+	}
 
-  /* ── Slider value badges — show the value, hide the track ── */
-  input[type="range"] + *,
-  .font-mono.bg-slate-100 {
-    display: inline !important;
-    background: transparent !important;
-    font-weight: 600;
-  }
+	/* ── Slider value badges — show the value, hide the track ── */
+	input[type="range"] + *,
+	.font-mono.bg-slate-100 {
+		display: inline !important;
+		background: transparent !important;
+		font-weight: 600;
+	}
 
-  /* ── Multi-option page: separator between stacked calculators ── */
-  .space-y-10 > * + * {
-    padding-top: 14pt;
-    margin-top: 14pt;
-    background-image: linear-gradient(to right, #d1d5db 0%, #d1d5db 100%) !important;
-    background-size: 100% 1px !important;
-    background-repeat: no-repeat !important;
-    background-position: top !important;
-  }
+	/* ── Multi-option page: separator between stacked calculators ── */
+	.space-y-10 > * + * {
+		padding-top: 14pt;
+		margin-top: 14pt;
+		background-image: linear-gradient(to right, #d1d5db 0%, #d1d5db 100%) !important;
+		background-size: 100% 1px !important;
+		background-repeat: no-repeat !important;
+		background-position: top !important;
+	}
 
-  /* ── Page-break rules ── */
-  section,
-  article,
-  .print-card {
-    break-inside: avoid;
-  }
+	/* ── Page-break rules ── */
+	section,
+	article,
+	.print-card {
+		break-inside: avoid;
+	}
 
-  /* Let grid columns collapse to a single column so content isn't crammed */
-  .grid {
-    display: block !important;
-  }
-  .grid > * {
-    margin-bottom: 10pt !important;
-    break-inside: avoid;
-  }
+	/* Let grid columns collapse to a single column so content isn't crammed */
+	.grid {
+		display: block !important;
+	}
+	.grid > * {
+		margin-bottom: 10pt !important;
+		break-inside: avoid;
+	}
 
-  /* Restore two-column grid only where there's enough room */
-  @supports (display: grid) {
-    .lg\:grid-cols-2,
-    .md\:grid-cols-2 {
-      display: grid !important;
-      grid-template-columns: 1fr 1fr !important;
-    }
-    .lg\:grid-cols-3,
-    .md\:grid-cols-3 {
-      display: grid !important;
-      grid-template-columns: 1fr 1fr 1fr !important;
-    }
-  }
+	/* Restore two-column grid only where there's enough room */
+	@supports (display: grid) {
+		.lg\:grid-cols-2,
+		.md\:grid-cols-2 {
+			display: grid !important;
+			grid-template-columns: 1fr 1fr !important;
+		}
+		.lg\:grid-cols-3,
+		.md\:grid-cols-3 {
+			display: grid !important;
+			grid-template-columns: 1fr 1fr 1fr !important;
+		}
+	}
 
-  /* ── Stat pills / badges ── */
-  .bg-slate-100,
-  .bg-slate-50,
-  .dark\:bg-white\/5 {
-    background-color: #f3f4f6 !important;
-    color: #111 !important;
-  }
+	/* ── Stat pills / badges ── */
+	.bg-slate-100,
+	.bg-slate-50,
+	.dark\:bg-white\/5 {
+		background-color: #f3f4f6 !important;
+		color: #111 !important;
+	}
 
-  /* ── Links — remove underline noise ── */
-  a {
-    text-decoration: none !important;
-    color: #111 !important;
-  }
+	/* ── Links — remove underline noise ── */
+	a {
+		text-decoration: none !important;
+		color: #111 !important;
+	}
 }
-

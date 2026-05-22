@@ -49,6 +49,23 @@ export const useBlogSeo = (post: BlogPostProps) => {
         script.textContent = JSON.stringify(ld);
         document.head.appendChild(script);
 
+        if (post.faq?.length) {
+            const faqLd = {
+                '@context': 'https://schema.org',
+                '@type': 'FAQPage',
+                mainEntity: post.faq.map(({ question, answer }) => ({
+                    '@type': 'Question',
+                    name: question,
+                    acceptedAnswer: { '@type': 'Answer', text: answer },
+                })),
+            };
+            const faqScript = document.createElement('script');
+            faqScript.type = 'application/ld+json';
+            faqScript.id = 'blog-faq-jsonld';
+            faqScript.textContent = JSON.stringify(faqLd);
+            document.head.appendChild(faqScript);
+        }
+
         return () => {
             document.title = prev.title;
             restoreMeta('name', 'description', prev.description);
@@ -63,6 +80,7 @@ export const useBlogSeo = (post: BlogPostProps) => {
             restoreMeta('name', 'twitter:image', prev.twImage);
             document.querySelector('link[rel="canonical"]')?.remove();
             document.getElementById('blog-post-jsonld')?.remove();
+            document.getElementById('blog-faq-jsonld')?.remove();
         };
     }, [post.href]);
 };
@@ -95,7 +113,9 @@ const buildJsonLd = (post: BlogPostProps, url: string) => ({
     headline: post.title,
     description: post.excerpt,
     url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     datePublished: post.dateISO,
+    dateModified: post.dateISO,
     author: {
         '@type': 'Person',
         name: post.author ?? SITE_NAME,
@@ -106,4 +126,9 @@ const buildJsonLd = (post: BlogPostProps, url: string) => ({
         url: import.meta.env.VITE_SITE_URL ?? '',
     },
     ...(post.image ? { image: post.image } : {}),
+    ...(post.keywords?.length ? { keywords: post.keywords.join(', ') } : {}),
+    speakable: {
+        '@type': 'SpeakableSpecification',
+        cssSelector: ['#blog-article', '.quick-answer'],
+    },
 });

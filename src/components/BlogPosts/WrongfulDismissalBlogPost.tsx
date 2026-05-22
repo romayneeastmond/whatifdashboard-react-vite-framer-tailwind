@@ -1,4 +1,8 @@
 const body = `<div id="blog-article">
+        <div class="quick-answer">
+            <strong>Quick Answer:</strong> A complete severance package in Canada should include your ESA termination pay, any ESA severance pay you qualify for, and — most importantly — common law reasonable notice compensation, which is typically far greater. The Bardal Factors (length of service, age, position, and availability of similar employment) determine the full scope of your entitlement.
+        </div>
+
         <h2 id="sec-intro">Understanding the Landscape of Separation</h2>
 
         <p>Receiving a severance package is often perceived as the end of a professional chapter, but it represents far more than just a lump sum of cash. It is a legally defined compensation package that is supposed to bridge the gap between your previous employment and your next opportunity. While most severance agreements are presented as a final, generous resolution, it is critical for employees to understand that these packages are not always sufficient, and they often fail to account for the full scope of their rights under employment law.</p>
@@ -45,6 +49,23 @@ const body = `<div id="blog-article">
         <p>The most important thing to remember when evaluating a severance package is to approach it with extreme caution. Do not sign any release of claims, or accept any settlement offer, without first having a detailed analysis run by an employment lawyer who is skilled in both statutory law and common law principles.</p>
 
         <p>A truly valuable severance package doesn't just pay you for the time you lost; it pays you for the difficulty of the transition, the specialized nature of your expertise, and the market value of the role you occupied. By understanding the difference between mere 'severance' and the law-defined 'reasonable notice' determined by factors like the <a href="/bardal">Bardal Factors</a>, you are better equipped to advocate for the compensation you truly deserve.</p>
+
+        <section class="blog-faq" aria-labelledby="faq-heading">
+            <h2 id="faq-heading">Frequently Asked Questions</h2>
+            <dl>
+                <dt>What should a severance package include in Canada?</dt>
+                <dd>A complete severance package should include ESA termination pay, ESA severance pay (if eligible), and common law reasonable notice pay in lieu. It may also include continuation of benefits, outplacement support, and payment for unused vacation. The common law component is usually the largest and most negotiable portion.</dd>
+
+                <dt>What are the Bardal Factors?</dt>
+                <dd>The Bardal Factors are the criteria Canadian courts use to determine reasonable notice for wrongful dismissal: the character of the employment (specialization and seniority), length of service, age of the employee, and the availability of similar employment given the employee's experience, training, and qualifications. Higher scores on each factor increase your entitlement.</dd>
+
+                <dt>What is the difference between a severance package and reasonable notice?</dt>
+                <dd>A severance package is what an employer offers — it may or may not reflect your legal entitlements. Reasonable notice is the legal standard under common law for how much notice (or pay in lieu) you are owed. If the package offered is less than your reasonable notice entitlement, you may have grounds for a wrongful dismissal claim.</dd>
+
+                <dt>Should I sign a severance agreement without consulting a lawyer?</dt>
+                <dd>No. Once signed, a severance agreement typically releases your employer from all further claims. Have an employment lawyer review it first — most offer free consultations. The difference between accepting a low offer and negotiating your full entitlement can be tens of thousands of dollars.</dd>
+            </dl>
+        </section>
     </div>
 
 <div class="blog-links">

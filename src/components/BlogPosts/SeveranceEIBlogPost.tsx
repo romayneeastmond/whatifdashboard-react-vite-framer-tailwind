@@ -1,4 +1,8 @@
 const body = `<div id="blog-article">
+        <div class="quick-answer">
+            <strong>Quick Answer:</strong> If you're laid off in Canada, you're entitled to ESA termination pay (1 week per year of service, up to 8 weeks), possible ESA severance pay (if your employer has 25+ employees and you've worked 5+ years), and Employment Insurance (EI) benefits of up to 55% of insurable earnings. Beyond these statutory minimums, common law may entitle you to significantly more through a wrongful dismissal claim.
+        </div>
+
         <h2 id="understanding-termination">Understanding the Layers of Termination Pay</h2>
 
         <p>Being laid off is stressful, financially and emotionally. The immediate focus is surviving the next few months. However, most people who go through a layoff are left in the dark about the total value of what they are entitled to. They might assume that the layoff is settled with one single severance cheque. In reality, Canadian employment compensation is layered, involving statutory minimums, contractual rights, and common law entitlements. Knowing the difference between these layers — and calculating them accurately — is crucial.</p>
@@ -34,6 +38,23 @@ const body = `<div id="blog-article">
         </ul>
 
         <p>Never accept the first offer. Presenting a well-calculated, fact-based proposal — backed by an analysis showing what you are owed — is the most effective negotiating tactic. By understanding the layered nature of Canadian employment law, you move from a position of passive receiver to an informed, strategic participant.</p>
+
+        <section class="blog-faq" aria-labelledby="faq-heading">
+            <h2 id="faq-heading">Frequently Asked Questions</h2>
+            <dl>
+                <dt>What is the difference between ESA termination pay and severance pay in Canada?</dt>
+                <dd>ESA termination pay is owed to almost all employees upon termination without cause — it equals 1 week per year of service up to 8 weeks. ESA severance pay is an additional amount owed only if your employer has a payroll of $2.5 million or more and you worked 5+ years — it equals 1 week per year of service up to 26 weeks. Both are statutory minimums; common law may entitle you to significantly more.</dd>
+
+                <dt>How much EI can I receive after a layoff in Canada?</dt>
+                <dd>Employment Insurance (EI) pays 55% of your average insurable weekly earnings, up to a maximum insurable amount (roughly $668/week as of 2024). The number of benefit weeks depends on your hours worked in the last 52 weeks and your regional unemployment rate — typically between 14 and 45 weeks.</dd>
+
+                <dt>What is common law reasonable notice?</dt>
+                <dd>Common law reasonable notice is a right granted to employees terminated without cause under Canadian common law. It requires employers to either provide working notice or pay in lieu of notice for a period that reflects your length of service, age, position, and the availability of similar employment. It is almost always greater than the ESA minimum.</dd>
+
+                <dt>How do I know if I have a wrongful dismissal claim?</dt>
+                <dd>You may have a wrongful dismissal claim if you were terminated without cause and received less compensation than your common law reasonable notice entitlement. An employment lawyer can assess your situation by reviewing your length of service, role, age, and the Bardal Factors. Use a <a href="/wrongfuldismissal">wrongful dismissal calculator</a> as a starting point for estimating your entitlement.</dd>
+            </dl>
+        </section>
     </div>
 
 <div class="blog-links">

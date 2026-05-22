@@ -79,16 +79,50 @@ Whenever a new blog post is added:
     date: 'May 22, 2026',
     dateISO: '2026-05-22',
     href: '/blog/post-slug-here',
+    keywords: ['primary keyword', 'secondary keyword', 'topic phrase', 'related term'],
+    faq: [
+        {
+            question: 'Most common question the post title implies?',
+            answer: 'Concrete, self-contained answer in 2–4 sentences. Include named entities, numbers, and units where relevant.',
+        },
+        // 3 more Q&A pairs covering related questions readers typically ask
+    ],
     // Optional — add if known:
     // author: 'Author Name',
     // image: 'https://example.com/og-image.jpg',
 }
 ```
 
+   - `keywords`: 4–6 specific phrases the post targets. Use the exact terms people search for, not marketing language.
+   - `faq`: 4 Q&A pairs. Each answer must be a complete, standalone response — AI engines extract these verbatim. Cover the question implied by the title plus 3 closely related questions. See existing posts in `registry.ts` for the tone and level of detail required.
+
 2. Create `src/components/BlogPosts/YourTopicBlogPost.tsx` using this exact boilerplate:
 
 ```tsx
-const body = `[Blog Article Body]
+const body = `<div id="blog-article">
+    <div class="quick-answer">
+        <strong>Quick Answer:</strong> [2–3 sentence direct answer to the question the title implies. Include concrete numbers, named entities, and conditions where relevant. This is the first thing AI engines read.]
+    </div>
+
+    [Rest of article body — h2 sections, paragraphs, lists]
+
+    <section class="blog-faq" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">Frequently Asked Questions</h2>
+        <dl>
+            <dt>[Question matching registry faq[0].question]</dt>
+            <dd>[Answer matching registry faq[0].answer]</dd>
+
+            <dt>[Question matching registry faq[1].question]</dt>
+            <dd>[Answer matching registry faq[1].answer]</dd>
+
+            <dt>[Question matching registry faq[2].question]</dt>
+            <dd>[Answer matching registry faq[2].answer]</dd>
+
+            <dt>[Question matching registry faq[3].question]</dt>
+            <dd>[Answer matching registry faq[3].answer]</dd>
+        </dl>
+    </section>
+</div>
 
 <div class="blog-links">
     <h3>Try These Calculators</h3>
@@ -100,8 +134,10 @@ const body = `[Blog Article Body]
 export default body;
 ```
 
-   - Replace `[Blog Article Body]` placeholder with the article HTML — the user will do this manually.
-   - Populate the calculator links section with every calculator that is relevant to the post's topic. Use the paths and names from the **Calculators** section above.
+   - **Quick Answer box**: Must appear immediately after `<div id="blog-article">`, before any `<h2>`. Keep it to 2–3 sentences. Write it as if answering a voice query — specific, factual, no fluff.
+   - **FAQ section**: Must appear at the end of the article, inside `<div id="blog-article">` and before `<div class="blog-links">`. Questions and answers must exactly match the `faq` array in the registry — the JSON-LD and visible content must be consistent.
+   - **`<dl>` / `<dt>` / `<dd>` structure**: Required for the FAQ — do not use `<h3>` + `<p>` pairs.
+   - Populate the calculator links section with every calculator relevant to the post's topic. Use the paths and names from the **Calculators** section above.
 
 3. Register the new post in `src/App.tsx`:
    - Import the body: `import yourTopicBody from './components/BlogPosts/YourTopicBlogPost';`
@@ -110,4 +146,4 @@ export default body;
      <Route path="/blog/post-slug-here" element={<BlogPostPage body={yourTopicBody} />} />
      ```
 
-**SEO is handled automatically.** The `useBlogSeo` hook (called inside `BlogPost`) sets `<title>`, `<meta name="description">`, OpenGraph tags (`og:title`, `og:description`, `og:url`, `og:type`, `og:image`), Twitter card tags, a `<link rel="canonical">`, and a `BlogPosting` JSON-LD script — all derived from the registry entry. No extra work is needed beyond filling in the registry fields accurately.
+**SEO and GEO are handled automatically.** The `useBlogSeo` hook sets `<title>`, `<meta name="description">`, OpenGraph tags, Twitter card tags, a `<link rel="canonical">`, a `BlogPosting` JSON-LD script (with `keywords`, `mainEntityOfPage`, and `speakable`), and — when `faq` is present — a `FAQPage` JSON-LD script. All are derived from the registry entry. No extra work is needed beyond filling in the registry fields accurately.

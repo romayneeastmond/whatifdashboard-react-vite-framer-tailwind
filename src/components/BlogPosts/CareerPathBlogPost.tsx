@@ -1,4 +1,8 @@
 const body = `<div id="blog-article">
+        <div class="quick-answer">
+            <strong>Quick Answer:</strong> Job hopping typically yields 10–20% salary increases per move versus the 2–5% annual raises typical of staying put. Staying put builds deep expertise and seniority that compounds over time. The optimal strategy depends on your career stage and risk tolerance — model both paths over 5–10 years using total compensation, not just base salary.
+        </div>
+
         <h2 id="career-strategy-overview">Beyond the Job Title: A Strategic View of Career Growth</h2>
 
         <p>In today’s fast-paced professional landscape, job decisions are often fraught with emotion. When presented with two offers — one at a familiar, stable company, and another at a risky, high-growth startup — it can feel like an existential choice. We are constantly bombarded with advice: "You need to network relentlessly!" or "Stay where you are comfortable!"</p>
@@ -35,6 +39,23 @@ const body = `<div id="blog-article">
         <p>A career path projection is ultimately an investment in yourself. It requires diligence, the willingness to learn the financial language of compensation, and the bravery to treat your professional skills as your most valuable, yet most liquid, asset.</p>
 
         <p>By moving beyond the emotional pull of the next big thing and instead grounding your decisions in the hard data provided by professional calculators, you gain clarity. You can accurately model whether the comfort of staying put will eventually stifle your growth, or if the thrill of the job hop is worth the associated risk. Use these models, trust the numbers, and project the career that will best sustain your desired lifestyle.</p>
+
+        <section class="blog-faq" aria-labelledby="faq-heading">
+            <h2 id="faq-heading">Frequently Asked Questions</h2>
+            <dl>
+                <dt>Is job hopping or staying put better for salary growth?</dt>
+                <dd>Job hopping typically produces faster salary growth, especially early in a career — lateral moves often yield 10–20% increases versus the 2–5% annual raise typical of staying put. However, long tenure builds deep expertise and seniority that compounds over time. The optimal choice depends on your field, career stage, and risk tolerance.</dd>
+
+                <dt>How much of a salary increase should I expect from switching jobs?</dt>
+                <dd>Switching employers typically yields a 10–20% salary increase, compared to 2–5% for staying. However, total compensation — including bonuses, equity, and benefits — matters as much as base salary. Always model net take-home pay after taxes, not gross figures.</dd>
+
+                <dt>How do I calculate the total compensation value of a job offer?</dt>
+                <dd>Total compensation includes base salary, annual bonus (probability-weighted), stock options or RSUs (with vesting schedule), benefits, and any retirement matching. Convert everything to an annual after-tax value using a <a href="/salary">salary calculator</a>, then compare apples-to-apples across offers.</dd>
+
+                <dt>What is career path projection?</dt>
+                <dd>Career path projection is the practice of modelling your future income, skill growth, and career trajectory under different scenarios — such as staying at your current employer versus switching jobs. It treats your career like a financial portfolio, weighing risk, return, and time horizon to identify the most strategic path.</dd>
+            </dl>
+        </section>
     </div>
 
 <div class="blog-links">

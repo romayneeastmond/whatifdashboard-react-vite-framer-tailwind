@@ -1,4 +1,8 @@
 const body = `<div id="blog-article">
+        <div class="quick-answer">
+            <strong>Quick Answer:</strong> Your take-home pay (net pay) is typically 65–80% of your gross salary, depending on your province, income level, and deductions. A salary calculator models the exact impact of federal and provincial taxes, CPP/EI contributions, and RRSP contributions so you can budget from the real number — not your offer letter figure.
+        </div>
+
         <h2 id="financial-foundation">The Power of Numbers: Taking Control of Your Finances</h2>
 
         <p>Navigating personal finance can feel like learning a foreign language. There are acronyms everywhere — 401k, RRSP, TFSA — and the sheer complexity of taxes, mortgages, and debt repayment can make budgeting feel overwhelming. However, the good news is that you don't need to be a financial expert to take charge of your money. You just need the right tools and a little guidance.</p>
@@ -34,6 +38,23 @@ const body = `<div id="blog-article">
         <p>These three calculators — the <a href="/salary">Salary &amp; Tax Calculator</a>, the <a href="/mortgage">Mortgage Equity Calculator</a>, and the <a href="/debt">Debt Repayment Calculator</a> — form the pillars of a robust personal financial plan. They are not intended to provide definitive answers, but rather to provide sophisticated estimates that allow you to make informed decisions.</p>
 
         <p>The biggest takeaway for any beginner is consistency. Use these tools regularly. Review them every time your income changes, a market rate shifts, or a major life goal pops up. Mastery doesn't come from knowing the formulas; it comes from the discipline of checking your numbers and planning for the future, one calculated step at a time.</p>
+
+        <section class="blog-faq" aria-labelledby="faq-heading">
+            <h2 id="faq-heading">Frequently Asked Questions</h2>
+            <dl>
+                <dt>What is the difference between gross pay and net pay?</dt>
+                <dd>Gross pay is your salary before any deductions — the number on your offer letter. Net pay (take-home pay) is what you actually receive after federal and provincial income tax, CPP contributions, and EI premiums are deducted. For most Canadian employees, net pay is roughly 65–80% of gross pay depending on income level and province.</dd>
+
+                <dt>How much tax will I pay on my salary in Canada?</dt>
+                <dd>Canada uses a progressive federal tax system with rates from 15% to 33%, plus provincial taxes that vary by province. On a $70,000 salary in Ontario, total income tax plus CPP and EI is approximately $18,000–$20,000, leaving net income of roughly $50,000–$52,000. Use a <a href="/salary">salary calculator</a> to model your specific province and deductions.</dd>
+
+                <dt>How do RRSP contributions reduce my taxes?</dt>
+                <dd>RRSP contributions reduce your taxable income dollar-for-dollar, lowering your income tax for the year. On a $70,000 income, a $10,000 RRSP contribution can reduce your tax bill by $2,600–$4,000 depending on your marginal tax rate. The exact savings depend on your province and income level.</dd>
+
+                <dt>What mandatory deductions come off my paycheque in Canada?</dt>
+                <dd>All Canadian employees pay federal and provincial income tax (withheld by the employer), Canada Pension Plan (CPP) contributions (5.95% of pensionable earnings up to the annual maximum), and Employment Insurance (EI) premiums (1.66% of insurable earnings up to the annual maximum). These are deducted automatically from each pay period.</dd>
+            </dl>
+        </section>
     </div>
 
 <div class="blog-links">
