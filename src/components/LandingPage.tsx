@@ -231,18 +231,39 @@ export const LandingPage = () => {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="mb-20"
+                className="mb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
             >
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400 dark:text-white/30 mb-4 font-normal">
-                    Life Decision Simulator
-                </p>
-                <h2 className="text-4xl lg:text-5xl font-medium tracking-tight text-slate-900 dark:text-white leading-tight mb-6">
-                    What would happen<br />
-                    <span className="text-[#387E67] dark:text-[#52B788]">if you changed one thing?</span>
-                </h2>
-                <p className="text-base text-slate-500 dark:text-white/50 max-w-xl leading-relaxed">
-                    Most calculators answer one question in isolation. This connects the whole picture — salary, debt, health, time, and retirement — so you can see how one decision ripples across your life. No account. Nothing sent anywhere.
-                </p>
+                <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-400 dark:text-white/30 mb-4 font-normal">
+                        Life Decision Simulator
+                    </p>
+                    <h2 className="text-4xl lg:text-5xl font-medium tracking-tight text-slate-900 dark:text-white leading-tight mb-6">
+                        What would happen<br />
+                        <span className="text-[#387E67] dark:text-[#52B788]">if you changed one thing?</span>
+                    </h2>
+                    <p className="text-base text-slate-500 dark:text-white/50 max-w-xl leading-relaxed">
+                        Most calculators answer one question in isolation. This connects the whole picture — salary, debt, health, time, and retirement — so you can see how one decision ripples across your life. No account. Nothing sent anywhere.
+                    </p>
+                </div>
+                <div>
+                    <Link
+                        to="/blog"
+                        className="group flex flex-col gap-4 p-8 rounded-2xl border border-slate-200 dark:border-white/8 bg-white dark:bg-white/3 hover:border-slate-300 dark:hover:border-white/15 hover:shadow-md transition-all duration-200"
+                    >
+                        <p className="text-xs uppercase tracking-[0.2em] text-[#387E67] dark:text-[#52B788] font-normal">
+                            From the Blog
+                        </p>
+                        <h3 className="text-2xl font-medium tracking-tight text-slate-900 dark:text-white leading-snug">
+                            Make better decisions<br />with better information.
+                        </h3>
+                        <p className="text-sm text-slate-500 dark:text-white/40 leading-relaxed">
+                            Guides on personal finance, career moves, fitness, and the math behind life's biggest choices.
+                        </p>
+                        <span className="inline-flex items-center gap-2 text-sm font-medium text-[#387E67] dark:text-[#52B788] group-hover:gap-3 transition-all duration-200">
+                            Read the blog <ArrowRight size={15} />
+                        </span>
+                    </Link>
+                </div>
             </motion.div>
 
             {/* View toggle */}

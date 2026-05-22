@@ -25,6 +25,14 @@
   button {
     @apply cursor-pointer;
   }
+
+  .blog-links a {
+    @apply underline text-[var(--brand-primary)] transition-colors duration-150;
+  }
+
+  .blog-links a:hover {
+    @apply text-[var(--brand-quaternary)] no-underline;
+  }
 }
 
 @layer base {
@@ -70,6 +78,24 @@
     @apply !text-white;
   }
 }
+
+/* ── Blog article body typography ── */
+article p {
+    @apply text-sm text-slate-600 dark:text-white/60 leading-relaxed mb-4;
+}
+article h2 {
+    @apply text-lg font-medium text-slate-900 dark:text-white mt-8 mb-3;
+}
+article h3 {
+    @apply text-base font-medium text-slate-800 dark:text-white/90 mt-6 mb-2;
+}
+article ul, article ol {
+    @apply text-sm text-slate-600 dark:text-white/60 leading-relaxed mb-4 pl-5;
+}
+article ul { @apply list-disc; }
+article ol { @apply list-decimal; }
+article li { @apply mb-1; }
+
 
 @media print {
   /* ── Page setup ── */

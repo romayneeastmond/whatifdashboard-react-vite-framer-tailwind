@@ -24,3 +24,50 @@ Whenever a new calculator is added to this project:
    - `src/components/CategoriesPage.tsx` → `CATEGORIES` array
 
    If no existing category fits, create a new one in both files and add it to this list.
+
+## Blog Posts
+
+Whenever a new blog post is added:
+
+1. Add an entry to `src/components/BlogPosts/registry.ts` with all required fields:
+
+```ts
+{
+    title: 'Post Title Here',
+    excerpt: 'One or two sentence summary used for the card preview and meta description.',
+    category: 'Finance', // matches an existing category label
+    date: 'May 22, 2026',
+    dateISO: '2026-05-22',
+    href: '/blog/post-slug-here',
+    // Optional — add if known:
+    // author: 'Author Name',
+    // image: 'https://example.com/og-image.jpg',
+}
+```
+
+2. Create `src/components/BlogPosts/YourTopicBlogPost.tsx` using this exact boilerplate:
+
+```tsx
+const body = `[Blog Article Body]
+
+<div class="blog-links mt-5">
+    <h3>Try These Calculators</h3>
+    <ul>
+        <li><a href="/calculator-path">Calculator Name</a> — One-line description of what it does.</li>
+    </ul>
+</div>`;
+
+export default body;
+```
+
+   - Replace `[Blog Article Body]` placeholder with the article HTML — the user will do this manually.
+   - Populate the calculator links section with every calculator that is relevant to the post's topic. Use the paths and names from the **Calculators** section above.
+
+3. Register the new post in `src/App.tsx`:
+   - Import the body: `import yourTopicBody from './components/BlogPosts/YourTopicBlogPost';`
+   - Add a `<Route>` inside the blog routes block:
+     ```tsx
+     <Route path="/blog/post-slug-here" element={<BlogPostPage body={yourTopicBody} />} />
+     ```
+
+**SEO is handled automatically.** The `useBlogSeo` hook (called inside `BlogPost`) sets `<title>`, `<meta name="description">`, OpenGraph tags (`og:title`, `og:description`, `og:url`, `og:type`, `og:image`), Twitter card tags, a `<link rel="canonical">`, and a `BlogPosting` JSON-LD script — all derived from the registry entry. No extra work is needed beyond filling in the registry fields accurately.

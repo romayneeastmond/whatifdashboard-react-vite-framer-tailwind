@@ -1,0 +1,52 @@
+import type { BlogPostProps } from '../../types';
+
+export const BLOG_POSTS: BlogPostProps[] = [
+    {
+        title: 'What Your Severance Package Should Really Include',
+        excerpt: "Know your worth when facing potential layoffs. Use our Bardal Factor and wrongful dismissal calculators to understand your legal entitlements.",
+        category: 'Legal',
+        date: 'April 28, 2026',
+        dateISO: '2026-04-28',
+        href: '/blog/what-your-severance-package-should-really-include',
+    },
+    {
+        title: 'Career Path Projection: Job Hopping vs. Staying Put',
+        excerpt: 'We analyzed 10 years of salary data to show which career move makes more financial sense. Use our career path calculator to compare scenarios.',
+        category: 'Career',
+        date: 'April 20, 2026',
+        dateISO: '2026-04-20',
+        href: '/blog/career-path-projection-job-hopping-vs-staying-put',
+    },
+    {
+        title: 'Setting SMART Financial Goals That Actually Stick',
+        excerpt: 'Track your progress with our goals calculator. Learn the secrets to building and maintaining healthy financial habits.',
+        category: 'Goals',
+        date: 'April 12, 2026',
+        dateISO: '2026-04-12',
+        href: '/blog/setting-smart-financial-goals-that-actually-stick',
+    },
+    {
+        title: "Master Your Salary Calculator: A Beginner's Guide",
+        excerpt: 'Learn how to use our salary calculator to model your take-home pay, adjust for taxes and retirement contributions, and plan your finances with confidence.',
+        category: 'Finance',
+        date: 'May 15, 2026',
+        dateISO: '2026-05-15',
+        href: '/blog/master-your-salary-calculator-a-beginners-guide',
+    },
+    {
+        title: 'The Debt Repayment Strategy That Saved Me $10,000',
+        excerpt: 'Discover the optimal debt payoff strategy using our debt calculator. See how the avalanche method beat the snowball method for your situation.',
+        category: 'Debt',
+        date: 'May 10, 2026',
+        dateISO: '2026-05-10',
+        href: '/blog/the-debt-repayment-strategy-that-saved-me-10000',
+    },
+    {
+        title: 'Compound Interest: The Eighth Wonder of the World',
+        excerpt: 'Understand how compound interest works and why starting early matters. Use our wealth growth calculator to see the power of time in your favor.',
+        category: 'Investing',
+        date: 'May 5, 2026',
+        dateISO: '2026-05-05',
+        href: '/blog/compound-interest-the-eighth-wonder-of-the-world',
+    },
+];
