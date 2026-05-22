@@ -37,7 +37,14 @@ Live demo hosted on Vercel [What-If Dashboard](https://whatifdashboard-react-vit
   - **💎 Obsidian (.zip)** — same Markdown files with YAML frontmatter (`tags: [whatif]`) for Obsidian vaults.
   - **🤖 MCP / RAG (.json)** — a single human-readable JSON file with labelled inputs and computed results per calculator, optimised for LLM ingestion and RAG pipelines.
 - **🏠 Landing Page**: Animated entry page with quick-access cards for each calculator.
-- **🧩 Custom Dashboard**: A build-your-own view at `/multi` — toggle any combination of calculators to appear together on a single page, letting you compare scenarios side-by-side. Selection is persisted to `localStorage`.
+- **🧩 Custom Dashboards**: A fully customizable multi-dashboard workspace at `/multi`:
+  - **Multiple named dashboards** — create, rename, and switch between as many dashboards as you need, each with its own independent configuration.
+  - **Per-dashboard calculator selection** — pick any combination of calculators; they display in the order you selected them.
+  - **Layout options** — choose from Full (single column), 50/50, 33/66, 66/33, 33/33 (three equal columns), or Masonry for each dashboard independently.
+  - **Stretch mode** — breaks the grid out of the content container to span the full viewport width, ideal for wide multi-column layouts.
+  - **Compact mode** — hides result tables and shows only inputs and charts for a cleaner at-a-glance view.
+  - **Hide Selections** — collapse the calculator picker and options panel to keep the dashboard clutter-free.
+  - All settings (layout, stretch, compact, panel visibility) are persisted per dashboard in `localStorage`.
 
 ## 🛠️ Technology Stack
 

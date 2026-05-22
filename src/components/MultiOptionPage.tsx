@@ -20,6 +20,7 @@ import { CalorieDeficitCalculator } from './calculators/CalorieDeficitCalculator
 import { CareerPathCalculator } from './calculators/CareerPathCalculator';
 import { WrongfulDismissalCalculator } from './calculators/WrongfulDismissalCalculator';
 import { SeveranceEICalculator } from './calculators/SeveranceEICalculator';
+import { Modal } from './ui/Controls';
 import { cn } from '../lib/utils';
 
 const REGISTRY = [
@@ -107,6 +108,7 @@ export const MultiOptionPage = () => {
     const [activeId, setActiveId]     = React.useState<string>(() => loadActiveId(loadDashboards()));
     const [renaming, setRenaming]     = React.useState<string | null>(null);
     const [renameVal, setRenameVal]   = React.useState('');
+    const [pendingDelete, setPendingDelete] = React.useState<string | null>(null);
     const renameRef = React.useRef<HTMLInputElement>(null);
 
     const dashboard = dashboards.find(d => d.id === activeId) ?? dashboards[0];
@@ -128,11 +130,14 @@ export const MultiOptionPage = () => {
         setActiveId(d.id);
     };
 
+    const confirmDelete = (id: string) => setPendingDelete(id);
+
     const deleteDashboard = (id: string) => {
         if (dashboards.length <= 1) return;
         const next = dashboards.find(d => d.id !== id);
         setDashboards(prev => prev.filter(d => d.id !== id));
         if (activeId === id && next) setActiveId(next.id);
+        setPendingDelete(null);
     };
 
     const startRename = (d: Dashboard) => {
@@ -249,7 +254,7 @@ export const MultiOptionPage = () => {
                 </button>
                 {dashboards.length > 1 && (
                     <button
-                        onClick={() => deleteDashboard(dashboard.id)}
+                        onClick={() => confirmDelete(dashboard.id)}
                         aria-label="Delete dashboard"
                         className="flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-normal border border-slate-200 dark:border-white/10 text-slate-400 dark:text-white/25 hover:border-rose-400 hover:text-rose-500 dark:hover:border-rose-500 dark:hover:text-rose-400 transition-colors cursor-pointer ml-2"
                     >
@@ -413,6 +418,33 @@ export const MultiOptionPage = () => {
                 </AnimatePresence>
             </div>
             </div>
+
+            {/* ── Delete confirmation modal ── */}
+            <Modal
+                isOpen={pendingDelete !== null}
+                onClose={() => setPendingDelete(null)}
+                title="Delete Dashboard"
+            >
+                <p className="text-sm text-slate-600 dark:text-white/60 mb-6">
+                    Delete <span className="font-medium text-slate-900 dark:text-white">
+                        {dashboards.find(d => d.id === pendingDelete)?.name ?? 'this dashboard'}
+                    </span>? This cannot be undone.
+                </p>
+                <div className="flex justify-end gap-3">
+                    <button
+                        onClick={() => setPendingDelete(null)}
+                        className="px-4 py-2 text-xs font-normal border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white/50 hover:border-slate-400 dark:hover:border-white/30 transition-colors cursor-pointer"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={() => pendingDelete && deleteDashboard(pendingDelete)}
+                        className="px-4 py-2 text-xs font-normal border border-rose-500 bg-rose-500 text-white hover:bg-rose-600 hover:border-rose-600 transition-colors cursor-pointer"
+                    >
+                        Delete
+                    </button>
+                </div>
+            </Modal>
         </div>
     );
 };
