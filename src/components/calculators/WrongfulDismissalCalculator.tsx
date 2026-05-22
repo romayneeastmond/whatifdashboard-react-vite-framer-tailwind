@@ -201,7 +201,10 @@ export const WrongfulDismissalCalculator = () => {
                             <ButtonGroup label="Availability of Similar Work" options={AVAILABILITY} value={data.fieldAvailability} onChange={v => update({ fieldAvailability: v })} />
                         </CardContent>
                     </Card>
+                </div>
 
+                {/* Results */}
+                <div className="space-y-6">
                     <Card>
                         <CardHeader>
                             <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Circumstances</h3>
@@ -244,10 +247,7 @@ export const WrongfulDismissalCalculator = () => {
                             )}
                         </CardContent>
                     </Card>
-                </div>
 
-                {/* Results */}
-                <div className="space-y-6">
                     <Card variant="summary">
                         <CardContent>
                             <div className="flex justify-between items-end">

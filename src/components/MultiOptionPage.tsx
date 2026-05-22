@@ -69,7 +69,7 @@ export const MultiOptionPage = () => {
                     Select calculators to display
                 </p>
                 <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2">
-                    {REGISTRY.map(calc => {
+                    {[...REGISTRY].sort((a, b) => a.label.localeCompare(b.label)).map(calc => {
                         const Icon = calc.icon;
                         const active = selected.includes(calc.id);
                         return (

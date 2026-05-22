@@ -120,26 +120,6 @@ export const CareerPathCalculator = () => {
 
                 {/* Chart + summary */}
                 <div className="space-y-6">
-                    <Card variant="summary">
-                        <CardContent>
-                            <div className="flex justify-between items-end">
-                                <div>
-                                    <p className="text-white/60 text-[10px] uppercase tracking-[0.3em] font-normal mb-1">Stay & Promote — Year {data.yearsToModel}</p>
-                                    <p className="text-4xl font-light tracking-tighter font-sans">
-                                        {fmtShort(last.salary)}
-                                        <span className="text-sm border-l border-white/20 ml-3 pl-3 text-white/40">/ yr</span>
-                                    </p>
-                                    <p className="text-white/40 text-[10px] mt-1 font-normal">Lifetime earnings: {fmtShort(last.lifetime)}</p>
-                                </div>
-                                <div className="text-right">
-                                    <p className="text-white/40 text-[10px] uppercase tracking-widest font-normal mb-1">Job Hop — Year {data.yearsToModel}</p>
-                                    <p className="text-xl font-light tracking-tighter text-white/90">{fmtShort(lastHop.salary)}</p>
-                                    <p className="text-white/40 text-[10px] mt-1 font-normal">Lifetime: {fmtShort(lastHop.lifetime)}</p>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-
                     <Card>
                         <CardHeader>
                             <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Salary Projection</h3>
@@ -170,6 +150,26 @@ export const CareerPathCalculator = () => {
                                     <Area type="monotone" dataKey="Job Hop"        stroke="var(--chart-secondary)" strokeWidth={2} fill="url(#gradHop)"  dot={false} />
                                 </AreaChart>
                             </ResponsiveContainer>
+                        </CardContent>
+                    </Card>
+
+                    <Card variant="summary">
+                        <CardContent>
+                            <div className="flex justify-between items-end">
+                                <div>
+                                    <p className="text-white/60 text-[10px] uppercase tracking-[0.3em] font-normal mb-1">Stay & Promote — Year {data.yearsToModel}</p>
+                                    <p className="text-4xl font-light tracking-tighter font-sans">
+                                        {fmtShort(last.salary)}
+                                        <span className="text-sm border-l border-white/20 ml-3 pl-3 text-white/40">/ yr</span>
+                                    </p>
+                                    <p className="text-white/40 text-[10px] mt-1 font-normal">Lifetime earnings: {fmtShort(last.lifetime)}</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-white/40 text-[10px] uppercase tracking-widest font-normal mb-1">Job Hop — Year {data.yearsToModel}</p>
+                                    <p className="text-xl font-light tracking-tighter text-white/90">{fmtShort(lastHop.salary)}</p>
+                                    <p className="text-white/40 text-[10px] mt-1 font-normal">Lifetime: {fmtShort(lastHop.lifetime)}</p>
+                                </div>
+                            </div>
                         </CardContent>
                     </Card>
                 </div>

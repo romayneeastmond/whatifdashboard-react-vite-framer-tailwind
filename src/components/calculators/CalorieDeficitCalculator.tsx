@@ -210,6 +210,21 @@ export const CalorieDeficitCalculator = () => {
 
                 {/* Results */}
                 <div className="space-y-6">
+                    {/* Goal selector */}
+                    <Card>
+                        <CardHeader>
+                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Weekly Loss Goal</h3>
+                        </CardHeader>
+                        <CardContent>
+                            <ButtonGroup label="" options={WEEKLY_GOALS} value={data.weeklyGoal} onChange={v => update({ weeklyGoal: v })} />
+                            {!results.safe && (
+                                <p className="text-[11px] text-amber-600 dark:text-amber-400 mt-2">
+                                    This goal would bring your food intake below 1,200 kcal/day. Target has been adjusted to the safe minimum.
+                                </p>
+                            )}
+                        </CardContent>
+                    </Card>
+
                     <Card variant="summary">
                         <CardContent>
                             <div className="flex justify-between items-end">
@@ -231,21 +246,6 @@ export const CalorieDeficitCalculator = () => {
                                     </div>
                                 )}
                             </div>
-                        </CardContent>
-                    </Card>
-
-                    {/* Goal selector */}
-                    <Card>
-                        <CardHeader>
-                            <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Weekly Loss Goal</h3>
-                        </CardHeader>
-                        <CardContent>
-                            <ButtonGroup label="" options={WEEKLY_GOALS} value={data.weeklyGoal} onChange={v => update({ weeklyGoal: v })} />
-                            {!results.safe && (
-                                <p className="text-[11px] text-amber-600 dark:text-amber-400 mt-2">
-                                    This goal would bring your food intake below 1,200 kcal/day. Target has been adjusted to the safe minimum.
-                                </p>
-                            )}
                         </CardContent>
                     </Card>
                 </div>
