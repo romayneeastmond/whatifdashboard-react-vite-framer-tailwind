@@ -6,6 +6,13 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://placeholder.example.com/categories</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Finance -->
+  <url>
     <loc>https://placeholder.example.com/salary</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -26,22 +33,109 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://placeholder.example.com/time</loc>
+    <loc>https://placeholder.example.com/debt</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Career -->
+  <url>
+    <loc>https://placeholder.example.com/careerpath</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Legal -->
   <url>
     <loc>https://placeholder.example.com/bardal</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://placeholder.example.com/debt</loc>
+    <loc>https://placeholder.example.com/wrongfuldismissal</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://placeholder.example.com/severanceei</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Fitness -->
+  <url>
+    <loc>https://placeholder.example.com/weightloss</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://placeholder.example.com/protein</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://placeholder.example.com/calorie</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Productivity -->
+  <url>
+    <loc>https://placeholder.example.com/time</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://placeholder.example.com/daysbetween</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Multi-dashboard -->
+  <url>
     <loc>https://placeholder.example.com/multi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog -->
+  <url>
+    <loc>https://placeholder.example.com/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://placeholder.example.com/blog/laid-off-heres-what-youre-actually-owed-in-canada</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://placeholder.example.com/blog/what-your-severance-package-should-really-include</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://placeholder.example.com/blog/career-path-projection-job-hopping-vs-staying-put</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://placeholder.example.com/blog/setting-smart-financial-goals-that-actually-stick</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://placeholder.example.com/blog/master-your-salary-calculator-a-beginners-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://placeholder.example.com/blog/the-debt-repayment-strategy-that-saved-me-10000</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://placeholder.example.com/blog/compound-interest-the-eighth-wonder-of-the-world</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

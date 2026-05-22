@@ -58,7 +58,23 @@ Whenever a new calculator is added to this project:
      { filename: 'Calculator Name.md', storageKey: 'my_calculator_key', render: renderMyCalculator },
      ```
 
-4. Add the calculator to the MCP / RAG JSON export in the same file (`src/utils/exportMarkdown.ts`):
+5. Add the calculator to `public/sitemap.xml`:
+   - Add a `<url>` block under the appropriate category comment, using the same path as the route:
+     ```xml
+     <url>
+       <loc>https://placeholder.example.com/my-calculator</loc>
+       <changefreq>monthly</changefreq>
+       <priority>0.8</priority>
+     </url>
+     ```
+
+6. Add the calculator to `public/llms.txt`:
+   - Add a bullet under the matching category section:
+     ```
+     - [Calculator Name](/my-calculator) — One-line description of what it does.
+     ```
+
+7. Add the calculator to the MCP / RAG JSON export in the same file (`src/utils/exportMarkdown.ts`):
    - Write a `dataFrom<Name>` function returning a `SingleEntry` (`{ inputs: KV; results: KV }`) for single-object calculators, or `ProfileEntry[]` (`{ profile: string; inputs: KV; results: KV }[]`) for profile-array calculators. All values must be formatted strings (currency, percentages, units) — not raw numbers.
    - Add a matching entry to the `DATA_MAP` array near the bottom of the file, before the `exportMcpRag` function:
      ```ts
@@ -139,7 +155,23 @@ export default body;
    - **`<dl>` / `<dt>` / `<dd>` structure**: Required for the FAQ — do not use `<h3>` + `<p>` pairs.
    - Populate the calculator links section with every calculator relevant to the post's topic. Use the paths and names from the **Calculators** section above.
 
-3. Register the new post in `src/App.tsx`:
+3. Add the post to `public/sitemap.xml`:
+   - Append a `<url>` block in the Blog section:
+     ```xml
+     <url>
+       <loc>https://placeholder.example.com/blog/post-slug-here</loc>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+     </url>
+     ```
+
+4. Add the post to `public/llms.txt`:
+   - Append a bullet in the Blog section:
+     ```
+     - [Post Title Here](/blog/post-slug-here)
+     ```
+
+5. Register the new post in `src/App.tsx`:
    - Import the body: `import yourTopicBody from './components/BlogPosts/YourTopicBlogPost';`
    - Add a `<Route>` inside the blog routes block:
      ```tsx

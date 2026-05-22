@@ -1,0 +1,46 @@
+# What If Dashboard
+
+> A free suite of interactive "what if" calculators and financial planning tools. Users explore scenarios across finance, career, legal, fitness, and productivity — adjusting inputs and instantly seeing projected outcomes.
+
+## Calculators
+
+### Finance
+- [Salary & Taxes](/salary) — Model take-home pay across multiple salary scenarios with tax breakdowns.
+- [Mortgage Equity](/mortgage) — Project equity growth, amortization, and prepayment impact.
+- [Wealth Growth](/investing) — Compound interest and investment growth over time.
+- [Goals Tracking](/goals) — Track progress toward multiple savings and financial goals.
+- [Debt Repayment](/debt) — Compare avalanche vs. snowball strategies across multiple debts.
+
+### Career
+- [Career Path Projection](/careerpath) — Project lifetime earnings across job-hopping vs. staying-put scenarios.
+
+### Legal
+- [Bardal Factor](/bardal) — Estimate wrongful dismissal notice periods using Canadian Bardal factors.
+- [Wrongful Dismissal](/wrongfuldismissal) — Calculate reasonable notice and damages for wrongful dismissal claims.
+- [Severance & EI](/severanceei) — Estimate severance pay and Employment Insurance entitlements after layoff.
+
+### Fitness
+- [Weight Loss](/weightloss) — Project weight loss timelines based on calorie deficit and activity.
+- [Protein Intake](/protein) — Calculate daily protein targets by body weight and fitness goal.
+- [Calorie Deficit Planner](/calorie) — Plan calorie deficits and model fat-loss outcomes.
+
+### Productivity
+- [Time Allocation](/time) — Visualize how time is spent across multiple life areas.
+- [Days Between](/daysbetween) — Calculate exact days, weeks, and months between two dates.
+
+### Multi-Dashboard
+- [Compare Scenarios](/multi) — View and compare outputs from multiple calculators side by side.
+
+## Blog
+
+- [Laid Off? Here's What You're Actually Owed in Canada](/blog/laid-off-heres-what-youre-actually-owed-in-canada)
+- [What Your Severance Package Should Really Include](/blog/what-your-severance-package-should-really-include)
+- [Career Path Projection: Job-Hopping vs. Staying Put](/blog/career-path-projection-job-hopping-vs-staying-put)
+- [Setting SMART Financial Goals That Actually Stick](/blog/setting-smart-financial-goals-that-actually-stick)
+- [Master Your Salary Calculator: A Beginner's Guide](/blog/master-your-salary-calculator-a-beginners-guide)
+- [The Debt Repayment Strategy That Saved Me $10,000](/blog/the-debt-repayment-strategy-that-saved-me-10000)
+- [Compound Interest: The Eighth Wonder of the World](/blog/compound-interest-the-eighth-wonder-of-the-world)
+
+## About
+
+All calculators run entirely in the browser — no data is sent to a server. Results are stored locally in the user's browser and can be exported to Markdown or JSON for use with note-taking apps and AI tools.
