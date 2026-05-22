@@ -5,7 +5,7 @@ import {
     Wallet, Home, BarChart3, Target, CreditCard,
     Flame, Dumbbell, Utensils,
     Clock, CalendarDays,
-    Scale, ShieldAlert,
+    Scale, ShieldAlert, Banknote,
     TrendingUp,
     ArrowRight,
 } from 'lucide-react';
@@ -135,6 +135,14 @@ const CATEGORIES: Category[] = [
                 color: 'text-rose-700 dark:text-rose-400',
                 bg: 'bg-rose-50 dark:bg-rose-950/40',
                 description: 'Estimate wrongful dismissal damages. Calculates reasonable notice, bad faith damages, mitigation deductions, a typical settlement range, and net after legal fees.',
+            },
+            {
+                path: '/severanceei',
+                label: 'Severance & EI Estimator',
+                icon: Banknote,
+                color: 'text-cyan-600 dark:text-cyan-400',
+                bg: 'bg-cyan-50 dark:bg-cyan-950/40',
+                description: 'Estimate your Canadian severance package and Employment Insurance benefits after a job loss. Calculates ESA termination and severance pay by province, EI eligibility, weekly benefit, duration, and your total income runway.',
             },
         ],
     },

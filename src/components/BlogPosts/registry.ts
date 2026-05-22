@@ -2,6 +2,14 @@ import type { BlogPostProps } from '../../types';
 
 export const BLOG_POSTS: BlogPostProps[] = [
     {
+        title: 'Laid Off? Here\'s What You\'re Actually Owed in Canada',
+        excerpt: 'Understand your ESA termination pay, severance pay, and EI entitlements after a layoff — and how to calculate what comes next.',
+        category: 'Legal',
+        date: 'May 22, 2026',
+        dateISO: '2026-05-22',
+        href: '/blog/laid-off-heres-what-youre-actually-owed-in-canada',
+    },
+    {
         title: 'What Your Severance Package Should Really Include',
         excerpt: "Know your worth when facing potential layoffs. Use our Bardal Factor and wrongful dismissal calculators to understand your legal entitlements.",
         category: 'Legal',

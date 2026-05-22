@@ -26,6 +26,7 @@ Live demo hosted on Vercel [What-If Dashboard](https://whatifdashboard-react-vit
   - **Calorie Deficit Planner**: Plan how to achieve a calorie deficit by splitting it between diet and exercise. Compare conservative, moderate, and aggressive weekly loss strategies side by side.
   - **Career Path Projection**: Model salary growth over 5–40 years. Compare staying in your current role (with periodic promotions) against job-hopping for salary bumps, and see cumulative lifetime earnings for each path.
   - **Wrongful Dismissal**: Estimate wrongful dismissal damages under Canadian employment law. Calculates common law reasonable notice (Bardal), Ontario ESA minimums, bad faith/Wallace damages, mitigation deductions, a typical settlement range, and estimated net after legal fees.
+  - **Severance & EI Estimator**: Estimate your Canadian severance package and Employment Insurance benefits after a job loss. Calculates ESA termination pay and severance pay by province, EI eligibility based on insurable hours and regional unemployment rate, weekly benefit amount, benefit duration, and your combined income runway.
 - **🌓 Dynamic Themes**: Fully responsive dark and light modes with a neutral, professional aesthetic.
 - **💾 Persistence**: Automatically saves your progress to `localStorage` so your data remains across reloads and sessions.
 - **🖨️ Professional Reporting**: Optimized print-only CSS for generating clean, white-background PDF or physical reports.

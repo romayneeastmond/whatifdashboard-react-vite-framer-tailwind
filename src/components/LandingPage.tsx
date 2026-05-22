@@ -1,7 +1,7 @@
 ﻿
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert } from 'lucide-react';
+import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert, Banknote } from 'lucide-react';
 import { useState } from 'react';
 
 const TOOLS = [
@@ -123,6 +123,15 @@ const TOOLS = [
             'Estimate your wrongful dismissal damages under Canadian employment law. Calculates common law notice, ESA minimums, bad faith damages, mitigation deductions, and a typical settlement range.',
     },
     {
+        path: '/severanceei',
+        label: 'Severance & EI Estimator',
+        icon: Banknote,
+        color: 'text-cyan-600 dark:text-cyan-400',
+        bg: 'bg-cyan-50 dark:bg-cyan-950/40',
+        description:
+            'Estimate your Canadian severance package and Employment Insurance benefits after a job loss. Calculates ESA termination and severance pay by province, EI eligibility, weekly benefit, duration, and your total income runway.',
+    },
+    {
         path: '/multi',
         label: 'Multi-Option Dashboard',
         icon: LayoutGrid,
@@ -184,7 +193,7 @@ const CATEGORIES = [
     { name: 'Career',      color: 'text-teal-600 dark:text-teal-400',    paths: ['/careerpath'] },
     { name: 'Finance',    color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/goals', '/mortgage', '/salary', '/investing'] },
     { name: 'Fitness',    color: 'text-orange-600 dark:text-orange-400', paths: ['/calorie', '/protein', '/weightloss'] },
-    { name: 'Legal',      color: 'text-slate-600 dark:text-slate-400',   paths: ['/bardal', '/wrongfuldismissal'] },
+    { name: 'Legal',      color: 'text-slate-600 dark:text-slate-400',   paths: ['/bardal', '/wrongfuldismissal', '/severanceei'] },
     { name: 'Productivity', color: 'text-amber-600 dark:text-amber-400', paths: ['/daysbetween', '/time'] },
 ];
 

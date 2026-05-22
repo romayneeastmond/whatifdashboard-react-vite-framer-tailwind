@@ -28,6 +28,7 @@ import {
 	Utensils,
 	TrendingUp,
 	ShieldAlert,
+	Banknote,
 } from 'lucide-react';
 import { SalaryCalculator } from './components/calculators/SalaryCalculator';
 import { MortgageCalculator } from './components/calculators/MortgageCalculator';
@@ -45,6 +46,7 @@ import { LandingPage } from './components/LandingPage';
 import { CalorieDeficitCalculator } from './components/calculators/CalorieDeficitCalculator';
 import { CareerPathCalculator } from './components/calculators/CareerPathCalculator';
 import { WrongfulDismissalCalculator } from './components/calculators/WrongfulDismissalCalculator';
+import { SeveranceEICalculator } from './components/calculators/SeveranceEICalculator';
 import { CookieBanner } from './components/CookieBanner';
 import { BlogPage } from './components/BlogPage';
 import { BlogPostPage } from './components/BlogPostPage';
@@ -55,6 +57,7 @@ import goalsBody from './components/BlogPosts/GoalsBlogPost';
 import salaryBody from './components/BlogPosts/SalaryBlogPost';
 import debtBody from './components/BlogPosts/DebtBlogPost';
 import investmentBody from './components/BlogPosts/InvestmentBlogPost';
+import severanceEIBody from './components/BlogPosts/SeveranceEIBlogPost';
 import { cn } from './lib/utils';
 
 const NAV_ITEMS = [
@@ -79,6 +82,7 @@ const MORE_ITEMS: MoreEntry[] = [
 	{ path: '/time', label: 'Time Allocation', icon: Clock },
 	{ path: '/weightloss', label: 'Weight Loss', icon: Flame },
 	{ path: '/wrongfuldismissal', label: 'Wrongful Dismissal', icon: ShieldAlert },
+	{ path: '/severanceei', label: 'Severance & EI', icon: Banknote },
 	{ divider: true },
 	{ path: '/multi', label: 'Multi-Option', icon: LayoutGrid },
 	{ path: '/categories', label: 'Categories', icon: FolderOpen },
@@ -219,7 +223,7 @@ const App = () => {
 		}
 	}, [isDarkMode]);
 
-	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/calorie', '/careerpath', '/wrongfuldismissal', '/multi', '/categories', '/blog'];
+	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/calorie', '/careerpath', '/wrongfuldismissal', '/severanceei', '/multi', '/categories', '/blog'];
 
 	React.useEffect(() => {
 		let styleEl: HTMLStyleElement | null = null;
@@ -407,7 +411,7 @@ const App = () => {
 						isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
 					)}
 				>
-					<div className="p-8">
+					<div className="p-8 h-full overflow-y-auto">
 						<div className="mb-12 flex justify-between items-center">
 							<Link
 								to="/"
@@ -523,6 +527,7 @@ const App = () => {
 								<Route path="/calorie" element={<CalorieDeficitCalculator />} />
 								<Route path="/careerpath" element={<CareerPathCalculator />} />
 								<Route path="/wrongfuldismissal" element={<WrongfulDismissalCalculator />} />
+								<Route path="/severanceei" element={<SeveranceEICalculator />} />
 								<Route path="/multi" element={<MultiOptionPage />} />
 								<Route path="/categories" element={<CategoriesPage />} />
 								<Route path="/blog" element={<BlogPage />} />
@@ -532,6 +537,7 @@ const App = () => {
 								<Route path="/blog/master-your-salary-calculator-a-beginners-guide" element={<BlogPostPage body={salaryBody} />} />
 								<Route path="/blog/the-debt-repayment-strategy-that-saved-me-10000" element={<BlogPostPage body={debtBody} />} />
 								<Route path="/blog/compound-interest-the-eighth-wonder-of-the-world" element={<BlogPostPage body={investmentBody} />} />
+								<Route path="/blog/laid-off-heres-what-youre-actually-owed-in-canada" element={<BlogPostPage body={severanceEIBody} />} />
 							</Routes>
 						</motion.div>
 					</AnimatePresence>
@@ -560,7 +566,7 @@ const App = () => {
 										<span>Export</span>
 									</button>
 
-									<label className="flex items-center gap-2 text-slate-400 hover:text-black dark:text-white/30 dark:hover:text-white transition-colors cursor-pointer">
+									<label className="flex items-center gap-2 normal-case text-slate-400 hover:text-black dark:text-white/30 dark:hover:text-white transition-colors cursor-pointer">
 										<Upload size={12} />
 										<span>Import</span>
 										<input type="file" accept=".json" onChange={handleImport} className="hidden" />

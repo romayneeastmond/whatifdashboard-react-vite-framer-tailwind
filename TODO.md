@@ -26,7 +26,7 @@
 - Rent vs Buy Calculator
 - Emergency Fund Runway
 - Job Offer Comparator
-- Severance & EI Estimator
+- ~~Severance & EI Estimator~~ ✓
 - Side Hustle Profitability
 - Inflation Impact Calculator
 - Cost of Delay Calculator

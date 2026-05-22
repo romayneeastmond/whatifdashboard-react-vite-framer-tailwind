@@ -1,7 +1,7 @@
 ﻿
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Wallet, Home, BarChart3, Target, Clock, Scale, CreditCard, Check, Dumbbell, Flame, CalendarDays, Utensils, TrendingUp, ShieldAlert } from 'lucide-react';
+import { Wallet, Home, BarChart3, Target, Clock, Scale, CreditCard, Check, Dumbbell, Flame, CalendarDays, Utensils, TrendingUp, ShieldAlert, Banknote } from 'lucide-react';
 import { SalaryCalculator } from './calculators/SalaryCalculator';
 import { MortgageCalculator } from './calculators/MortgageCalculator';
 import { InvestmentCalculator } from './calculators/InvestmentCalculator';
@@ -15,6 +15,7 @@ import { DaysBetweenCalculator } from './calculators/DaysBetweenCalculator';
 import { CalorieDeficitCalculator } from './calculators/CalorieDeficitCalculator';
 import { CareerPathCalculator } from './calculators/CareerPathCalculator';
 import { WrongfulDismissalCalculator } from './calculators/WrongfulDismissalCalculator';
+import { SeveranceEICalculator } from './calculators/SeveranceEICalculator';
 import { cn } from '../lib/utils';
 
 const REGISTRY = [
@@ -31,6 +32,7 @@ const REGISTRY = [
     { id: 'calorie',            label: 'Calorie Deficit',      icon: Utensils,    component: CalorieDeficitCalculator   },
     { id: 'careerpath',         label: 'Career Path',          icon: TrendingUp,  component: CareerPathCalculator       },
     { id: 'wrongfuldismissal',  label: 'Wrongful Dismissal',   icon: ShieldAlert, component: WrongfulDismissalCalculator},
+    { id: 'severanceei',        label: 'Severance & EI',       icon: Banknote,    component: SeveranceEICalculator      },
 ] as const;
 
 type CalcId = typeof REGISTRY[number]['id'];
