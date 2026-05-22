@@ -76,7 +76,7 @@ const ButtonGroup = <T extends string>({
     );
 };
 
-export const ProteinCalculator = () => {
+export const ProteinCalculator = ({ compact }: { compact?: boolean }) => {
     const [data, setData] = React.useState<ProteinData>(() => {
         try {
             const saved = localStorage.getItem('protein_data');
@@ -248,37 +248,41 @@ export const ProteinCalculator = () => {
             </div>
 
             {/* Detail table */}
-            <Card>
-                <CardHeader>
-                    <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
-                        Calculation Detail
-                    </h3>
-                </CardHeader>
-                <CardContent>
-                    <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">
-                        {[
-                            { label: 'Body Weight', value: `${results.weightKgRounded} kg` },
-                            { label: 'Protein Rate', value: `${results.rateGPerKg.toFixed(2)} g per kg` },
-                            { label: 'Daily Protein (target)', value: `${results.proteinG} g` },
-                            { label: 'Daily Protein (range)', value: `${results.proteinLow} – ${results.proteinHigh} g` },
-                            { label: 'Protein Scoops (target)', value: `${results.scoops} scoops` },
-                            { label: 'Protein Scoops (range)', value: `${results.scoopsLow} – ${results.scoopsHigh} scoops` },
-                        ].map(({ label, value }) => (
-                            <div key={label} className="flex justify-between items-center py-3">
-                                <span className="text-slate-500 dark:text-white/40 text-xs uppercase tracking-wider">{label}</span>
-                                <span className="font-mono text-slate-900 dark:text-white text-sm">{value}</span>
-                            </div>
-                        ))}
-                    </div>
-                </CardContent>
-            </Card>
+            {!compact && (
+                <Card>
+                    <CardHeader>
+                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                            Calculation Detail
+                        </h3>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">
+                            {[
+                                { label: 'Body Weight', value: `${results.weightKgRounded} kg` },
+                                { label: 'Protein Rate', value: `${results.rateGPerKg.toFixed(2)} g per kg` },
+                                { label: 'Daily Protein (target)', value: `${results.proteinG} g` },
+                                { label: 'Daily Protein (range)', value: `${results.proteinLow} – ${results.proteinHigh} g` },
+                                { label: 'Protein Scoops (target)', value: `${results.scoops} scoops` },
+                                { label: 'Protein Scoops (range)', value: `${results.scoopsLow} – ${results.scoopsHigh} scoops` },
+                            ].map(({ label, value }) => (
+                                <div key={label} className="flex justify-between items-center py-3">
+                                    <span className="text-slate-500 dark:text-white/40 text-xs uppercase tracking-wider">{label}</span>
+                                    <span className="font-mono text-slate-900 dark:text-white text-sm">{value}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
 
-            <p className="text-[11px] text-slate-400 dark:text-white/25 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-6">
-                <strong className="text-slate-500 dark:text-white/40">Note:</strong> Protein targets are estimates based on general
-                sports nutrition and dietary guidelines (0.8–2.1 g/kg). A "scoop" is assumed to be {SCOOP_GRAMS} g of protein powder.
-                Older adults (50+) receive an upward adjustment to offset age-related muscle loss. Consult a registered dietitian
-                for personalized guidance.
-            </p>
+            {!compact && (
+                <p className="text-[11px] text-slate-400 dark:text-white/25 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-6">
+                    <strong className="text-slate-500 dark:text-white/40">Note:</strong> Protein targets are estimates based on general
+                    sports nutrition and dietary guidelines (0.8–2.1 g/kg). A "scoop" is assumed to be {SCOOP_GRAMS} g of protein powder.
+                    Older adults (50+) receive an upward adjustment to offset age-related muscle loss. Consult a registered dietitian
+                    for personalized guidance.
+                </p>
+            )}
         </div>
     );
 };

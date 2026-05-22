@@ -90,7 +90,7 @@ const ButtonGroup = <T extends string>({
     );
 };
 
-export const WeightLossCalculator = () => {
+export const WeightLossCalculator = ({ compact }: { compact?: boolean }) => {
     const [data, setData] = React.useState<WeightLossData>(() => {
         try {
             const saved = localStorage.getItem('weightloss_data');
@@ -354,43 +354,47 @@ export const WeightLossCalculator = () => {
             </div>
 
             {/* Detail table */}
-            <Card>
-                <CardHeader>
-                    <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
-                        Calculation Detail
-                    </h3>
-                </CardHeader>
-                <CardContent>
-                    <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">
-                        {[
-                            { label: 'Basal Metabolic Rate (BMR)', value: `${fmt(results.bmr)} kcal/day` },
-                            { label: 'Total Daily Energy Expenditure (TDEE)', value: `${fmt(results.tdee)} kcal/day` },
-                            { label: 'Recommended Deficit', value: `${fmt(results.deficit)} kcal/day` },
-                            { label: 'Daily Calorie Target', value: `${fmt(results.dailyTarget)} kcal/day` },
-                            { label: 'Estimated Weekly Loss', value: `${fmt(results.weeklyLossLbs, 2)} lbs  (${fmt(results.weeklyLossKg, 2)} kg)` },
-                            { label: 'Weeks to Goal', value: results.tolosKg > 0 ? `${results.weeksToGoal} weeks (~${results.monthsToGoal} months)` : '—' },
-                        ].map(({ label, value }) => (
-                            <div key={label} className="flex justify-between items-center py-3">
-                                <span className="text-slate-500 dark:text-white/40 text-xs uppercase tracking-wider">{label}</span>
-                                <span className="font-mono text-slate-900 dark:text-white text-sm">{value}</span>
-                            </div>
-                        ))}
-                    </div>
+            {!compact && (
+                <Card>
+                    <CardHeader>
+                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
+                            Calculation Detail
+                        </h3>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">
+                            {[
+                                { label: 'Basal Metabolic Rate (BMR)', value: `${fmt(results.bmr)} kcal/day` },
+                                { label: 'Total Daily Energy Expenditure (TDEE)', value: `${fmt(results.tdee)} kcal/day` },
+                                { label: 'Recommended Deficit', value: `${fmt(results.deficit)} kcal/day` },
+                                { label: 'Daily Calorie Target', value: `${fmt(results.dailyTarget)} kcal/day` },
+                                { label: 'Estimated Weekly Loss', value: `${fmt(results.weeklyLossLbs, 2)} lbs  (${fmt(results.weeklyLossKg, 2)} kg)` },
+                                { label: 'Weeks to Goal', value: results.tolosKg > 0 ? `${results.weeksToGoal} weeks (~${results.monthsToGoal} months)` : '—' },
+                            ].map(({ label, value }) => (
+                                <div key={label} className="flex justify-between items-center py-3">
+                                    <span className="text-slate-500 dark:text-white/40 text-xs uppercase tracking-wider">{label}</span>
+                                    <span className="font-mono text-slate-900 dark:text-white text-sm">{value}</span>
+                                </div>
+                            ))}
+                        </div>
 
-                    {!results.deficitSafe && (
-                        <p className="mt-4 text-[11px] text-amber-600 dark:text-amber-400">
-                            Your calculated deficit brings daily calories below 1,200 kcal. The target has been raised to maintain a safe minimum intake.
-                        </p>
-                    )}
-                </CardContent>
-            </Card>
+                        {!results.deficitSafe && (
+                            <p className="mt-4 text-[11px] text-amber-600 dark:text-amber-400">
+                                Your calculated deficit brings daily calories below 1,200 kcal. The target has been raised to maintain a safe minimum intake.
+                            </p>
+                        )}
+                    </CardContent>
+                </Card>
+            )}
 
-            <p className="text-[11px] text-slate-400 dark:text-white/25 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-6">
-                <strong className="text-slate-500 dark:text-white/40">Note:</strong> BMR is calculated using the Mifflin-St Jeor equation.
-                A deficit of 20% of TDEE is applied and clamped between 250–1,000 kcal for safety, so more active individuals sustain a proportionally larger deficit.
-                Daily intake is never recommended below 1,200 kcal. These are estimates — individual metabolism varies.
-                Consult a healthcare professional before starting any significant caloric restriction.
-            </p>
+            {!compact && (
+                <p className="text-[11px] text-slate-400 dark:text-white/25 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-6">
+                    <strong className="text-slate-500 dark:text-white/40">Note:</strong> BMR is calculated using the Mifflin-St Jeor equation.
+                    A deficit of 20% of TDEE is applied and clamped between 250–1,000 kcal for safety, so more active individuals sustain a proportionally larger deficit.
+                    Daily intake is never recommended below 1,200 kcal. These are estimates — individual metabolism varies.
+                    Consult a healthcare professional before starting any significant caloric restriction.
+                </p>
+            )}
         </div>
     );
 };

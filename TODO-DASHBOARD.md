@@ -37,22 +37,22 @@ Layout is stored on the dashboard object and toggled via a layout picker in the 
 
 ---
 
-## Feature 3: Compact Mode
+## ~~Feature 3: Compact Mode~~
 
-Compact mode hides summary/result tables and shows only the main inputs and/or chart for a cleaner dashboard view.
+~~Compact mode hides summary/result tables and shows only the main inputs and/or chart for a cleaner dashboard view.~~
 
-**Only these calculators need compact mode** (others are already input-focused):
+~~**Only these calculators need compact mode** (others are already input-focused):~~
 
-- Bardal Factor
-- Calorie Deficit
-- Career Path
-- Days Between
-- Debt Repayment
-- Protein Intake
-- Weight Loss
-- Wrongful Dismissal
+~~- Bardal Factor~~
+~~- Calorie Deficit~~
+~~- Career Path~~
+~~- Days Between~~
+~~- Debt Repayment~~
+~~- Protein Intake~~
+~~- Weight Loss~~
+~~- Wrongful Dismissal~~
 
-**Implementation:** Each of the above calculators receives a `compact?: boolean` prop. When `true`, the result/explanation table is hidden. The multi-option page passes `compact={layout !== 'full'}` (or based on a per-dashboard toggle).
+~~**Implementation:** Each of the above calculators receives a `compact?: boolean` prop. When `true`, the result/explanation table is hidden. The multi-option page passes `compact={layout !== 'full'}` (or based on a per-dashboard toggle).~~
 
 ---
 

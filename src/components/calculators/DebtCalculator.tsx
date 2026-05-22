@@ -55,11 +55,13 @@ const DebtScenarioView = ({
     onUpdate,
     onRemove,
     isOnly,
+    compact,
 }: {
     scenario: DebtScenario;
     onUpdate: (data: DebtData) => void;
     onRemove: () => void;
     isOnly: boolean;
+    compact?: boolean;
 }) => {
     const data    = scenario.data;
     const results = useMemo(() => calcResults(data), [data]);
@@ -203,7 +205,7 @@ const DebtScenarioView = ({
                 </div>
             </div>
 
-            {!results.impossible && (
+            {!results.impossible && !compact && (
                 <Card>
                     <CardHeader>
                         <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">
@@ -233,7 +235,7 @@ const DebtScenarioView = ({
     );
 };
 
-export const DebtCalculator = () => {
+export const DebtCalculator = ({ compact }: { compact?: boolean }) => {
     const [scenarios, setScenarios] = React.useState<DebtScenario[]>(() => {
         const saved = localStorage.getItem('debt_scenarios');
         if (saved) return JSON.parse(saved);
@@ -288,6 +290,7 @@ export const DebtCalculator = () => {
                             isOnly={scenarios.length === 1}
                             onUpdate={data => updateScenarioData(scenario.id, data)}
                             onRemove={() => removeScenario(scenario.id, scenario.name)}
+                            compact={compact}
                         />
                     </React.Fragment>
                 ))}

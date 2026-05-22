@@ -47,7 +47,7 @@ const project = (salary: number, years: number, annualRaise: number, eventEvery:
     return points;
 };
 
-export const CareerPathCalculator = () => {
+export const CareerPathCalculator = ({ compact }: { compact?: boolean }) => {
     const [data, setData] = React.useState<CareerData>(() => {
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
@@ -176,45 +176,49 @@ export const CareerPathCalculator = () => {
             </div>
 
             {/* Milestone table */}
-            <Card>
-                <CardHeader>
-                    <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Milestone Comparison</h3>
-                </CardHeader>
-                <CardContent>
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-xs">
-                            <thead>
-                                <tr className="border-b border-slate-100 dark:border-white/5">
-                                    <th className="text-left py-2 pr-6 text-[10px] uppercase tracking-widest text-slate-400 dark:text-white/30 font-normal">Year</th>
-                                    <th className="text-right py-2 pr-6 text-[10px] uppercase tracking-widest text-slate-400 dark:text-white/30 font-normal">No Growth</th>
-                                    <th className="text-right py-2 pr-6 text-[10px] uppercase tracking-widest text-[#387E67] dark:text-[#52B788] font-normal">Stay & Promote</th>
-                                    <th className="text-right py-2 text-[10px] uppercase tracking-widest text-slate-500 dark:text-white/40 font-normal">Job Hop</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
-                                {results.milestones.map(y => {
-                                    const stay = results.stayPoints[y];
-                                    const hop  = results.hopPoints[y];
-                                    const none = results.noGrowthPts[y];
-                                    return (
-                                        <tr key={y}>
-                                            <td className="py-3 pr-6 font-medium text-slate-700 dark:text-white/70">Year {y}</td>
-                                            <td className="py-3 pr-6 text-right font-mono text-slate-400 dark:text-white/30">{fmt(none.salary)}</td>
-                                            <td className="py-3 pr-6 text-right font-mono text-[#387E67] dark:text-[#52B788] font-medium">{fmt(stay.salary)}</td>
-                                            <td className="py-3 text-right font-mono text-slate-600 dark:text-white/50">{fmt(hop.salary)}</td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-                </CardContent>
-            </Card>
+            {!compact && (
+                <Card>
+                    <CardHeader>
+                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Milestone Comparison</h3>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-xs">
+                                <thead>
+                                    <tr className="border-b border-slate-100 dark:border-white/5">
+                                        <th className="text-left py-2 pr-6 text-[10px] uppercase tracking-widest text-slate-400 dark:text-white/30 font-normal">Year</th>
+                                        <th className="text-right py-2 pr-6 text-[10px] uppercase tracking-widest text-slate-400 dark:text-white/30 font-normal">No Growth</th>
+                                        <th className="text-right py-2 pr-6 text-[10px] uppercase tracking-widest text-[#387E67] dark:text-[#52B788] font-normal">Stay & Promote</th>
+                                        <th className="text-right py-2 text-[10px] uppercase tracking-widest text-slate-500 dark:text-white/40 font-normal">Job Hop</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+                                    {results.milestones.map(y => {
+                                        const stay = results.stayPoints[y];
+                                        const hop  = results.hopPoints[y];
+                                        const none = results.noGrowthPts[y];
+                                        return (
+                                            <tr key={y}>
+                                                <td className="py-3 pr-6 font-medium text-slate-700 dark:text-white/70">Year {y}</td>
+                                                <td className="py-3 pr-6 text-right font-mono text-slate-400 dark:text-white/30">{fmt(none.salary)}</td>
+                                                <td className="py-3 pr-6 text-right font-mono text-[#387E67] dark:text-[#52B788] font-medium">{fmt(stay.salary)}</td>
+                                                <td className="py-3 text-right font-mono text-slate-600 dark:text-white/50">{fmt(hop.salary)}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
 
-            <p className="text-[11px] text-slate-400 dark:text-white/25 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-6">
-                <strong className="text-slate-500 dark:text-white/40">Note:</strong> Projections assume consistent annual raises and events occurring on schedule. Real career trajectories vary based on
-                industry conditions, negotiation skill, company performance, and economic factors. Lifetime earnings are cumulative salary only and do not account for inflation, taxes, or investment growth.
-            </p>
+            {!compact && (
+                <p className="text-[11px] text-slate-400 dark:text-white/25 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-6">
+                    <strong className="text-slate-500 dark:text-white/40">Note:</strong> Projections assume consistent annual raises and events occurring on schedule. Real career trajectories vary based on
+                    industry conditions, negotiation skill, company performance, and economic factors. Lifetime earnings are cumulative salary only and do not account for inflation, taxes, or investment growth.
+                </p>
+            )}
         </div>
     );
 };

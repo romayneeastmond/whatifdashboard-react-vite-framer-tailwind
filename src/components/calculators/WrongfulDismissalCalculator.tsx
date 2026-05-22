@@ -130,7 +130,7 @@ const Toggle = ({ label, description, value, onChange }: { label: string; descri
     );
 };
 
-export const WrongfulDismissalCalculator = () => {
+export const WrongfulDismissalCalculator = ({ compact }: { compact?: boolean }) => {
     const [data, setData] = React.useState<WrongfulData>(() => {
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
@@ -282,42 +282,46 @@ export const WrongfulDismissalCalculator = () => {
             </div>
 
             {/* Full damages breakdown */}
-            <Card>
-                <CardHeader>
-                    <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Damages Breakdown</h3>
-                </CardHeader>
-                <CardContent>
-                    <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">
-                        {[
-                            { label: 'Reasonable Notice Period',           value: `${results.noticeMonths} months (range: ${results.noticeLow}–${results.noticeHigh})` },
-                            { label: 'Pay in Lieu of Notice',              value: fmt(results.payInLieu) },
-                            ...(results.constructiveAdder > 0 ? [{ label: 'Constructive Dismissal Uplift (+10%)', value: fmt(results.constructiveAdder) }] : []),
-                            ...(results.badFaithAdder > 0      ? [{ label: 'Bad Faith Damages (+2 mos)',          value: fmt(results.badFaithAdder) }] : []),
-                            { label: 'Total Damages (Gross)',              value: fmt(results.totalDamagesGross) },
-                            ...(results.mitigationDeduction > 0 ? [{ label: `Mitigation Deduction (${data.mitigationMonths} mos earned)`, value: `–${fmt(results.mitigationDeduction)}` }] : []),
-                            { label: 'Total Damages (Net)',                value: fmt(results.totalDamagesNet) },
-                            { label: data.feeType === 'contingency' ? `Legal Fees (${data.contingencyPct}% contingency)` : `Legal Fees (flat)`, value: `–${fmt(results.legalFees)}` },
-                            { label: 'Estimated Net After Fees',          value: fmt(results.netAfterLegal) },
-                        ].map(({ label, value }) => (
-                            <div key={label} className="flex justify-between items-center py-3">
-                                <span className="text-slate-500 dark:text-white/40 text-xs uppercase tracking-wider">{label}</span>
-                                <span className="font-mono text-slate-900 dark:text-white text-sm">{value}</span>
-                            </div>
-                        ))}
-                    </div>
-                    {results.cappedNote && (
-                        <p className="mt-4 text-[11px] text-amber-600 dark:text-amber-400">
-                            Notice period has been capped at {MAX_NOTICE} months. Courts rarely exceed this limit.
-                        </p>
-                    )}
-                </CardContent>
-            </Card>
+            {!compact && (
+                <Card>
+                    <CardHeader>
+                        <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Damages Breakdown</h3>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="divide-y divide-slate-100 dark:divide-white/5 text-sm">
+                            {[
+                                { label: 'Reasonable Notice Period',           value: `${results.noticeMonths} months (range: ${results.noticeLow}–${results.noticeHigh})` },
+                                { label: 'Pay in Lieu of Notice',              value: fmt(results.payInLieu) },
+                                ...(results.constructiveAdder > 0 ? [{ label: 'Constructive Dismissal Uplift (+10%)', value: fmt(results.constructiveAdder) }] : []),
+                                ...(results.badFaithAdder > 0      ? [{ label: 'Bad Faith Damages (+2 mos)',          value: fmt(results.badFaithAdder) }] : []),
+                                { label: 'Total Damages (Gross)',              value: fmt(results.totalDamagesGross) },
+                                ...(results.mitigationDeduction > 0 ? [{ label: `Mitigation Deduction (${data.mitigationMonths} mos earned)`, value: `–${fmt(results.mitigationDeduction)}` }] : []),
+                                { label: 'Total Damages (Net)',                value: fmt(results.totalDamagesNet) },
+                                { label: data.feeType === 'contingency' ? `Legal Fees (${data.contingencyPct}% contingency)` : `Legal Fees (flat)`, value: `–${fmt(results.legalFees)}` },
+                                { label: 'Estimated Net After Fees',          value: fmt(results.netAfterLegal) },
+                            ].map(({ label, value }) => (
+                                <div key={label} className="flex justify-between items-center py-3">
+                                    <span className="text-slate-500 dark:text-white/40 text-xs uppercase tracking-wider">{label}</span>
+                                    <span className="font-mono text-slate-900 dark:text-white text-sm">{value}</span>
+                                </div>
+                            ))}
+                        </div>
+                        {results.cappedNote && (
+                            <p className="mt-4 text-[11px] text-amber-600 dark:text-amber-400">
+                                Notice period has been capped at {MAX_NOTICE} months. Courts rarely exceed this limit.
+                            </p>
+                        )}
+                    </CardContent>
+                </Card>
+            )}
 
-            <p className="text-[11px] text-slate-400 dark:text-white/25 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-6">
-                <strong className="text-slate-500 dark:text-white/40">Legal notice:</strong> This calculator provides general estimates for wrongful dismissal damages based on common law reasonable notice principles.
-                Results are for informational purposes only and do not constitute legal advice. Actual entitlements vary by jurisdiction, contractual terms, and the specific facts of each case.
-                Consult a qualified employment lawyer in your jurisdiction before taking any action.
-            </p>
+            {!compact && (
+                <p className="text-[11px] text-slate-400 dark:text-white/25 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-6">
+                    <strong className="text-slate-500 dark:text-white/40">Legal notice:</strong> This calculator provides general estimates for wrongful dismissal damages based on common law reasonable notice principles.
+                    Results are for informational purposes only and do not constitute legal advice. Actual entitlements vary by jurisdiction, contractual terms, and the specific facts of each case.
+                    Consult a qualified employment lawyer in your jurisdiction before taking any action.
+                </p>
+            )}
         </div>
     );
 };

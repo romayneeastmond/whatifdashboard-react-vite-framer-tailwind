@@ -36,6 +36,7 @@ const REGISTRY = [
 type CalcId = typeof REGISTRY[number]['id'];
 
 const STORAGE_KEY = 'multi_option_selection';
+const COMPACT_KEY = 'multi_option_compact';
 
 const loadSelection = (): CalcId[] => {
     try {
@@ -48,10 +49,15 @@ const loadSelection = (): CalcId[] => {
 
 export const MultiOptionPage = () => {
     const [selected, setSelected] = React.useState<CalcId[]>(loadSelection);
+    const [compact, setCompact] = React.useState(() => localStorage.getItem(COMPACT_KEY) === 'true');
 
     React.useEffect(() => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(selected));
     }, [selected]);
+
+    React.useEffect(() => {
+        localStorage.setItem(COMPACT_KEY, String(compact));
+    }, [compact]);
 
     const toggle = (id: CalcId) => {
         setSelected(prev =>
@@ -65,7 +71,7 @@ export const MultiOptionPage = () => {
         <div className="space-y-10">
             {/* Selector */}
             <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400 dark:text-white/30 mb-4 font-normal">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400 dark:text-white/30 font-normal mb-4">
                     Select calculators to display
                 </p>
                 <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2">
@@ -93,6 +99,25 @@ export const MultiOptionPage = () => {
                 </div>
             </div>
 
+            {/* Options */}
+            <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400 dark:text-white/30 font-normal mb-4">
+                    Options
+                </p>
+                <button
+                    onClick={() => setCompact(c => !c)}
+                    className={cn(
+                        'flex items-center gap-2 px-3 py-1.5 text-[10px] uppercase tracking-widest font-normal border transition-all cursor-pointer',
+                        compact
+                            ? 'bg-[#387E67] dark:bg-[#52B788] border-[#387E67] dark:border-[#52B788] text-white'
+                            : 'bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 dark:text-white/40 hover:border-slate-400 dark:hover:border-white/30'
+                    )}
+                    aria-pressed={compact}
+                >
+                    Compact
+                </button>
+            </div>
+
             {selected.length === 0 && (
                 <div className="py-24 text-center border border-dashed border-slate-200 dark:border-white/8">
                     <p className="text-sm text-slate-400 dark:text-white/25">
@@ -104,7 +129,7 @@ export const MultiOptionPage = () => {
             {/* Rendered calculators */}
             <AnimatePresence mode="popLayout">
                 {activeCalcs.map((calc, i) => {
-                    const Component = calc.component;
+                    const Component = calc.component as React.ComponentType<{ compact?: boolean }>;
                     const Icon = calc.icon;
                     return (
                         <motion.div
@@ -130,7 +155,7 @@ export const MultiOptionPage = () => {
                                 </button>
                             </div>
 
-                            <Component />
+                            <Component compact={compact} />
 
                             {i < activeCalcs.length - 1 && (
                                 <div className="mt-16 border-t border-slate-100 dark:border-white/5" />

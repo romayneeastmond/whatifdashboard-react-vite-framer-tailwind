@@ -18,7 +18,7 @@ const defaultData = (): DaysBetweenData => {
 
 const fmt = (n: number) => n.toLocaleString(undefined, { maximumFractionDigits: 0 });
 
-export const DaysBetweenCalculator = () => {
+export const DaysBetweenCalculator = ({ compact }: { compact?: boolean }) => {
     const [data, setData] = React.useState<DaysBetweenData>(() => {
         try {
             const saved = localStorage.getItem('daysbetween_data');
@@ -199,7 +199,7 @@ export const DaysBetweenCalculator = () => {
             </div>
 
             {/* Detail table */}
-            {results && results.absDays > 0 && (
+            {!compact && results && results.absDays > 0 && (
                 <Card>
                     <CardHeader>
                         <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">

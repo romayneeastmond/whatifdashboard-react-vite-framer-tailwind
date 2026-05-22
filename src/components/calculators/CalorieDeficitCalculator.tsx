@@ -88,7 +88,7 @@ const ButtonGroup = <T extends string>({
     );
 };
 
-export const CalorieDeficitCalculator = () => {
+export const CalorieDeficitCalculator = ({ compact }: { compact?: boolean }) => {
     const [data, setData] = React.useState<CalorieData>(() => {
         try {
             const saved = localStorage.getItem('caloriedeficit_data');
@@ -252,7 +252,7 @@ export const CalorieDeficitCalculator = () => {
             </div>
 
             {/* Strategy comparison table */}
-            <Card>
+            {!compact && <Card>
                 <CardHeader>
                     <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Strategy Comparison</h3>
                 </CardHeader>
@@ -295,10 +295,10 @@ export const CalorieDeficitCalculator = () => {
                         </p>
                     )}
                 </CardContent>
-            </Card>
+            </Card>}
 
             {/* Detail */}
-            <Card>
+            {!compact && <Card>
                 <CardHeader>
                     <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Calculation Detail</h3>
                 </CardHeader>
@@ -319,13 +319,15 @@ export const CalorieDeficitCalculator = () => {
                         ))}
                     </div>
                 </CardContent>
-            </Card>
+            </Card>}
 
+            {!compact && (
             <p className="text-[11px] text-slate-400 dark:text-white/25 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-6">
                 <strong className="text-slate-500 dark:text-white/40">Note:</strong> BMR is calculated using the Mifflin-St Jeor equation. Daily food intake is never recommended below 1,200 kcal.
                 Exercise calories are subtracted from the required food reduction — increasing exercise lets you eat more while maintaining the same deficit.
                 These are estimates; individual metabolism varies. Consult a healthcare professional before starting any significant caloric restriction.
             </p>
+            )}
         </div>
     );
 };
