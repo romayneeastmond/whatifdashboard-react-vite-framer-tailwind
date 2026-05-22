@@ -1,5 +1,11 @@
 # Claude Instructions
 
+## Code Style
+
+- **No license headers.** Never add `@license`, `SPDX-License-Identifier`, or any license comment block to any file.
+- **Arrow syntax.** All functions and React functional components must use arrow syntax (`const Foo = () => {}`), not `function` declarations.
+- **Indentation.** Use 4 spaces for indentation (no tab characters).
+
 ## Calculators
 
 Whenever a new calculator is added to this project:

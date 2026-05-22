@@ -148,6 +148,7 @@
 - Mortgage/Debt → amortization table export (Excel/CSV)
 - Weight Loss Plan → printable PDF or MyFitnessPal-compatible format
 - Days Between / Time Allocation → Google Calendar / iCal (.ics) export
+- Offer exporting to Notion or Obsidian
 
 ## ~~Cross-Calculator Scenario Comparison~~ (tried, rejected)
 - NOTE: Per-calculator multi-person comparison already covers this. A global scenario just duplicates that without adding immediate visual feedback. Removed.
