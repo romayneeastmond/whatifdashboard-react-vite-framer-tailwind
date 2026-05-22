@@ -148,6 +148,10 @@ const FAQ = [
 		a: "Everything stays in your browser's localStorage — no account, no server, no database. Your numbers never leave your device.",
 	},
 	{
+		q: 'Is any data sent to a server?',
+		a: 'No. All calculations run entirely in your browser. Nothing is transmitted, tracked, or stored outside your own device.',
+	},
+	{
 		q: 'Can I lose my data?',
 		a: 'Yes, if you clear your browser data or switch browsers. Use the Export feature in the footer to save a backup file at any time.',
 	},
@@ -156,16 +160,16 @@ const FAQ = [
 		a: 'Clicking Export in the footer downloads a single JSON file containing all your saved inputs across every tool. Keep it anywhere you like.',
 	},
 	{
-		q: 'Can I use my exported data in Notion or Obsidian?',
-		a: 'Yes. The exported JSON file is plain, human-readable data. In Notion you can import it via a Notion integration or paste values manually. In Obsidian, drop the file into your vault and reference it from any note — community plugins like Dataview or JSON Importer can render the data inline.',
-	},
-	{
 		q: 'How does Import work?',
 		a: 'Clicking Import and selecting a previously exported JSON file restores all your inputs exactly as they were. This overwrites any current data, so export first if needed.',
 	},
 	{
-		q: 'Is any data sent to a server?',
-		a: 'No. All calculations run entirely in your browser. Nothing is transmitted, tracked, or stored outside your own device.',
+		q: 'Can I use my exported data in Notion or Obsidian?',
+		a: 'Yes. The exported JSON file is plain, human-readable data. In Notion you can import it via a Notion integration or paste values manually. In Obsidian, drop the file into your vault and reference it from any note — community plugins like Dataview or JSON Importer can render the data inline.',
+	},
+	{
+		q: 'Can I feed my data into an AI assistant or LLM?',
+		a: 'Yes. Use the "Export → MCP / RAG JSON" option in the footer. It produces a structured JSON file where each calculator\'s inputs and results are labelled and formatted as readable strings — ideal for pasting into a system prompt or uploading to an LLM context window. You can also load it into a retrieval-augmented generation (RAG) pipeline or an MCP server so that an AI assistant like Claude can answer questions about your finances, career, or health goals using your actual numbers.',
 	},
 ];
 

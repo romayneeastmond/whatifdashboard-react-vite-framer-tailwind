@@ -18,3 +18,9 @@ Create a boilerplate blog entry for the [Calculator Name] calculator. It should 
 
 ```
 
+## Using MCP / RAG Exported Data with a LLM Chat
+
+```
+I created my own life decision and financial modeling dashboard. I am going to upload the findings in Json format. Can you analyze, chart, and graph these findings? [Attach json file to conversation]
+
+```
