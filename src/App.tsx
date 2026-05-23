@@ -105,6 +105,93 @@ const MORE_PATHS = MORE_ITEMS
 	.filter((m): m is MoreNavItem => !('divider' in m))
 	.map(m => m.path);
 
+const CALCULATOR_LABELS: Record<string, string> = {
+	'/bardal': 'Bardal Factor',
+	'/calorie': 'Calorie Deficit Planner',
+	'/careerpath': 'Career Path Projection',
+	'/daysbetween': 'Days Between',
+	'/debt': 'Debt Repayment',
+	'/emergencyfund': 'Emergency Fund Runway',
+	'/goals': 'Goals Tracking',
+	'/investing': 'Wealth Growth',
+	'/layoffsurvival': 'Layoff Survival Simulator',
+	'/lowerpayingjob': 'Lower-Paying Job',
+	'/mortgage': 'Mortgage Equity',
+	'/protein': 'Protein Intake',
+	'/salary': 'Salary & Taxes',
+	'/severanceei': 'Severance & EI Estimator',
+	'/time': 'Time Allocation',
+	'/weightloss': 'Weight Loss',
+	'/wrongfuldismissal': 'Wrongful Dismissal',
+};
+
+const CATEGORIES_MAP = [
+	{ name: 'Career', paths: ['/careerpath', '/lowerpayingjob', '/salary'] },
+	{ name: 'Finance', paths: ['/debt', '/emergencyfund', '/goals', '/layoffsurvival', '/mortgage', '/investing'] },
+	{ name: 'Fitness', paths: ['/calorie', '/protein', '/weightloss'] },
+	{ name: 'Legal', paths: ['/bardal', '/wrongfuldismissal', '/severanceei'] },
+	{ name: 'Productivity', paths: ['/daysbetween', '/time'] },
+];
+
+const RelatedCategoryDropdown = ({ currentPath }: { currentPath: string }) => {
+	const [open, setOpen] = useState(false);
+	const ref = React.useRef<HTMLDivElement>(null);
+
+	const category = CATEGORIES_MAP.find(c => c.paths.includes(currentPath));
+
+	useEffect(() => {
+		const handler = (e: MouseEvent) => {
+			if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+		};
+		const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+		document.addEventListener('mousedown', handler);
+		document.addEventListener('keydown', onKey);
+		return () => { document.removeEventListener('mousedown', handler); document.removeEventListener('keydown', onKey); };
+	}, []);
+
+	if (!category) return null;
+
+	const siblings = category.paths.filter(p => p !== currentPath);
+
+	return (
+		<div ref={ref} className="relative flex items-center">
+			<button
+				onClick={() => setOpen(o => !o)}
+				aria-haspopup="true"
+				aria-expanded={open}
+				aria-label={`Related: ${category.name} calculators`}
+				className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] font-normal text-slate-500 dark:text-white/40 hover:text-[#387E67] dark:hover:text-[#52B788] border border-slate-200 dark:border-white/10 hover:border-[#387E67] dark:hover:border-[#52B788] transition-colors duration-200 cursor-pointer"
+			>
+				{category.name}
+				<ChevronDown size={11} className={cn('transition-transform duration-150', open && 'rotate-180')} />
+			</button>
+
+			<AnimatePresence>
+				{open && (
+					<motion.div
+						initial={{ opacity: 0, y: 4 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: 4 }}
+						transition={{ duration: 0.15 }}
+						className="absolute top-full right-0 mt-1 w-52 bg-white dark:bg-[#121212] border border-slate-200 dark:border-white/10 shadow-lg z-50 py-1"
+					>
+						{siblings.map(path => (
+							<Link
+								key={path}
+								to={path}
+								onClick={() => setOpen(false)}
+								className="flex items-center px-4 py-2.5 text-[11px] text-slate-600 dark:text-white/60 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors"
+							>
+								{CALCULATOR_LABELS[path] ?? path}
+							</Link>
+						))}
+					</motion.div>
+				)}
+			</AnimatePresence>
+		</div>
+	);
+};
+
 const BackToTop = () => {
 	const [visible, setVisible] = useState(false);
 
@@ -523,6 +610,7 @@ const App = () => {
 							<h1 id="page-title" className="text-2xl font-medium tracking-tight text-slate-900 dark:text-white">
 								{pageTitle}
 							</h1>
+							<RelatedCategoryDropdown currentPath={location.pathname} />
 						</header>
 					)}
 
