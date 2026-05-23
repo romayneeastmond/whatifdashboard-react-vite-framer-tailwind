@@ -68,7 +68,7 @@
 
 # Advanced “What If” Simulators
 
-- Layoff Survival Simulator
+- ~~Layoff Survival Simulator~~ ✓
 - What If I Move? Calculator
 - ~~What If I Take a Lower Paying Job?~~ ✓
 - ~~Career Path Projection~~ ✓

@@ -31,6 +31,7 @@ import {
 	Banknote,
 	Trash2,
 	TrendingDown,
+	LifeBuoy,
 } from 'lucide-react';
 import { exportNotion, exportObsidian, exportMcpRag } from './utils/exportMarkdown';
 import { BLOG_POSTS } from './components/BlogPosts/registry';
@@ -53,6 +54,7 @@ const CareerPathCalculator = React.lazy(() => import('./components/calculators/C
 const WrongfulDismissalCalculator = React.lazy(() => import('./components/calculators/WrongfulDismissalCalculator').then(m => ({ default: m.WrongfulDismissalCalculator })));
 const SeveranceEICalculator = React.lazy(() => import('./components/calculators/SeveranceEICalculator').then(m => ({ default: m.SeveranceEICalculator })));
 const LowerPayingJobCalculator = React.lazy(() => import('./components/calculators/LowerPayingJobCalculator').then(m => ({ default: m.LowerPayingJobCalculator })));
+const LayoffSurvivalCalculator = React.lazy(() => import('./components/calculators/LayoffSurvivalCalculator').then(m => ({ default: m.LayoffSurvivalCalculator })));
 const CookieBanner = React.lazy(() => import('./components/CookieBanner').then(m => ({ default: m.CookieBanner })));
 const BlogPage = React.lazy(() => import('./components/BlogPage').then(m => ({ default: m.BlogPage })));
 const BlogPostPage = React.lazy(() => import('./components/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
@@ -84,6 +86,7 @@ const MORE_ITEMS: MoreEntry[] = [
 	{ path: '/calorie', label: 'Calorie Deficit', icon: Utensils },
 	{ path: '/careerpath', label: 'Career Path', icon: TrendingUp },
 	{ path: '/daysbetween', label: 'Days Between', icon: CalendarDays },
+	{ path: '/layoffsurvival', label: 'Layoff Survival', icon: LifeBuoy },
 	{ path: '/lowerpayingjob', label: 'Lower-Paying Job', icon: TrendingDown },
 	{ path: '/protein', label: 'Protein Intake', icon: Dumbbell },
 	{ path: '/severanceei', label: 'Severance & EI', icon: Banknote },
@@ -546,6 +549,7 @@ const App = () => {
 								<Route path="/wrongfuldismissal" element={<WrongfulDismissalCalculator />} />
 								<Route path="/severanceei" element={<SeveranceEICalculator />} />
 								<Route path="/lowerpayingjob" element={<LowerPayingJobCalculator />} />
+								<Route path="/layoffsurvival" element={<LayoffSurvivalCalculator />} />
 								<Route path="/multi" element={<MultiOptionPage />} />
 								<Route path="/categories" element={<CategoriesPage />} />
 								<Route path="/blog" element={<BlogPage />} />

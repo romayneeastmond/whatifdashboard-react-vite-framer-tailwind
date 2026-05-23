@@ -6,7 +6,7 @@ import {
     Flame, Dumbbell, Utensils,
     Clock, CalendarDays,
     Scale, ShieldAlert, Banknote,
-    TrendingUp, TrendingDown,
+    TrendingUp, TrendingDown, LifeBuoy,
     ArrowRight,
 } from 'lucide-react';
 
@@ -91,6 +91,14 @@ const CATEGORIES: Category[] = [
                 color: 'text-violet-600 dark:text-violet-400',
                 bg: 'bg-violet-50 dark:bg-violet-950/40',
                 description: 'Project your investment portfolio over time. Tweak initial amount, monthly contributions, and expected return rate to visualize compounding growth.',
+            },
+            {
+                path: '/layoffsurvival',
+                label: 'Layoff Survival Simulator',
+                icon: LifeBuoy,
+                color: 'text-orange-600 dark:text-orange-400',
+                bg: 'bg-orange-50 dark:bg-orange-950/40',
+                description: 'Find out how long your savings and severance will last after a job loss. Model your runway, burn rate, and break-even income — then see how cutting expenses or adding side income extends your timeline.',
             },
         ],
     },

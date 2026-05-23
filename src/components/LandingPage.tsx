@@ -1,7 +1,7 @@
 ﻿
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert, Banknote, TrendingDown } from 'lucide-react';
+import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert, Banknote, TrendingDown, LifeBuoy } from 'lucide-react';
 import { useState } from 'react';
 
 const TOOLS = [
@@ -132,6 +132,15 @@ const TOOLS = [
 			'Compare your current salary against a lower-paying job offer. See the true financial cost of the pay cut including benefits, monthly surplus, and projected 10-year wealth difference.',
 	},
 	{
+		path: '/layoffsurvival',
+		label: 'Layoff Survival Simulator',
+		icon: LifeBuoy,
+		color: 'text-orange-600 dark:text-orange-400',
+		bg: 'bg-orange-50 dark:bg-orange-950/40',
+		description:
+			'Find out how long your savings and severance will last after a job loss. Model your runway, burn rate, and break-even income — then see how cutting expenses or adding side income extends your timeline.',
+	},
+	{
 		path: '/severanceei',
 		label: 'Severance & EI Estimator',
 		icon: Banknote,
@@ -208,7 +217,7 @@ const FaqItem = ({ q, a }: { q: string; a: string }) => {
 
 const CATEGORIES = [
 	{ name: 'Career', color: 'text-teal-600 dark:text-teal-400', paths: ['/careerpath', '/lowerpayingjob', '/salary'] },
-	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/goals', '/mortgage', '/investing'] },
+	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/goals', '/layoffsurvival', '/mortgage', '/investing'] },
 	{ name: 'Fitness', color: 'text-orange-600 dark:text-orange-400', paths: ['/calorie', '/protein', '/weightloss'] },
 	{ name: 'Legal', color: 'text-slate-600 dark:text-slate-400', paths: ['/bardal', '/wrongfuldismissal', '/severanceei'] },
 	{ name: 'Productivity', color: 'text-amber-600 dark:text-amber-400', paths: ['/daysbetween', '/time'] },

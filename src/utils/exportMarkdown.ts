@@ -865,6 +865,61 @@ const renderLowerPayingJob = (raw: string): string => {
     ].join('\n');
 };
 
+const renderLayoffSurvival = (raw: string): string => {
+    const d = JSON.parse(raw) as {
+        savings: number; severance: number; eiMonthly: number; eiDuration: number;
+        sideIncome: number; fixedExpenses: number; variableExpenses: number; expectedJobSearchMonths: number;
+    };
+    const monthlyExpenses = d.fixedExpenses + d.variableExpenses;
+    const survivalExpenses = d.fixedExpenses + d.variableExpenses * 0.7;
+    const simRunway = (varExp: number) => {
+        let bal = d.savings + d.severance;
+        for (let m = 1; m <= 360; m++) {
+            const inc = (m <= d.eiDuration ? d.eiMonthly : 0) + d.sideIncome;
+            bal += inc - (d.fixedExpenses + varExp);
+            if (bal <= 0) return m - 1;
+        }
+        return 60;
+    };
+    const runway = simRunway(d.variableExpenses);
+    const survivalRunway = simRunway(d.variableExpenses * 0.7);
+    const breakEvenIncome = monthlyExpenses - d.sideIncome;
+    const postEiBurnRate = monthlyExpenses - d.sideIncome;
+    return [
+        h3('Funds'),
+        table([
+            ['Current Savings', $(d.savings)],
+            ['Severance Received', $(d.severance)],
+            ['Starting Buffer', $(d.savings + d.severance)],
+        ]),
+        '',
+        h3('Income'),
+        table([
+            ['EI / Unemployment Benefit', `${$(d.eiMonthly)}/mo`],
+            ['EI Duration', `${d.eiDuration} months`],
+            ['Side Income', `${$(d.sideIncome)}/mo`],
+        ]),
+        '',
+        h3('Monthly Expenses'),
+        table([
+            ['Fixed Expenses', $(d.fixedExpenses)],
+            ['Variable Expenses', $(d.variableExpenses)],
+            ['Total Monthly Expenses', $(monthlyExpenses)],
+            ['Survival Mode Expenses (−30% variable)', $(survivalExpenses)],
+        ]),
+        '',
+        h3('Results'),
+        table([
+            ['Runway (current spending)', `${runway} months`],
+            ['Runway (survival mode)', `${survivalRunway} months`],
+            ['Break-Even Monthly Income Needed', $(breakEvenIncome)],
+            ['Post-EI Monthly Burn Rate', `${$(postEiBurnRate)}/mo`],
+            ['Expected Job Search Duration', `${d.expectedJobSearchMonths} months`],
+            ['Job Found Before Runway Ends', d.expectedJobSearchMonths <= runway ? 'Yes' : 'No'],
+        ]),
+    ].join('\n');
+};
+
 // ── zip builder ──────────────────────────────────────────────────────────────
 
 interface FileEntry {
@@ -889,6 +944,7 @@ const FILE_MAP: FileEntry[] = [
     { filename: 'Days Between.md',             storageKey: 'daysbetween_data',       render: renderDaysBetween },
     { filename: 'Career Path Projection.md',   storageKey: 'careerpath_data',        render: renderCareer },
     { filename: 'Lower-Paying Job.md',         storageKey: 'lowerpayingjob_data',    render: renderLowerPayingJob },
+    { filename: 'Layoff Survival.md',          storageKey: 'layoff_survival_data',   render: renderLayoffSurvival },
 ];
 
 const buildZip = async (frontmatter: string | null): Promise<Blob> => {
@@ -1365,6 +1421,45 @@ const dataFromLowerPayingJob = (raw: string): SingleEntry => {
     };
 };
 
+const dataFromLayoffSurvival = (raw: string): SingleEntry => {
+    const d = JSON.parse(raw) as {
+        savings: number; severance: number; eiMonthly: number; eiDuration: number;
+        sideIncome: number; fixedExpenses: number; variableExpenses: number; expectedJobSearchMonths: number;
+    };
+    const monthlyExpenses = d.fixedExpenses + d.variableExpenses;
+    const simRunway = (varExp: number) => {
+        let bal = d.savings + d.severance;
+        for (let m = 1; m <= 360; m++) {
+            const inc = (m <= d.eiDuration ? d.eiMonthly : 0) + d.sideIncome;
+            bal += inc - (d.fixedExpenses + varExp);
+            if (bal <= 0) return m - 1;
+        }
+        return 60;
+    };
+    const runway = simRunway(d.variableExpenses);
+    const survivalRunway = simRunway(d.variableExpenses * 0.7);
+    return {
+        inputs: {
+            'Current Savings':        $(d.savings),
+            'Severance Received':     $(d.severance),
+            'EI Monthly Benefit':     $(d.eiMonthly),
+            'EI Duration':            `${d.eiDuration} months`,
+            'Side Income':            `${$(d.sideIncome)}/mo`,
+            'Fixed Expenses':         $(d.fixedExpenses),
+            'Variable Expenses':      $(d.variableExpenses),
+            'Expected Job Search':    `${d.expectedJobSearchMonths} months`,
+        },
+        results: {
+            'Starting Buffer':        $(d.savings + d.severance),
+            'Total Monthly Expenses': $(monthlyExpenses),
+            'Runway':                 `${runway} months`,
+            'Survival Mode Runway':   `${survivalRunway} months`,
+            'Break-Even Income':      `${$(monthlyExpenses - d.sideIncome)}/mo`,
+            'Job Found Before Runout': d.expectedJobSearchMonths <= runway ? 'Yes' : 'No',
+        },
+    };
+};
+
 interface DataEntry {
     label: string;
     storageKey: string;
@@ -1387,6 +1482,7 @@ const DATA_MAP: DataEntry[] = [
     { label: 'Days Between',            storageKey: 'daysbetween_data',       renderData: dataFromDaysBetween },
     { label: 'Career Path Projection',  storageKey: 'careerpath_data',        renderData: dataFromCareer },
     { label: 'Lower-Paying Job',        storageKey: 'lowerpayingjob_data',    renderData: dataFromLowerPayingJob },
+    { label: 'Layoff Survival',         storageKey: 'layoff_survival_data',   renderData: dataFromLayoffSurvival },
 ];
 
 export const exportMcpRag = (): void => {
