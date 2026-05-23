@@ -682,27 +682,35 @@ const App = () => {
 											<span>Export</span>
 											<ChevronDown size={10} className={`transition-transform duration-150 ${showExportMenu ? 'rotate-180' : ''}`} />
 										</button>
-										{showExportMenu && (
-											<>
-												<div className="fixed inset-0 z-10" onClick={() => setShowExportMenu(false)} />
-												<div className="absolute bottom-full right-0 mb-3 z-20 py-1 bg-white dark:bg-white/[0.03] border border-slate-100 dark:border-white/[0.08] shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
-													{([
-														{ label: '🗂️  JSON Backup', action: () => { handleExport(); setShowExportMenu(false); } },
-														{ label: '📋  Notion (.zip)', action: () => { exportNotion().then(() => setShowExportMenu(false)); } },
-														{ label: '💎  Obsidian (.zip)', action: () => { exportObsidian().then(() => setShowExportMenu(false)); } },
-														{ label: '🤖  MCP / RAG (.json)', action: () => { exportMcpRag(); setShowExportMenu(false); } },
-													] as { label: string; action: () => void }[]).map(({ label, action }) => (
-														<button
-															key={label}
-															onClick={action}
-															className="block w-full text-left px-5 py-2 text-[11px] text-slate-500 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors cursor-pointer whitespace-nowrap"
-														>
-															{label}
-														</button>
-													))}
-												</div>
-											</>
-										)}
+										<AnimatePresence>
+											{showExportMenu && (
+												<>
+													<div className="fixed inset-0 z-10" onClick={() => setShowExportMenu(false)} />
+													<motion.div
+														initial={{ opacity: 0, y: 4 }}
+														animate={{ opacity: 1, y: 0 }}
+														exit={{ opacity: 0, y: 4 }}
+														transition={{ duration: 0.15 }}
+														className="absolute bottom-full right-0 mb-1 w-52 bg-white dark:bg-[#121212] border border-slate-200 dark:border-white/10 shadow-lg z-20 py-1"
+													>
+														{([
+															{ label: '🗂️  JSON Backup', action: () => { handleExport(); setShowExportMenu(false); } },
+															{ label: '📋  Notion (.zip)', action: () => { exportNotion().then(() => setShowExportMenu(false)); } },
+															{ label: '💎  Obsidian (.zip)', action: () => { exportObsidian().then(() => setShowExportMenu(false)); } },
+															{ label: '🤖  MCP / RAG (.json)', action: () => { exportMcpRag(); setShowExportMenu(false); } },
+														] as { label: string; action: () => void }[]).map(({ label, action }) => (
+															<button
+																key={label}
+																onClick={action}
+																className="flex items-center w-full text-left px-4 py-2.5 text-[11px] text-slate-600 dark:text-white/60 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors cursor-pointer whitespace-nowrap"
+															>
+																{label}
+															</button>
+														))}
+													</motion.div>
+												</>
+											)}
+										</AnimatePresence>
 									</div>
 
 									<label className="flex items-center gap-2 normal-case text-slate-400 hover:text-black dark:text-white/30 dark:hover:text-white transition-colors cursor-pointer">
