@@ -802,6 +802,69 @@ const renderCareer = (raw: string): string => {
     ].join('\n');
 };
 
+const renderLowerPayingJob = (raw: string): string => {
+    interface JobData { annualSalary: number; taxRate: number; retirementPct: number; monthlyExpenses: number; monthlyBenefitsValue: number; }
+    interface LPJData { currentJob: JobData; newJob: JobData; investmentReturn: number; }
+    const d: LPJData = JSON.parse(raw);
+    const calcJob = (j: JobData) => {
+        const monthlyRetirement = (j.annualSalary * j.retirementPct) / 100 / 12;
+        const annualTaxable = j.annualSalary - monthlyRetirement * 12;
+        const monthlyTax = (annualTaxable * j.taxRate) / 100 / 12;
+        const takeHomeMonthly = annualTaxable / 12 - monthlyTax;
+        const monthlySurplus = takeHomeMonthly + j.monthlyBenefitsValue - j.monthlyExpenses;
+        return { monthlyRetirement, monthlyTax, takeHomeMonthly, monthlySurplus };
+    };
+    const projectW = (contrib: number, ret: number, years: number) => {
+        const r = ret / 100 / 12;
+        const safe = Math.max(0, contrib);
+        return r === 0 ? safe * years * 12 : safe * ((Math.pow(1 + r, years * 12) - 1) / r);
+    };
+    const cur = calcJob(d.currentJob);
+    const nj = calcJob(d.newJob);
+    const w5cur = projectW(cur.monthlySurplus, d.investmentReturn, 5);
+    const w5new = projectW(nj.monthlySurplus, d.investmentReturn, 5);
+    const w10cur = projectW(cur.monthlySurplus, d.investmentReturn, 10);
+    const w10new = projectW(nj.monthlySurplus, d.investmentReturn, 10);
+    const diff = (a: number, b: number) => b >= a ? `+${$(b - a)}` : `-${$(a - b)}`;
+    return [
+        h3('Current Job'),
+        table([
+            ['Annual Salary', $(d.currentJob.annualSalary)],
+            ['Tax Rate', pct(d.currentJob.taxRate)],
+            ['Retirement Contribution', pct(d.currentJob.retirementPct)],
+            ['Monthly Expenses', $(d.currentJob.monthlyExpenses)],
+            ['Monthly Benefits Value', $(d.currentJob.monthlyBenefitsValue)],
+            ['Monthly Take-Home', $(cur.takeHomeMonthly)],
+            ['Monthly Surplus', cur.monthlySurplus >= 0 ? $(cur.monthlySurplus) : `-${$(-cur.monthlySurplus)}`],
+        ]),
+        '',
+        h3('Lower-Paying Job'),
+        table([
+            ['Annual Salary', $(d.newJob.annualSalary)],
+            ['Tax Rate', pct(d.newJob.taxRate)],
+            ['Retirement Contribution', pct(d.newJob.retirementPct)],
+            ['Monthly Expenses', $(d.newJob.monthlyExpenses)],
+            ['Monthly Benefits Value', $(d.newJob.monthlyBenefitsValue)],
+            ['Monthly Take-Home', $(nj.takeHomeMonthly)],
+            ['Monthly Surplus', nj.monthlySurplus >= 0 ? $(nj.monthlySurplus) : `-${$(-nj.monthlySurplus)}`],
+        ]),
+        '',
+        h3('Comparison'),
+        table([
+            ['Monthly Take-Home Difference', diff(cur.takeHomeMonthly, nj.takeHomeMonthly)],
+            ['Monthly Benefits Difference', diff(d.currentJob.monthlyBenefitsValue, d.newJob.monthlyBenefitsValue)],
+            ['Annual Salary Difference', diff(d.currentJob.annualSalary, d.newJob.annualSalary)],
+            ['Expected Investment Return', pct(d.investmentReturn)],
+            ['5-Year Projected Wealth (Current)', $(w5cur)],
+            ['5-Year Projected Wealth (New)', $(w5new)],
+            ['5-Year Wealth Difference', diff(w5cur, w5new)],
+            ['10-Year Projected Wealth (Current)', $(w10cur)],
+            ['10-Year Projected Wealth (New)', $(w10new)],
+            ['10-Year Wealth Difference', diff(w10cur, w10new)],
+        ]),
+    ].join('\n');
+};
+
 // ── zip builder ──────────────────────────────────────────────────────────────
 
 interface FileEntry {
@@ -825,6 +888,7 @@ const FILE_MAP: FileEntry[] = [
     { filename: 'Protein Intake.md',           storageKey: 'protein_data',           render: renderProtein },
     { filename: 'Days Between.md',             storageKey: 'daysbetween_data',       render: renderDaysBetween },
     { filename: 'Career Path Projection.md',   storageKey: 'careerpath_data',        render: renderCareer },
+    { filename: 'Lower-Paying Job.md',         storageKey: 'lowerpayingjob_data',    render: renderLowerPayingJob },
 ];
 
 const buildZip = async (frontmatter: string | null): Promise<Blob> => {
@@ -1255,6 +1319,52 @@ const dataFromCareer = (raw: string): SingleEntry => {
     };
 };
 
+const dataFromLowerPayingJob = (raw: string): SingleEntry => {
+    interface JobData { annualSalary: number; taxRate: number; retirementPct: number; monthlyExpenses: number; monthlyBenefitsValue: number; }
+    interface LPJData { currentJob: JobData; newJob: JobData; investmentReturn: number; }
+    const d: LPJData = JSON.parse(raw);
+    const calcJob = (j: JobData) => {
+        const monthlyRetirement = (j.annualSalary * j.retirementPct) / 100 / 12;
+        const annualTaxable = j.annualSalary - monthlyRetirement * 12;
+        const monthlyTax = (annualTaxable * j.taxRate) / 100 / 12;
+        const takeHomeMonthly = annualTaxable / 12 - monthlyTax;
+        const monthlySurplus = takeHomeMonthly + j.monthlyBenefitsValue - j.monthlyExpenses;
+        return { takeHomeMonthly, monthlySurplus };
+    };
+    const projectW = (contrib: number, ret: number, years: number) => {
+        const r = ret / 100 / 12;
+        const safe = Math.max(0, contrib);
+        return r === 0 ? safe * years * 12 : safe * ((Math.pow(1 + r, years * 12) - 1) / r);
+    };
+    const cur = calcJob(d.currentJob);
+    const nj = calcJob(d.newJob);
+    const w10cur = projectW(cur.monthlySurplus, d.investmentReturn, 10);
+    const w10new = projectW(nj.monthlySurplus, d.investmentReturn, 10);
+    const diff10 = w10new - w10cur;
+    return {
+        inputs: {
+            'Current Annual Salary':       $(d.currentJob.annualSalary),
+            'Current Tax Rate':            pct(d.currentJob.taxRate),
+            'Current Retirement %':        pct(d.currentJob.retirementPct),
+            'Current Monthly Benefits':    $(d.currentJob.monthlyBenefitsValue),
+            'New Annual Salary':           $(d.newJob.annualSalary),
+            'New Tax Rate':                pct(d.newJob.taxRate),
+            'New Retirement %':            pct(d.newJob.retirementPct),
+            'New Monthly Benefits':        $(d.newJob.monthlyBenefitsValue),
+            'Monthly Expenses':            $(d.currentJob.monthlyExpenses),
+            'Expected Investment Return':  pct(d.investmentReturn),
+        },
+        results: {
+            'Current Take-Home (Monthly)': $(cur.takeHomeMonthly),
+            'New Take-Home (Monthly)':     $(nj.takeHomeMonthly),
+            'Monthly Take-Home Difference': diff10 >= 0 ? `+${$(nj.takeHomeMonthly - cur.takeHomeMonthly)}` : $(nj.takeHomeMonthly - cur.takeHomeMonthly),
+            '10-Year Wealth (Current)':    $(w10cur),
+            '10-Year Wealth (New Job)':    $(w10new),
+            '10-Year Wealth Difference':   diff10 >= 0 ? `+${$(diff10)}` : `-${$(-diff10)}`,
+        },
+    };
+};
+
 interface DataEntry {
     label: string;
     storageKey: string;
@@ -1276,6 +1386,7 @@ const DATA_MAP: DataEntry[] = [
     { label: 'Protein Intake',          storageKey: 'protein_data',           renderData: dataFromProtein },
     { label: 'Days Between',            storageKey: 'daysbetween_data',       renderData: dataFromDaysBetween },
     { label: 'Career Path Projection',  storageKey: 'careerpath_data',        renderData: dataFromCareer },
+    { label: 'Lower-Paying Job',        storageKey: 'lowerpayingjob_data',    renderData: dataFromLowerPayingJob },
 ];
 
 export const exportMcpRag = (): void => {

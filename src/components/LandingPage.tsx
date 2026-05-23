@@ -1,7 +1,7 @@
 ﻿
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert, Banknote } from 'lucide-react';
+import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert, Banknote, TrendingDown } from 'lucide-react';
 import { useState } from 'react';
 
 const TOOLS = [
@@ -123,6 +123,15 @@ const TOOLS = [
 			'Estimate your wrongful dismissal damages under Canadian employment law. Calculates common law notice, ESA minimums, bad faith damages, mitigation deductions, and a typical settlement range.',
 	},
 	{
+		path: '/lowerpayingjob',
+		label: 'Lower-Paying Job',
+		icon: TrendingDown,
+		color: 'text-fuchsia-600 dark:text-fuchsia-400',
+		bg: 'bg-fuchsia-50 dark:bg-fuchsia-950/40',
+		description:
+			'Compare your current salary against a lower-paying job offer. See the true financial cost of the pay cut including benefits, monthly surplus, and projected 10-year wealth difference.',
+	},
+	{
 		path: '/severanceei',
 		label: 'Severance & EI Estimator',
 		icon: Banknote,
@@ -198,8 +207,8 @@ const FaqItem = ({ q, a }: { q: string; a: string }) => {
 }
 
 const CATEGORIES = [
-	{ name: 'Career', color: 'text-teal-600 dark:text-teal-400', paths: ['/careerpath'] },
-	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/goals', '/mortgage', '/salary', '/investing'] },
+	{ name: 'Career', color: 'text-teal-600 dark:text-teal-400', paths: ['/careerpath', '/lowerpayingjob', '/salary'] },
+	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/goals', '/mortgage', '/investing'] },
 	{ name: 'Fitness', color: 'text-orange-600 dark:text-orange-400', paths: ['/calorie', '/protein', '/weightloss'] },
 	{ name: 'Legal', color: 'text-slate-600 dark:text-slate-400', paths: ['/bardal', '/wrongfuldismissal', '/severanceei'] },
 	{ name: 'Productivity', color: 'text-amber-600 dark:text-amber-400', paths: ['/daysbetween', '/time'] },

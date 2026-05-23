@@ -10,6 +10,7 @@
 - [Wealth Growth](/investing) — Compound interest and investment growth over time.
 - [Goals Tracking](/goals) — Track progress toward multiple savings and financial goals.
 - [Debt Repayment](/debt) — Compare avalanche vs. snowball strategies across multiple debts.
+- [Lower-Paying Job](/lowerpayingjob) — Compare current salary vs. a lower-paying offer, accounting for benefits and 10-year wealth projections.
 
 ### Career
 - [Career Path Projection](/careerpath) — Project lifetime earnings across job-hopping vs. staying-put scenarios.

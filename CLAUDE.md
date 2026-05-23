@@ -31,6 +31,14 @@ These rules must be followed whenever adding or editing any component, calculato
 - **Arrow syntax.** All functions and React functional components must use arrow syntax (`const Foo = () => {}`), not `function` declarations.
 - **Indentation.** Use 4 spaces for indentation (no tab characters).
 
+## Navigation
+
+### More menu ordering
+- Items in the `MORE_ITEMS` array in `src/App.tsx` must always be sorted **alphabetically by label**, with the exception of the divider and the items below it (Multi-Option, Categories), which always remain at the bottom after the divider.
+
+### TODO.md
+- When a calculator or feature from `TODO.md` is completed, mark it with strikethrough and a checkmark: `~~Item Name~~ ✓`. Do this at the same time you add the feature.
+
 ## Calculators
 
 Whenever a new calculator is added to this project:
@@ -38,8 +46,8 @@ Whenever a new calculator is added to this project:
 1. Update `README.md` with a description of the calculator under the **Comprehensive Calculators** bullet list in the Features section.
 
 2. Assign the calculator to a category. The current categories are:
-   - **Career** — Career Path Projection
-   - **Finance** — Salary & Taxes, Mortgage Equity, Debt Repayment, Wealth Growth, Goals Tracking
+   - **Career** — Career Path Projection, Lower-Paying Job, Salary & Taxes
+   - **Finance** — Mortgage Equity, Debt Repayment, Wealth Growth, Goals Tracking
    - **Fitness** — Weight Loss, Protein Intake, Calorie Deficit Planner
    - **Legal** — Bardal Factor, Wrongful Dismissal
    - **Productivity** — Time Allocation, Days Between

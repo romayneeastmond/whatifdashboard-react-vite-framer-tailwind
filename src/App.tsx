@@ -30,6 +30,7 @@ import {
 	ShieldAlert,
 	Banknote,
 	Trash2,
+	TrendingDown,
 } from 'lucide-react';
 import { exportNotion, exportObsidian, exportMcpRag } from './utils/exportMarkdown';
 import { BLOG_POSTS } from './components/BlogPosts/registry';
@@ -51,6 +52,7 @@ const CalorieDeficitCalculator = React.lazy(() => import('./components/calculato
 const CareerPathCalculator = React.lazy(() => import('./components/calculators/CareerPathCalculator').then(m => ({ default: m.CareerPathCalculator })));
 const WrongfulDismissalCalculator = React.lazy(() => import('./components/calculators/WrongfulDismissalCalculator').then(m => ({ default: m.WrongfulDismissalCalculator })));
 const SeveranceEICalculator = React.lazy(() => import('./components/calculators/SeveranceEICalculator').then(m => ({ default: m.SeveranceEICalculator })));
+const LowerPayingJobCalculator = React.lazy(() => import('./components/calculators/LowerPayingJobCalculator').then(m => ({ default: m.LowerPayingJobCalculator })));
 const CookieBanner = React.lazy(() => import('./components/CookieBanner').then(m => ({ default: m.CookieBanner })));
 const BlogPage = React.lazy(() => import('./components/BlogPage').then(m => ({ default: m.BlogPage })));
 const BlogPostPage = React.lazy(() => import('./components/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
@@ -82,11 +84,12 @@ const MORE_ITEMS: MoreEntry[] = [
 	{ path: '/calorie', label: 'Calorie Deficit', icon: Utensils },
 	{ path: '/careerpath', label: 'Career Path', icon: TrendingUp },
 	{ path: '/daysbetween', label: 'Days Between', icon: CalendarDays },
+	{ path: '/lowerpayingjob', label: 'Lower-Paying Job', icon: TrendingDown },
 	{ path: '/protein', label: 'Protein Intake', icon: Dumbbell },
+	{ path: '/severanceei', label: 'Severance & EI', icon: Banknote },
 	{ path: '/time', label: 'Time Allocation', icon: Clock },
 	{ path: '/weightloss', label: 'Weight Loss', icon: Flame },
 	{ path: '/wrongfuldismissal', label: 'Wrongful Dismissal', icon: ShieldAlert },
-	{ path: '/severanceei', label: 'Severance & EI', icon: Banknote },
 	{ divider: true },
 	{ path: '/multi', label: 'Multi-Option', icon: LayoutGrid },
 	{ path: '/categories', label: 'Categories', icon: FolderOpen },
@@ -227,7 +230,7 @@ const App = () => {
 		}
 	}, [isDarkMode]);
 
-	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/calorie', '/careerpath', '/wrongfuldismissal', '/severanceei', '/multi', '/categories', '/blog'];
+	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/calorie', '/careerpath', '/wrongfuldismissal', '/severanceei', '/lowerpayingjob', '/multi', '/categories', '/blog'];
 
 	React.useEffect(() => {
 		let styleEl: HTMLStyleElement | null = null;
@@ -542,6 +545,7 @@ const App = () => {
 								<Route path="/careerpath" element={<CareerPathCalculator />} />
 								<Route path="/wrongfuldismissal" element={<WrongfulDismissalCalculator />} />
 								<Route path="/severanceei" element={<SeveranceEICalculator />} />
+								<Route path="/lowerpayingjob" element={<LowerPayingJobCalculator />} />
 								<Route path="/multi" element={<MultiOptionPage />} />
 								<Route path="/categories" element={<CategoriesPage />} />
 								<Route path="/blog" element={<BlogPage />} />

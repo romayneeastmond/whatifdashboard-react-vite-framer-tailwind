@@ -70,7 +70,7 @@
 
 - Layoff Survival Simulator
 - What If I Move? Calculator
-- What If I Take a Lower Paying Job?
+- ~~What If I Take a Lower Paying Job?~~ ✓
 - ~~Career Path Projection~~ ✓
 - Lifestyle Inflation Simulator
 - AI Replacement Risk Estimator

@@ -6,7 +6,7 @@ import {
     Flame, Dumbbell, Utensils,
     Clock, CalendarDays,
     Scale, ShieldAlert, Banknote,
-    TrendingUp,
+    TrendingUp, TrendingDown,
     ArrowRight,
 } from 'lucide-react';
 
@@ -38,6 +38,22 @@ const CATEGORIES: Category[] = [
                 bg: 'bg-teal-50 dark:bg-teal-950/40',
                 description: 'Project your salary over 5, 10, or 20 years. Compare staying in your current role with promotions against job-hopping for higher bumps, and see the lifetime earnings difference.',
             },
+            {
+                path: '/lowerpayingjob',
+                label: 'Lower-Paying Job',
+                icon: TrendingDown,
+                color: 'text-fuchsia-600 dark:text-fuchsia-400',
+                bg: 'bg-fuchsia-50 dark:bg-fuchsia-950/40',
+                description: 'Compare your current salary against a lower-paying job offer. See the true financial cost of the pay cut including benefits, monthly surplus, and projected 10-year wealth difference.',
+            },
+            {
+                path: '/salary',
+                label: 'Salary & Taxes',
+                icon: Wallet,
+                color: 'text-emerald-600 dark:text-emerald-400',
+                bg: 'bg-emerald-50 dark:bg-emerald-950/40',
+                description: 'Model your take-home pay. Adjust gross salary, tax rate, retirement contribution, and monthly expenses to see exactly what lands in your pocket.',
+            },
         ],
     },
     {
@@ -67,14 +83,6 @@ const CATEGORIES: Category[] = [
                 color: 'text-blue-600 dark:text-blue-400',
                 bg: 'bg-blue-50 dark:bg-blue-950/40',
                 description: 'Run the numbers on a home purchase. Explore how down payment, interest rate, and loan term affect your monthly payment and long-term equity.',
-            },
-            {
-                path: '/salary',
-                label: 'Salary & Taxes',
-                icon: Wallet,
-                color: 'text-emerald-600 dark:text-emerald-400',
-                bg: 'bg-emerald-50 dark:bg-emerald-950/40',
-                description: 'Model your take-home pay. Adjust gross salary, tax rate, retirement contribution, and monthly expenses to see exactly what lands in your pocket.',
             },
             {
                 path: '/investing',
