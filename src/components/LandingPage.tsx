@@ -1,7 +1,7 @@
 ﻿
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert, Banknote, TrendingDown, LifeBuoy } from 'lucide-react';
+import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert, Banknote, TrendingDown, LifeBuoy, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
 
 const TOOLS = [
@@ -132,6 +132,15 @@ const TOOLS = [
 			'Compare your current salary against a lower-paying job offer. See the true financial cost of the pay cut including benefits, monthly surplus, and projected 10-year wealth difference.',
 	},
 	{
+		path: '/emergencyfund',
+		label: 'Emergency Fund Runway',
+		icon: ShieldCheck,
+		color: 'text-sky-600 dark:text-sky-400',
+		bg: 'bg-sky-50 dark:bg-sky-950/40',
+		description:
+			'Find out if your emergency fund is big enough and how long it will take to build one. See your current runway in months, the gap to your target, and how boosting contributions or cutting expenses accelerates your timeline.',
+	},
+	{
 		path: '/layoffsurvival',
 		label: 'Layoff Survival Simulator',
 		icon: LifeBuoy,
@@ -217,7 +226,7 @@ const FaqItem = ({ q, a }: { q: string; a: string }) => {
 
 const CATEGORIES = [
 	{ name: 'Career', color: 'text-teal-600 dark:text-teal-400', paths: ['/careerpath', '/lowerpayingjob', '/salary'] },
-	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/goals', '/layoffsurvival', '/mortgage', '/investing'] },
+	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/emergencyfund', '/goals', '/layoffsurvival', '/mortgage', '/investing'] },
 	{ name: 'Fitness', color: 'text-orange-600 dark:text-orange-400', paths: ['/calorie', '/protein', '/weightloss'] },
 	{ name: 'Legal', color: 'text-slate-600 dark:text-slate-400', paths: ['/bardal', '/wrongfuldismissal', '/severanceei'] },
 	{ name: 'Productivity', color: 'text-amber-600 dark:text-amber-400', paths: ['/daysbetween', '/time'] },

@@ -920,6 +920,60 @@ const renderLayoffSurvival = (raw: string): string => {
     ].join('\n');
 };
 
+const renderEmergencyFund = (raw: string): string => {
+    const d = JSON.parse(raw) as {
+        currentSavings: number; monthlyExpenses: number; targetMonths: number;
+        monthlyContribution: number; interestRate: number; sideIncome: number;
+    };
+    const target = d.monthlyExpenses * d.targetMonths;
+    const gap = Math.max(target - d.currentSavings, 0);
+    const currentRunway = d.monthlyExpenses > 0 ? Math.floor(d.currentSavings / d.monthlyExpenses) : 99;
+    const coveragePercent = Math.min(Math.round((d.currentSavings / Math.max(target, 1)) * 100), 100);
+    const simMonths = (extraContrib: number, targetOverride?: number) => {
+        const t = targetOverride ?? target;
+        const contribution = d.monthlyContribution + extraContrib + d.sideIncome;
+        const monthlyRate = d.interestRate / 100 / 12;
+        let bal = d.currentSavings;
+        for (let m = 1; m <= 120; m++) {
+            bal = bal * (1 + monthlyRate) + contribution;
+            if (bal >= t) return m;
+        }
+        return null;
+    };
+    const monthsToGoal = simMonths(0);
+    const aggressiveMonths = simMonths(d.monthlyContribution * 0.5);
+    return [
+        h3('Current Position'),
+        table([
+            ['Current Savings', $(d.currentSavings)],
+            ['Monthly Expenses', $(d.monthlyExpenses)],
+            ['Current Runway', `${currentRunway} months`],
+            ['Fund Coverage', `${coveragePercent}%`],
+        ]),
+        '',
+        h3('Target'),
+        table([
+            ['Target Coverage', `${d.targetMonths} months`],
+            ['Target Amount', $(target)],
+            ['Gap to Fill', $(gap)],
+        ]),
+        '',
+        h3('Building the Fund'),
+        table([
+            ['Monthly Contribution', $(d.monthlyContribution)],
+            ['Side Income', `${$(d.sideIncome)}/mo`],
+            ['Interest Rate', `${d.interestRate}%`],
+        ]),
+        '',
+        h3('Results'),
+        table([
+            ['Months to Goal (current pace)', monthsToGoal !== null ? `${monthsToGoal} months` : 'Already met'],
+            ['Months to Goal (aggressive ×1.5)', aggressiveMonths !== null ? `${aggressiveMonths} months` : 'Already met'],
+            ['Fund Status', currentRunway >= d.targetMonths ? 'Fully funded' : currentRunway >= Math.floor(d.targetMonths / 2) ? 'Partially funded' : 'Underfunded'],
+        ]),
+    ].join('\n');
+};
+
 // ── zip builder ──────────────────────────────────────────────────────────────
 
 interface FileEntry {
@@ -945,6 +999,7 @@ const FILE_MAP: FileEntry[] = [
     { filename: 'Career Path Projection.md',   storageKey: 'careerpath_data',        render: renderCareer },
     { filename: 'Lower-Paying Job.md',         storageKey: 'lowerpayingjob_data',    render: renderLowerPayingJob },
     { filename: 'Layoff Survival.md',          storageKey: 'layoff_survival_data',   render: renderLayoffSurvival },
+    { filename: 'Emergency Fund Runway.md',    storageKey: 'emergency_fund_data',    render: renderEmergencyFund },
 ];
 
 const buildZip = async (frontmatter: string | null): Promise<Blob> => {
@@ -1460,6 +1515,49 @@ const dataFromLayoffSurvival = (raw: string): SingleEntry => {
     };
 };
 
+const dataFromEmergencyFund = (raw: string): SingleEntry => {
+    const d = JSON.parse(raw) as {
+        currentSavings: number; monthlyExpenses: number; targetMonths: number;
+        monthlyContribution: number; interestRate: number; sideIncome: number;
+    };
+    const target = d.monthlyExpenses * d.targetMonths;
+    const gap = Math.max(target - d.currentSavings, 0);
+    const currentRunway = d.monthlyExpenses > 0 ? Math.floor(d.currentSavings / d.monthlyExpenses) : 99;
+    const coveragePercent = Math.min(Math.round((d.currentSavings / Math.max(target, 1)) * 100), 100);
+    const simMonths = (extraContrib: number, targetOverride?: number) => {
+        const t = targetOverride ?? target;
+        const contribution = d.monthlyContribution + extraContrib + d.sideIncome;
+        const monthlyRate = d.interestRate / 100 / 12;
+        let bal = d.currentSavings;
+        for (let m = 1; m <= 120; m++) {
+            bal = bal * (1 + monthlyRate) + contribution;
+            if (bal >= t) return m;
+        }
+        return null;
+    };
+    const monthsToGoal = simMonths(0);
+    const aggressiveMonths = simMonths(d.monthlyContribution * 0.5);
+    return {
+        inputs: {
+            'Current Savings':       $(d.currentSavings),
+            'Monthly Expenses':      $(d.monthlyExpenses),
+            'Target Coverage':       `${d.targetMonths} months`,
+            'Monthly Contribution':  $(d.monthlyContribution),
+            'Side Income':           `${$(d.sideIncome)}/mo`,
+            'Interest Rate':         `${d.interestRate}%`,
+        },
+        results: {
+            'Target Amount':         $(target),
+            'Gap to Fill':           $(gap),
+            'Current Runway':        `${currentRunway} months`,
+            'Coverage':              `${coveragePercent}%`,
+            'Months to Goal':        monthsToGoal !== null ? `${monthsToGoal} months` : 'Already met',
+            'Aggressive Months to Goal': aggressiveMonths !== null ? `${aggressiveMonths} months` : 'Already met',
+            'Fund Status':           currentRunway >= d.targetMonths ? 'Fully funded' : currentRunway >= Math.floor(d.targetMonths / 2) ? 'Partially funded' : 'Underfunded',
+        },
+    };
+};
+
 interface DataEntry {
     label: string;
     storageKey: string;
@@ -1483,6 +1581,7 @@ const DATA_MAP: DataEntry[] = [
     { label: 'Career Path Projection',  storageKey: 'careerpath_data',        renderData: dataFromCareer },
     { label: 'Lower-Paying Job',        storageKey: 'lowerpayingjob_data',    renderData: dataFromLowerPayingJob },
     { label: 'Layoff Survival',         storageKey: 'layoff_survival_data',   renderData: dataFromLayoffSurvival },
+    { label: 'Emergency Fund Runway',   storageKey: 'emergency_fund_data',    renderData: dataFromEmergencyFund },
 ];
 
 export const exportMcpRag = (): void => {

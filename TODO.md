@@ -24,7 +24,7 @@
 - FIRE / Retirement Calculator
 - RRSP vs TFSA Optimizer
 - Rent vs Buy Calculator
-- Emergency Fund Runway
+- ~~Emergency Fund Runway~~ ✓
 - Job Offer Comparator
 - ~~Severance & EI Estimator~~ ✓
 - Side Hustle Profitability
@@ -99,12 +99,12 @@
 
 ## Employment & Workplace
 
-- Severance Estimator
+- ~~Severance Estimator~~ ✓
 - ~~Wrongful Dismissal Estimate~~ ✓
 - Overtime Pay Calculator
 - Contractor vs Employee Income Comparison
 - Vacation Pay Calculator
-- Employment Insurance (EI) Estimator
+- ~~Employment Insurance (EI) Estimator~~ ✓
 - Maternity / Parental Leave Benefit Calculator
 
 ## Debt & Consumer Law
@@ -148,7 +148,7 @@
 - Mortgage/Debt → amortization table export (Excel/CSV)
 - Weight Loss Plan → printable PDF or MyFitnessPal-compatible format
 - Days Between / Time Allocation → Google Calendar / iCal (.ics) export
-- Offer exporting to Notion or Obsidian
+- ~~Offer exporting to Notion or Obsidian~~ ✓
 
 ## ~~Cross-Calculator Scenario Comparison~~ (tried, rejected)
 - NOTE: Per-calculator multi-person comparison already covers this. A global scenario just duplicates that without adding immediate visual feedback. Removed.

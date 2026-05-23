@@ -32,6 +32,7 @@ import {
 	Trash2,
 	TrendingDown,
 	LifeBuoy,
+	ShieldCheck,
 } from 'lucide-react';
 import { exportNotion, exportObsidian, exportMcpRag } from './utils/exportMarkdown';
 import { BLOG_POSTS } from './components/BlogPosts/registry';
@@ -55,6 +56,7 @@ const WrongfulDismissalCalculator = React.lazy(() => import('./components/calcul
 const SeveranceEICalculator = React.lazy(() => import('./components/calculators/SeveranceEICalculator').then(m => ({ default: m.SeveranceEICalculator })));
 const LowerPayingJobCalculator = React.lazy(() => import('./components/calculators/LowerPayingJobCalculator').then(m => ({ default: m.LowerPayingJobCalculator })));
 const LayoffSurvivalCalculator = React.lazy(() => import('./components/calculators/LayoffSurvivalCalculator').then(m => ({ default: m.LayoffSurvivalCalculator })));
+const EmergencyFundCalculator = React.lazy(() => import('./components/calculators/EmergencyFundCalculator').then(m => ({ default: m.EmergencyFundCalculator })));
 const CookieBanner = React.lazy(() => import('./components/CookieBanner').then(m => ({ default: m.CookieBanner })));
 const BlogPage = React.lazy(() => import('./components/BlogPage').then(m => ({ default: m.BlogPage })));
 const BlogPostPage = React.lazy(() => import('./components/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
@@ -86,6 +88,7 @@ const MORE_ITEMS: MoreEntry[] = [
 	{ path: '/calorie', label: 'Calorie Deficit', icon: Utensils },
 	{ path: '/careerpath', label: 'Career Path', icon: TrendingUp },
 	{ path: '/daysbetween', label: 'Days Between', icon: CalendarDays },
+	{ path: '/emergencyfund', label: 'Emergency Fund', icon: ShieldCheck },
 	{ path: '/layoffsurvival', label: 'Layoff Survival', icon: LifeBuoy },
 	{ path: '/lowerpayingjob', label: 'Lower-Paying Job', icon: TrendingDown },
 	{ path: '/protein', label: 'Protein Intake', icon: Dumbbell },
@@ -550,6 +553,7 @@ const App = () => {
 								<Route path="/severanceei" element={<SeveranceEICalculator />} />
 								<Route path="/lowerpayingjob" element={<LowerPayingJobCalculator />} />
 								<Route path="/layoffsurvival" element={<LayoffSurvivalCalculator />} />
+								<Route path="/emergencyfund" element={<EmergencyFundCalculator />} />
 								<Route path="/multi" element={<MultiOptionPage />} />
 								<Route path="/categories" element={<CategoriesPage />} />
 								<Route path="/blog" element={<BlogPage />} />

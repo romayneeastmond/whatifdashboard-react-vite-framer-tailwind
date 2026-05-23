@@ -7,7 +7,7 @@ import {
     Flame, Dumbbell, Utensils,
     Clock, CalendarDays,
     Scale, ShieldAlert, Banknote,
-    TrendingUp, TrendingDown, LifeBuoy,
+    TrendingUp, TrendingDown, LifeBuoy, ShieldCheck,
     ArrowRight, Search,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -62,6 +62,14 @@ const CATEGORIES: Category[] = [
         name: 'Finance',
         color: 'text-emerald-600 dark:text-emerald-400',
         tools: [
+            {
+                path: '/emergencyfund',
+                label: 'Emergency Fund Runway',
+                icon: ShieldCheck,
+                color: 'text-sky-600 dark:text-sky-400',
+                bg: 'bg-sky-50 dark:bg-sky-950/40',
+                description: 'Find out if your emergency fund is big enough and how long it will take to build one. See your current runway in months, the gap to your target, and how boosting contributions or cutting expenses accelerates your timeline.',
+            },
             {
                 path: '/debt',
                 label: 'Debt Repayment',
