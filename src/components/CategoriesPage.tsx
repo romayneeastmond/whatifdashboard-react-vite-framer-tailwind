@@ -1,5 +1,6 @@
 ﻿
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import {
     Wallet, Home, BarChart3, Target, CreditCard,
@@ -7,8 +8,9 @@ import {
     Clock, CalendarDays,
     Scale, ShieldAlert, Banknote,
     TrendingUp, TrendingDown, LifeBuoy,
-    ArrowRight,
+    ArrowRight, Search,
 } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 type Tool = {
     path: string;
@@ -218,11 +220,79 @@ const ToolCard = ({ tool, delay }: { tool: Tool; delay: number }) => {
     );
 }
 
+const normalize = (s: string) => s.toLowerCase();
+
 export const CategoriesPage = () => {
+    const [query, setQuery] = useState('');
+    const navigate = useNavigate();
     let globalDelay = 0;
 
+    const q = normalize(query.trim());
+    const allTools = CATEGORIES.flatMap(cat => cat.tools.map(t => ({ ...t, category: cat.name })));
+    const filtered = q
+        ? allTools.filter(t =>
+            normalize(t.label).includes(q) ||
+            normalize(t.description).includes(q) ||
+            normalize(t.category).includes(q)
+        )
+        : null;
+
     return (
-        <div className="space-y-16">
+        <div className="space-y-8">
+            {/* Search */}
+            <div className="relative">
+                <Search
+                    size={15}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-white/30 pointer-events-none"
+                />
+                <input
+                    type="search"
+                    value={query}
+                    onChange={e => setQuery(e.target.value)}
+                    placeholder="Search calculators…"
+                    aria-label="Search calculators"
+                    className="w-full pl-11 pr-4 py-2.5 text-sm bg-white dark:bg-white/3 border border-slate-200 dark:border-white/8 rounded-lg text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 outline-none focus:border-[#387E67] dark:focus:border-[#52B788] transition-colors [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
+                />
+            </div>
+
+            {/* Filtered results */}
+            {filtered !== null && (
+                filtered.length === 0
+                    ? (
+                        <p className="text-sm text-slate-400 dark:text-white/30 py-8 text-center">
+                            No calculators matching &ldquo;{query}&rdquo;
+                        </p>
+                    )
+                    : (
+                        <div className="space-y-3">
+                            {filtered.map((tool) => (
+                                <button
+                                    key={tool.path}
+                                    onClick={() => navigate(tool.path)}
+                                    className={cn(
+                                        'w-full flex items-center justify-between gap-4 p-4 text-left rounded-lg border border-slate-200 dark:border-white/8',
+                                        'bg-white dark:bg-white/3 hover:border-slate-300 dark:hover:border-white/15 hover:shadow-sm transition-all duration-200 group cursor-pointer'
+                                    )}
+                                >
+                                    <div className="min-w-0">
+                                        <p className="text-xs uppercase tracking-[0.15em] text-slate-400 dark:text-white/30 mb-1">
+                                            {tool.category}
+                                        </p>
+                                        <p className="text-sm font-medium text-slate-900 dark:text-white truncate">{tool.label}</p>
+                                        <p className="text-xs text-slate-500 dark:text-white/40 mt-1 line-clamp-1">{tool.description}</p>
+                                    </div>
+                                    <ArrowRight
+                                        size={14}
+                                        className="shrink-0 text-slate-300 dark:text-white/20 group-hover:text-slate-500 dark:group-hover:text-white/50 group-hover:translate-x-0.5 transition-all"
+                                    />
+                                </button>
+                            ))}
+                        </div>
+                    )
+            )}
+
+            {/* Default category grid */}
+            {filtered === null && <div className="space-y-16">
             {[...CATEGORIES].sort((a, b) => a.name.localeCompare(b.name)).map((cat) => (
                 <motion.section
                     key={cat.name}
@@ -241,6 +311,7 @@ export const CategoriesPage = () => {
                     </div>
                 </motion.section>
             ))}
+        </div>}
         </div>
     );
 }
