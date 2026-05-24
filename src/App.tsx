@@ -1,6 +1,7 @@
 ﻿
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { usePageTracking } from './hooks/usePageTracking';
 import { motion, AnimatePresence } from 'motion/react';
 import {
 	BarChart3,
@@ -300,6 +301,7 @@ const MoreDropdown = ({ currentPath }: { currentPath: string }) => {
 
 const App = () => {
 	const location = useLocation();
+	usePageTracking();
 
 	useEffect(() => {
 		window.scrollTo(0, 0);

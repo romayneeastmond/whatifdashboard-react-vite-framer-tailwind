@@ -33,5 +33,7 @@ yarn-error.log*
 
 # Local configuration
 !.env.example
+.env.local
+.env.production
 
 .claude
