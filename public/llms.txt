@@ -11,6 +11,7 @@
 - [Goals Tracking](/goals) — Track progress toward multiple savings and financial goals.
 - [Debt Repayment](/debt) — Compare avalanche vs. snowball strategies across multiple debts.
 - [Emergency Fund Runway](/emergencyfund) — Check if your emergency fund is big enough, see your current runway in months, and project how long it takes to reach your target.
+- [FIRE / Retirement Calculator](/fire) — Find your FIRE number and project when you can retire based on savings, contributions, expected return, and planned retirement expenses.
 - [Layoff Survival Simulator](/layoffsurvival) — Model how long savings and severance last after a job loss, with runway, burn rate, and what-if scenarios.
 - [Lower-Paying Job](/lowerpayingjob) — Compare current salary vs. a lower-paying offer, accounting for benefits and 10-year wealth projections.
 

@@ -7,7 +7,7 @@ import {
     Flame, Dumbbell, Utensils,
     Clock, CalendarDays,
     Scale, ShieldAlert, Banknote,
-    TrendingUp, TrendingDown, LifeBuoy, ShieldCheck,
+    TrendingUp, TrendingDown, LifeBuoy, ShieldCheck, PiggyBank,
     ArrowRight, Search,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -69,6 +69,14 @@ const CATEGORIES: Category[] = [
                 color: 'text-sky-600 dark:text-sky-400',
                 bg: 'bg-sky-50 dark:bg-sky-950/40',
                 description: 'Find out if your emergency fund is big enough and how long it will take to build one. See your current runway in months, the gap to your target, and how boosting contributions or cutting expenses accelerates your timeline.',
+            },
+            {
+                path: '/fire',
+                label: 'FIRE / Retirement Calculator',
+                icon: PiggyBank,
+                color: 'text-green-600 dark:text-green-400',
+                bg: 'bg-green-50 dark:bg-green-950/40',
+                description: 'Find your FIRE number and see when you can retire. Enter your current savings, monthly contributions, expected return, and retirement expenses to project your portfolio over time and see if you\'re on track.',
             },
             {
                 path: '/debt',

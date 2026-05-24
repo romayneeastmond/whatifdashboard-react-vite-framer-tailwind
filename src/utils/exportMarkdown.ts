@@ -974,6 +974,76 @@ const renderEmergencyFund = (raw: string): string => {
     ].join('\n');
 };
 
+// ── FIRE / Retirement ────────────────────────────────────────────────────────
+
+interface FireData {
+    currentAge: number; retirementAge: number; currentPortfolio: number;
+    monthlyContribution: number; annualRetirementExpenses: number;
+    annualReturn: number; inflationRate: number; withdrawalRate: number;
+}
+interface FireProfile { id: string; name: string; data: FireData }
+
+const fireFV = (d: FireData, months: number) => {
+    const r = d.annualReturn / 100 / 12;
+    if (r === 0) return d.currentPortfolio + d.monthlyContribution * months;
+    const grow = Math.pow(1 + r, months);
+    return d.currentPortfolio * grow + d.monthlyContribution * (grow - 1) / r;
+};
+
+const renderFire = (raw: string): string => {
+    const profiles: FireProfile[] = JSON.parse(raw);
+    return profiles.map((p) => {
+        const d = p.data;
+        const fireNumber = d.annualRetirementExpenses / (d.withdrawalRate / 100);
+        const yearsToRetirement = Math.max(d.retirementAge - d.currentAge, 0);
+        const projected = fireFV(d, yearsToRetirement * 12);
+        const onTrack = projected >= fireNumber;
+        let yearsNeeded = yearsToRetirement;
+        if (!onTrack) {
+            for (let y = yearsToRetirement + 1; y <= 80; y++) {
+                if (fireFV(d, y * 12) >= fireNumber) { yearsNeeded = y; break; }
+            }
+        }
+        const r = d.annualReturn / 100 / 12;
+        let monthlyNeeded = d.monthlyContribution;
+        if (!onTrack && yearsToRetirement > 0 && r > 0) {
+            const grow = Math.pow(1 + r, yearsToRetirement * 12);
+            const gap = fireNumber - d.currentPortfolio * grow;
+            monthlyNeeded = gap > 0 ? gap * r / (grow - 1) : 0;
+        }
+        const realReturn = ((1 + d.annualReturn / 100) / (1 + d.inflationRate / 100) - 1) * 100;
+
+        return [
+            h2(p.name),
+            '',
+            h3('Inputs'),
+            table([
+                ['Current Age', `${d.currentAge} years`],
+                ['Target Retirement Age', `${d.retirementAge} years`],
+                ['Current Portfolio', $(d.currentPortfolio)],
+                ['Monthly Contribution', $(d.monthlyContribution)],
+                ['Annual Retirement Expenses', $(d.annualRetirementExpenses)],
+                ['Expected Annual Return', pct(d.annualReturn)],
+                ['Inflation Rate', pct(d.inflationRate)],
+                ['Safe Withdrawal Rate', pct(d.withdrawalRate)],
+            ]),
+            '',
+            h3('Results'),
+            table([
+                ['FIRE Number', $(fireNumber)],
+                ['Years to Target Retirement', `${yearsToRetirement} years`],
+                ['Projected Portfolio at Retirement', $(projected)],
+                ['Real Return (Inflation-Adjusted)', `${realReturn.toFixed(1)}%`],
+                ['On Track', onTrack ? 'Yes' : 'No'],
+                ...(onTrack ? [] : [
+                    ['Earliest Possible Retirement Age', `${d.currentAge + yearsNeeded}`] as [string, string],
+                    ['Monthly Contribution Needed', $(monthlyNeeded)] as [string, string],
+                ]),
+            ]),
+        ].join('\n');
+    }).join(`\n${hr}\n`);
+};
+
 // ── zip builder ──────────────────────────────────────────────────────────────
 
 interface FileEntry {
@@ -1000,6 +1070,7 @@ const FILE_MAP: FileEntry[] = [
     { filename: 'Lower-Paying Job.md',         storageKey: 'lowerpayingjob_data',    render: renderLowerPayingJob },
     { filename: 'Layoff Survival.md',          storageKey: 'layoff_survival_data',   render: renderLayoffSurvival },
     { filename: 'Emergency Fund Runway.md',    storageKey: 'emergency_fund_data',    render: renderEmergencyFund },
+    { filename: 'FIRE Retirement.md',          storageKey: 'fire_profiles',           render: renderFire },
 ];
 
 const buildZip = async (frontmatter: string | null): Promise<Blob> => {
@@ -1558,6 +1629,52 @@ const dataFromEmergencyFund = (raw: string): SingleEntry => {
     };
 };
 
+const dataFromFire = (raw: string): ProfileEntry[] =>
+    (JSON.parse(raw) as FireProfile[]).map((p) => {
+        const d = p.data;
+        const fireNumber = d.annualRetirementExpenses / (d.withdrawalRate / 100);
+        const yearsToRetirement = Math.max(d.retirementAge - d.currentAge, 0);
+        const projected = fireFV(d, yearsToRetirement * 12);
+        const onTrack = projected >= fireNumber;
+        let yearsNeeded = yearsToRetirement;
+        if (!onTrack) {
+            for (let y = yearsToRetirement + 1; y <= 80; y++) {
+                if (fireFV(d, y * 12) >= fireNumber) { yearsNeeded = y; break; }
+            }
+        }
+        const r = d.annualReturn / 100 / 12;
+        let monthlyNeeded = d.monthlyContribution;
+        if (!onTrack && yearsToRetirement > 0 && r > 0) {
+            const grow = Math.pow(1 + r, yearsToRetirement * 12);
+            const gap = fireNumber - d.currentPortfolio * grow;
+            monthlyNeeded = gap > 0 ? gap * r / (grow - 1) : 0;
+        }
+        const realReturn = ((1 + d.annualReturn / 100) / (1 + d.inflationRate / 100) - 1) * 100;
+        return {
+            profile: p.name,
+            inputs: {
+                'Current Age': `${d.currentAge} years`,
+                'Target Retirement Age': `${d.retirementAge} years`,
+                'Current Portfolio': $(d.currentPortfolio),
+                'Monthly Contribution': $(d.monthlyContribution),
+                'Annual Retirement Expenses': $(d.annualRetirementExpenses),
+                'Expected Annual Return': pct(d.annualReturn),
+                'Inflation Rate': pct(d.inflationRate),
+                'Safe Withdrawal Rate': pct(d.withdrawalRate),
+            },
+            results: {
+                'FIRE Number': $(fireNumber),
+                'Projected Portfolio at Retirement': $(projected),
+                'Real Return (Inflation-Adjusted)': `${realReturn.toFixed(1)}%`,
+                'On Track': onTrack ? 'Yes' : 'No',
+                ...(onTrack ? {} : {
+                    'Earliest Retirement Age': `${d.currentAge + yearsNeeded}`,
+                    'Monthly Contribution Needed': $(monthlyNeeded),
+                }),
+            },
+        };
+    });
+
 interface DataEntry {
     label: string;
     storageKey: string;
@@ -1582,6 +1699,7 @@ const DATA_MAP: DataEntry[] = [
     { label: 'Lower-Paying Job',        storageKey: 'lowerpayingjob_data',    renderData: dataFromLowerPayingJob },
     { label: 'Layoff Survival',         storageKey: 'layoff_survival_data',   renderData: dataFromLayoffSurvival },
     { label: 'Emergency Fund Runway',   storageKey: 'emergency_fund_data',    renderData: dataFromEmergencyFund },
+    { label: 'FIRE / Retirement',       storageKey: 'fire_profiles',           renderData: dataFromFire },
 ];
 
 export const exportMcpRag = (): void => {

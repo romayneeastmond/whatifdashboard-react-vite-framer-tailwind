@@ -33,6 +33,7 @@ import {
 	TrendingDown,
 	LifeBuoy,
 	ShieldCheck,
+	PiggyBank,
 } from 'lucide-react';
 import { exportNotion, exportObsidian, exportMcpRag } from './utils/exportMarkdown';
 import { BLOG_POSTS } from './components/BlogPosts/registry';
@@ -57,6 +58,7 @@ const SeveranceEICalculator = React.lazy(() => import('./components/calculators/
 const LowerPayingJobCalculator = React.lazy(() => import('./components/calculators/LowerPayingJobCalculator').then(m => ({ default: m.LowerPayingJobCalculator })));
 const LayoffSurvivalCalculator = React.lazy(() => import('./components/calculators/LayoffSurvivalCalculator').then(m => ({ default: m.LayoffSurvivalCalculator })));
 const EmergencyFundCalculator = React.lazy(() => import('./components/calculators/EmergencyFundCalculator').then(m => ({ default: m.EmergencyFundCalculator })));
+const FireCalculator = React.lazy(() => import('./components/calculators/FireCalculator').then(m => ({ default: m.FireCalculator })));
 const CookieBanner = React.lazy(() => import('./components/CookieBanner').then(m => ({ default: m.CookieBanner })));
 const BlogPage = React.lazy(() => import('./components/BlogPage').then(m => ({ default: m.BlogPage })));
 const BlogPostPage = React.lazy(() => import('./components/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
@@ -89,6 +91,7 @@ const MORE_ITEMS: MoreEntry[] = [
 	{ path: '/careerpath', label: 'Career Path', icon: TrendingUp },
 	{ path: '/daysbetween', label: 'Days Between', icon: CalendarDays },
 	{ path: '/emergencyfund', label: 'Emergency Fund', icon: ShieldCheck },
+	{ path: '/fire', label: 'FIRE / Retirement', icon: PiggyBank },
 	{ path: '/layoffsurvival', label: 'Layoff Survival', icon: LifeBuoy },
 	{ path: '/lowerpayingjob', label: 'Lower-Paying Job', icon: TrendingDown },
 	{ path: '/protein', label: 'Protein Intake', icon: Dumbbell },
@@ -112,6 +115,7 @@ const CALCULATOR_LABELS: Record<string, string> = {
 	'/daysbetween': 'Days Between',
 	'/debt': 'Debt Repayment',
 	'/emergencyfund': 'Emergency Fund Runway',
+	'/fire': 'FIRE / Retirement Calculator',
 	'/goals': 'Goals Tracking',
 	'/investing': 'Wealth Growth',
 	'/layoffsurvival': 'Layoff Survival Simulator',
@@ -127,7 +131,7 @@ const CALCULATOR_LABELS: Record<string, string> = {
 
 const CATEGORIES_MAP = [
 	{ name: 'Career', paths: ['/careerpath', '/lowerpayingjob', '/salary'] },
-	{ name: 'Finance', paths: ['/debt', '/emergencyfund', '/goals', '/layoffsurvival', '/mortgage', '/investing'] },
+	{ name: 'Finance', paths: ['/debt', '/emergencyfund', '/fire', '/goals', '/layoffsurvival', '/mortgage', '/investing'] },
 	{ name: 'Fitness', paths: ['/calorie', '/protein', '/weightloss'] },
 	{ name: 'Legal', paths: ['/bardal', '/wrongfuldismissal', '/severanceei'] },
 	{ name: 'Productivity', paths: ['/daysbetween', '/time'] },
@@ -323,7 +327,7 @@ const App = () => {
 		}
 	}, [isDarkMode]);
 
-	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/calorie', '/careerpath', '/wrongfuldismissal', '/severanceei', '/lowerpayingjob', '/multi', '/categories', '/blog'];
+	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/calorie', '/careerpath', '/wrongfuldismissal', '/severanceei', '/lowerpayingjob', '/fire', '/multi', '/categories', '/blog'];
 
 	React.useEffect(() => {
 		let styleEl: HTMLStyleElement | null = null;
@@ -642,6 +646,7 @@ const App = () => {
 								<Route path="/lowerpayingjob" element={<LowerPayingJobCalculator />} />
 								<Route path="/layoffsurvival" element={<LayoffSurvivalCalculator />} />
 								<Route path="/emergencyfund" element={<EmergencyFundCalculator />} />
+								<Route path="/fire" element={<FireCalculator />} />
 								<Route path="/multi" element={<MultiOptionPage />} />
 								<Route path="/categories" element={<CategoriesPage />} />
 								<Route path="/blog" element={<BlogPage />} />
