@@ -180,6 +180,10 @@ const TOOLS = [
 
 const FAQ = [
 	{
+		q: 'How many calculators are available?',
+		a: `There are ${TOOLS.length} free calculators available — no account, no subscription, no paywall. Every tool runs entirely in your browser.`,
+	},
+	{
 		q: 'Where is my data stored?',
 		a: "Everything stays in your browser's localStorage — no account, no server, no database. Your numbers never leave your device.",
 	},
