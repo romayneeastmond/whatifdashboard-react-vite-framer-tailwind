@@ -2,6 +2,33 @@ import type { BlogPostProps } from '../../types';
 
 export const BLOG_POSTS: BlogPostProps[] = [
     {
+        title: 'FIRE Number Calculator: How Much Do You Need to Retire Early?',
+        excerpt: 'Your FIRE number is 25× your annual expenses. Learn how savings rate, compound growth, and the 4% rule combine to make early retirement achievable — and use the FIRE / Retirement Calculator to find your exact target date.',
+        category: 'Finance',
+        date: 'May 25, 2026',
+        dateISO: '2026-05-25',
+        href: '/blog/fire-number-calculator-how-much-do-you-need-to-retire-early',
+        keywords: ['FIRE number calculator', 'how much to retire early', 'financial independence retire early', '4% rule retirement', 'savings rate FIRE', 'compound interest retirement'],
+        faq: [
+            {
+                question: 'What is the FIRE number and how do I calculate it?',
+                answer: 'Your FIRE number is 25 times your expected annual retirement expenses — derived from the 4% safe withdrawal rate established by the Trinity Study. If you plan to spend $50,000 per year in retirement, your FIRE number is $1,250,000. Use the FIRE / Retirement Calculator to factor in your current savings, monthly contributions, and expected investment return to project when you will hit that target.',
+            },
+            {
+                question: 'What savings rate do I need to retire early?',
+                answer: 'A 10% savings rate corresponds to a roughly 40-year working career. A 25% savings rate gets you to FIRE in about 32 years. At 50%, you can reach financial independence in approximately 17 years. At 65–70%, under 10 years is achievable. The savings rate is the single biggest lever because it simultaneously reduces your FIRE number and accelerates portfolio growth.',
+            },
+            {
+                question: 'Is the 4% withdrawal rule safe for a 40- or 50-year retirement?',
+                answer: 'The original Trinity Study modelled 30-year retirements. For longer retirements — typical for early retirees — many planners recommend a 3.25–3.5% withdrawal rate to account for sequence-of-returns risk and longevity. Maintaining some spending flexibility (reducing withdrawals in down markets) materially improves long-term survival rates regardless of the rate you choose.',
+            },
+            {
+                question: 'How does compound interest accelerate FIRE?',
+                answer: 'Compound interest means your investment returns generate their own returns. A portfolio earning 7% annually doubles roughly every 10 years. For early retirees, this means that starting 5 years earlier can add hundreds of thousands of dollars to your final balance — not from extra contributions, but from the additional compounding time. The Wealth Growth Calculator shows this effect in detail.',
+            },
+        ],
+    },
+    {
         title: 'Laid Off? Here\'s What You\'re Actually Owed in Canada',
         excerpt: 'Understand your ESA termination pay, severance pay, and EI entitlements after a layoff — and how to calculate what comes next.',
         category: 'Legal',

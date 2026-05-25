@@ -73,6 +73,7 @@ const SalaryBlogPost = React.lazy(() => import('./components/BlogPosts/SalaryBlo
 const DebtBlogPost = React.lazy(() => import('./components/BlogPosts/DebtBlogPost').then(m => ({ default: () => <BlogPostPage body={m.default} /> })));
 const InvestmentBlogPost = React.lazy(() => import('./components/BlogPosts/InvestmentBlogPost').then(m => ({ default: () => <BlogPostPage body={m.default} /> })));
 const SeveranceEIBlogPost = React.lazy(() => import('./components/BlogPosts/SeveranceEIBlogPost').then(m => ({ default: () => <BlogPostPage body={m.default} /> })));
+const FireRetirementBlogPost = React.lazy(() => import('./components/BlogPosts/FireRetirementBlogPost').then(m => ({ default: () => <BlogPostPage body={m.default} /> })));
 import { cn } from './lib/utils';
 
 const NAV_ITEMS = [
@@ -665,6 +666,7 @@ const App = () => {
 								<Route path="/blog/the-debt-repayment-strategy-that-saved-me-10000" element={<DebtBlogPost />} />
 								<Route path="/blog/compound-interest-the-eighth-wonder-of-the-world" element={<InvestmentBlogPost />} />
 								<Route path="/blog/laid-off-heres-what-youre-actually-owed-in-canada" element={<SeveranceEIBlogPost />} />
+								<Route path="/blog/fire-number-calculator-how-much-do-you-need-to-retire-early" element={<FireRetirementBlogPost />} />
 							</Routes>
 						</React.Suspense>
 						</motion.div>
