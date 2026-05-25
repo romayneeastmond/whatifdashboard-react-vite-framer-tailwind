@@ -6,6 +6,7 @@ export const usePageTracking = () => {
 
     useEffect(() => {
         const sendPageView = async () => {
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') return;
             try {
                 await fetch('/api/track', {
                     method: 'POST',
