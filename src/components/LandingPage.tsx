@@ -1,7 +1,7 @@
 ﻿
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert, Banknote, TrendingDown, LifeBuoy, ShieldCheck, PiggyBank, Landmark } from 'lucide-react';
+import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert, Banknote, TrendingDown, LifeBuoy, ShieldCheck, PiggyBank, Landmark, CircleDollarSign, Search } from 'lucide-react';
 import { useState } from 'react';
 
 const TOOLS = [
@@ -177,6 +177,15 @@ const TOOLS = [
 			'Decide whether to prioritize RRSP or TFSA contributions based on your current and expected retirement tax rates. Compares after-tax retirement wealth for each strategy and recommends the better option.',
 	},
 	{
+		path: '/networth',
+		label: 'Net Worth Projection',
+		icon: CircleDollarSign,
+		color: 'text-teal-600 dark:text-teal-400',
+		bg: 'bg-teal-50 dark:bg-teal-950/40',
+		description:
+			'Track your total net worth and project how it grows over time. Enter all your assets and liabilities, set your monthly savings rate and expected growth, and see your trajectory over up to 40 years. Supports multiple profiles for couples.',
+	},
+	{
 		path: '/multi',
 		label: 'Multi-Option Dashboard',
 		icon: LayoutGrid,
@@ -248,7 +257,7 @@ const FaqItem = ({ q, a }: { q: string; a: string }) => {
 
 const CATEGORIES = [
 	{ name: 'Career', color: 'text-teal-600 dark:text-teal-400', paths: ['/careerpath', '/lowerpayingjob', '/salary'] },
-	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/emergencyfund', '/fire', '/goals', '/layoffsurvival', '/mortgage', '/investing', '/rrsp-tfsa'] },
+	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/emergencyfund', '/fire', '/goals', '/layoffsurvival', '/mortgage', '/networth', '/investing', '/rrsp-tfsa'] },
 	{ name: 'Fitness', color: 'text-orange-600 dark:text-orange-400', paths: ['/calorie', '/protein', '/weightloss'] },
 	{ name: 'Legal', color: 'text-slate-600 dark:text-slate-400', paths: ['/bardal', '/wrongfuldismissal', '/severanceei'] },
 	{ name: 'Productivity', color: 'text-amber-600 dark:text-amber-400', paths: ['/daysbetween', '/time'] },
@@ -287,8 +296,24 @@ const ToolCard = ({ tool, delay }: { tool: typeof TOOLS[number]; delay: number }
 	);
 }
 
+const normalize = (s: string) => s.toLowerCase();
+
 export const LandingPage = () => {
 	const [view, setView] = useState<'list' | 'categories'>('categories');
+	const [query, setQuery] = useState('');
+	const navigate = useNavigate();
+
+	const q = normalize(query.trim());
+	const allToolsWithCategory = CATEGORIES.flatMap(cat =>
+		TOOLS.filter(t => cat.paths.includes(t.path)).map(t => ({ ...t, category: cat.name }))
+	);
+	const filtered = q
+		? allToolsWithCategory.filter(t =>
+			normalize(t.label).includes(q) ||
+			normalize(t.description).includes(q) ||
+			normalize(t.category).includes(q)
+		)
+		: null;
 
 	return (
 		<div className="w-full px-6 lg:px-12 py-16 lg:py-24">
@@ -332,6 +357,22 @@ export const LandingPage = () => {
 				</div>
 			</motion.div>
 
+			{/* Search */}
+			<div className="relative mb-8">
+				<Search
+					size={15}
+					className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-white/30 pointer-events-none"
+				/>
+				<input
+					type="search"
+					value={query}
+					onChange={e => setQuery(e.target.value)}
+					placeholder="Search calculators…"
+					aria-label="Search calculators"
+					className="w-full pl-11 pr-4 py-2.5 text-sm bg-white dark:bg-white/3 border border-slate-200 dark:border-white/8 rounded-lg text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-white/30 outline-none focus:border-[#387E67] dark:focus:border-[#52B788] transition-colors [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden"
+				/>
+			</div>
+
 			{/* View toggle */}
 			<div className="flex items-center gap-1 mb-6">
 				<button
@@ -352,8 +393,41 @@ export const LandingPage = () => {
 				</button>
 			</div>
 
+			{/* Filtered search results */}
+			{filtered !== null && (
+				filtered.length === 0
+					? (
+						<p className="text-sm text-slate-400 dark:text-white/30 py-8 text-center">
+							No calculators matching &ldquo;{query}&rdquo;
+						</p>
+					)
+					: (
+						<div className="space-y-3">
+							{filtered.map((tool) => (
+								<button
+									key={tool.path}
+									onClick={() => navigate(tool.path)}
+									className="w-full flex items-center justify-between gap-4 p-4 text-left rounded-lg border border-slate-200 dark:border-white/8 bg-white dark:bg-white/3 hover:border-slate-300 dark:hover:border-white/15 hover:shadow-sm transition-all duration-200 group cursor-pointer"
+								>
+									<div className="min-w-0">
+										<p className="text-xs uppercase tracking-[0.15em] text-slate-400 dark:text-white/30 mb-1">
+											{tool.category}
+										</p>
+										<p className="text-sm font-medium text-slate-900 dark:text-white truncate">{tool.label}</p>
+										<p className="text-xs text-slate-500 dark:text-white/40 mt-1 line-clamp-1">{tool.description}</p>
+									</div>
+									<ArrowRight
+										size={14}
+										className="shrink-0 text-slate-300 dark:text-white/20 group-hover:text-slate-500 dark:group-hover:text-white/50 group-hover:translate-x-0.5 transition-all"
+									/>
+								</button>
+							))}
+						</div>
+					)
+			)}
+
 			{/* Tool cards — list view */}
-			{view === 'list' && (
+			{filtered === null && view === 'list' && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					{[...TOOLS].sort((a, b) => a.label.localeCompare(b.label)).map((tool, i) => (
 						<ToolCard key={tool.path} tool={tool} delay={0.06 * i} />
@@ -362,7 +436,7 @@ export const LandingPage = () => {
 			)}
 
 			{/* Tool cards — categories view */}
-			{view === 'categories' && (
+			{filtered === null && view === 'categories' && (
 				<div className="space-y-12">
 					{CATEGORIES.map((cat) => {
 						const catTools = TOOLS.filter(t => cat.paths.includes(t.path)).sort((a, b) => a.label.localeCompare(b.label));

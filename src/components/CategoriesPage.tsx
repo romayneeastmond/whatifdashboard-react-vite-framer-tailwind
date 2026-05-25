@@ -7,7 +7,7 @@ import {
     Flame, Dumbbell, Utensils,
     Clock, CalendarDays,
     Scale, ShieldAlert, Banknote,
-    TrendingUp, TrendingDown, LifeBuoy, ShieldCheck, PiggyBank, Landmark,
+    TrendingUp, TrendingDown, LifeBuoy, ShieldCheck, PiggyBank, Landmark, CircleDollarSign,
     ArrowRight, Search,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -117,6 +117,14 @@ const CATEGORIES: Category[] = [
                 color: 'text-orange-600 dark:text-orange-400',
                 bg: 'bg-orange-50 dark:bg-orange-950/40',
                 description: 'Find out how long your savings and severance will last after a job loss. Model your runway, burn rate, and break-even income — then see how cutting expenses or adding side income extends your timeline.',
+            },
+            {
+                path: '/networth',
+                label: 'Net Worth Projection',
+                icon: CircleDollarSign,
+                color: 'text-teal-600 dark:text-teal-400',
+                bg: 'bg-teal-50 dark:bg-teal-950/40',
+                description: 'Track your total net worth and project how it grows over time. Enter all your assets and liabilities, set your monthly savings rate and expected growth, and see your trajectory over up to 40 years. Supports multiple profiles for couples.',
             },
             {
                 path: '/rrsp-tfsa',

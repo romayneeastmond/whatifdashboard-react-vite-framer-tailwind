@@ -1123,6 +1123,82 @@ const renderRrspTfsa = (raw: string): string => {
     }).join(`\n${hr}\n`);
 };
 
+// ── Net Worth Projection ─────────────────────────────────────────────────────
+
+interface NetWorthData {
+    cashSavings: number; investments: number; realEstate: number;
+    vehicles: number; otherAssets: number;
+    mortgageBalance: number; carLoans: number; studentLoans: number;
+    creditCardDebt: number; otherDebt: number;
+    monthlyNetSavings: number; annualGrowthRate: number; projectionYears: number;
+}
+interface NetWorthProfile { id: string; name: string; data: NetWorthData }
+
+const nwProject = (d: NetWorthData, years: number): number => {
+    const netWorth = (d.cashSavings + d.investments + d.realEstate + d.vehicles + d.otherAssets)
+        - (d.mortgageBalance + d.carLoans + d.studentLoans + d.creditCardDebt + d.otherDebt);
+    const r = d.annualGrowthRate / 100;
+    const annual = d.monthlyNetSavings * 12;
+    if (r === 0) return netWorth + annual * years;
+    return netWorth * Math.pow(1 + r, years) + annual * (Math.pow(1 + r, years) - 1) / r;
+};
+
+const renderNetWorth = (raw: string): string => {
+    const profiles: NetWorthProfile[] = JSON.parse(raw);
+    return profiles.map((p) => {
+        const d = p.data;
+        const totalAssets = d.cashSavings + d.investments + d.realEstate + d.vehicles + d.otherAssets;
+        const totalLiabilities = d.mortgageBalance + d.carLoans + d.studentLoans + d.creditCardDebt + d.otherDebt;
+        const netWorth = totalAssets - totalLiabilities;
+        const debtToAsset = totalAssets > 0 ? (totalLiabilities / totalAssets * 100).toFixed(0) : '0';
+        const projected = nwProject(d, d.projectionYears);
+        let yearPositive: string | null = null;
+        if (netWorth < 0) {
+            for (let y = 1; y <= d.projectionYears; y++) {
+                if (nwProject(d, y) >= 0) { yearPositive = `${y}`; break; }
+            }
+        }
+        return [
+            h2(p.name),
+            '',
+            h3('Assets'),
+            table([
+                ['Cash & Savings', $(d.cashSavings)],
+                ['Investments', $(d.investments)],
+                ['Real Estate', $(d.realEstate)],
+                ['Vehicles', $(d.vehicles)],
+                ['Other Assets', $(d.otherAssets)],
+                ['Total Assets', $(totalAssets)],
+            ]),
+            '',
+            h3('Liabilities'),
+            table([
+                ['Mortgage Balance', $(d.mortgageBalance)],
+                ['Car Loans', $(d.carLoans)],
+                ['Student Loans', $(d.studentLoans)],
+                ['Credit Card Debt', $(d.creditCardDebt)],
+                ['Other Debt', $(d.otherDebt)],
+                ['Total Liabilities', $(totalLiabilities)],
+            ]),
+            '',
+            h3('Projection Settings'),
+            table([
+                ['Monthly Net Savings', $(d.monthlyNetSavings)],
+                ['Annual Growth Rate', pct(d.annualGrowthRate)],
+                ['Projection Years', `${d.projectionYears} years`],
+            ]),
+            '',
+            h3('Results'),
+            table([
+                ['Net Worth Today', $(netWorth)],
+                ['Debt-to-Asset Ratio', `${debtToAsset}%`],
+                [`Net Worth in ${d.projectionYears} Years`, $(projected)],
+                ...(yearPositive ? [['Year Net Worth Turns Positive', `Year ${yearPositive}`] as [string, string]] : []),
+            ]),
+        ].join('\n');
+    }).join(`\n${hr}\n`);
+};
+
 // ── zip builder ──────────────────────────────────────────────────────────────
 
 interface FileEntry {
@@ -1151,6 +1227,7 @@ const FILE_MAP: FileEntry[] = [
     { filename: 'Emergency Fund Runway.md',    storageKey: 'emergency_fund_data',    render: renderEmergencyFund },
     { filename: 'FIRE Retirement.md',          storageKey: 'fire_profiles',           render: renderFire },
     { filename: 'RRSP vs TFSA Optimizer.md',  storageKey: 'rrsp_tfsa_profiles',      render: renderRrspTfsa },
+    { filename: 'Net Worth Projection.md',    storageKey: 'networth_profiles',       render: renderNetWorth },
 ];
 
 const buildZip = async (frontmatter: string | null): Promise<Blob> => {
@@ -1792,6 +1869,48 @@ const dataFromRrspTfsa = (raw: string): ProfileEntry[] =>
         };
     });
 
+const dataFromNetWorth = (raw: string): ProfileEntry[] =>
+    (JSON.parse(raw) as NetWorthProfile[]).map((p) => {
+        const d = p.data;
+        const totalAssets = d.cashSavings + d.investments + d.realEstate + d.vehicles + d.otherAssets;
+        const totalLiabilities = d.mortgageBalance + d.carLoans + d.studentLoans + d.creditCardDebt + d.otherDebt;
+        const netWorth = totalAssets - totalLiabilities;
+        const debtToAsset = totalAssets > 0 ? (totalLiabilities / totalAssets * 100).toFixed(0) : '0';
+        const projected = nwProject(d, d.projectionYears);
+        let yearPositive: string | null = null;
+        if (netWorth < 0) {
+            for (let y = 1; y <= d.projectionYears; y++) {
+                if (nwProject(d, y) >= 0) { yearPositive = `Year ${y}`; break; }
+            }
+        }
+        return {
+            profile: p.name,
+            inputs: {
+                'Cash & Savings': $(d.cashSavings),
+                'Investments': $(d.investments),
+                'Real Estate': $(d.realEstate),
+                'Vehicles': $(d.vehicles),
+                'Other Assets': $(d.otherAssets),
+                'Mortgage Balance': $(d.mortgageBalance),
+                'Car Loans': $(d.carLoans),
+                'Student Loans': $(d.studentLoans),
+                'Credit Card Debt': $(d.creditCardDebt),
+                'Other Debt': $(d.otherDebt),
+                'Monthly Net Savings': $(d.monthlyNetSavings),
+                'Annual Growth Rate': pct(d.annualGrowthRate),
+                'Projection Years': `${d.projectionYears} years`,
+            },
+            results: {
+                'Total Assets': $(totalAssets),
+                'Total Liabilities': $(totalLiabilities),
+                'Net Worth Today': $(netWorth),
+                'Debt-to-Asset Ratio': `${debtToAsset}%`,
+                [`Net Worth in ${d.projectionYears} Years`]: $(projected),
+                ...(yearPositive ? { 'Year Net Worth Turns Positive': yearPositive } : {}),
+            },
+        };
+    });
+
 interface DataEntry {
     label: string;
     storageKey: string;
@@ -1818,6 +1937,7 @@ const DATA_MAP: DataEntry[] = [
     { label: 'Emergency Fund Runway',   storageKey: 'emergency_fund_data',    renderData: dataFromEmergencyFund },
     { label: 'FIRE / Retirement',       storageKey: 'fire_profiles',           renderData: dataFromFire },
     { label: 'RRSP vs TFSA Optimizer', storageKey: 'rrsp_tfsa_profiles',      renderData: dataFromRrspTfsa },
+    { label: 'Net Worth Projection',   storageKey: 'networth_profiles',       renderData: dataFromNetWorth },
 ];
 
 export const exportExcel = (): void => {

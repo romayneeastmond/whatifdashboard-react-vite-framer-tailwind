@@ -20,7 +20,7 @@
 
 # Financial & Career Modeling
 
-- Net Worth Projection
+- ~~Net Worth Projection~~ ✓
 - ~~FIRE / Retirement Calculator~~ ✓
 - ~~RRSP vs TFSA Optimizer~~ ✓
 - Rent vs Buy Calculator

@@ -15,6 +15,7 @@
 - [Layoff Survival Simulator](/layoffsurvival) — Model how long savings and severance last after a job loss, with runway, burn rate, and what-if scenarios.
 - [Lower-Paying Job](/lowerpayingjob) — Compare current salary vs. a lower-paying offer, accounting for benefits and 10-year wealth projections.
 - [RRSP vs TFSA Optimizer](/rrsp-tfsa) — Compare RRSP-first vs TFSA-first contribution strategies and get a recommendation based on current and retirement tax rates.
+- [Net Worth Projection](/networth) — Track total net worth across assets and liabilities, project growth over time with monthly savings and return rate. Supports multiple profiles.
 
 ### Career
 - [Career Path Projection](/careerpath) — Project lifetime earnings across job-hopping vs. staying-put scenarios.

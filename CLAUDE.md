@@ -47,7 +47,7 @@ Whenever a new calculator is added to this project:
 
 2. Assign the calculator to a category. The current categories are:
    - **Career** — Career Path Projection, Lower-Paying Job, Salary & Taxes
-   - **Finance** — Mortgage Equity, Debt Repayment, Wealth Growth, Goals Tracking
+   - **Finance** — Mortgage Equity, Debt Repayment, Wealth Growth, Goals Tracking, Net Worth Projection
    - **Fitness** — Weight Loss, Protein Intake, Calorie Deficit Planner
    - **Legal** — Bardal Factor, Wrongful Dismissal
    - **Productivity** — Time Allocation, Days Between
@@ -58,13 +58,21 @@ Whenever a new calculator is added to this project:
 
    If no existing category fits, create a new one in both files and add it to this list.
 
-3. Add the calculator to the Notion / Obsidian markdown export in `src/utils/exportMarkdown.ts`:
+3. Add the calculator to the **Notion / Obsidian markdown export** in `src/utils/exportMarkdown.ts`:
    - Write a `render<Name>` function that reads the stored data and returns formatted markdown (see existing renderers for the pattern).
    - Determine the `localStorage` key the calculator writes to (check the calculator component).
    - Add an entry to the `FILE_MAP` array at the bottom of the render-functions section, before the `// ── zip builder ──` comment:
      ```ts
      { filename: 'Calculator Name.md', storageKey: 'my_calculator_key', render: renderMyCalculator },
      ```
+
+4. Add the calculator to the **Excel, JSON (MCP/RAG), and all structured data exports** in the same file (`src/utils/exportMarkdown.ts`). All three formats are driven by the single `DATA_MAP` array — one entry covers all of them:
+   - Write a `dataFrom<Name>` function returning a `SingleEntry` (`{ inputs: KV; results: KV }`) for single-object calculators, or `ProfileEntry[]` (`{ profile: string; inputs: KV; results: KV }[]`) for profile-array calculators. All values must be formatted strings (currency, percentages, units) — not raw numbers.
+   - Add a matching entry to the `DATA_MAP` array near the bottom of the file, before the `exportExcel` function:
+     ```ts
+     { label: 'Calculator Name', storageKey: 'my_calculator_key', renderData: dataFromMyCalculator },
+     ```
+   - **Do not skip this step.** A calculator missing from `DATA_MAP` will be absent from Excel (`.xlsx`), MCP/RAG JSON, and every future structured export that iterates `DATA_MAP`.
 
 5. Add the calculator to `public/sitemap.xml`:
    - Add a `<url>` block under the appropriate category comment, using the same path as the route:
@@ -80,13 +88,6 @@ Whenever a new calculator is added to this project:
    - Add a bullet under the matching category section:
      ```
      - [Calculator Name](/my-calculator) — One-line description of what it does.
-     ```
-
-7. Add the calculator to the MCP / RAG JSON export in the same file (`src/utils/exportMarkdown.ts`):
-   - Write a `dataFrom<Name>` function returning a `SingleEntry` (`{ inputs: KV; results: KV }`) for single-object calculators, or `ProfileEntry[]` (`{ profile: string; inputs: KV; results: KV }[]`) for profile-array calculators. All values must be formatted strings (currency, percentages, units) — not raw numbers.
-   - Add a matching entry to the `DATA_MAP` array near the bottom of the file, before the `exportMcpRag` function:
-     ```ts
-     { label: 'Calculator Name', storageKey: 'my_calculator_key', renderData: dataFromMyCalculator },
      ```
 
 ## Blog Posts
