@@ -145,7 +145,7 @@
 # Differentiation & Export Ideas
 
 ## Export to Known Formats
-- Mortgage/Debt → amortization table export (Excel/CSV)
+- ~~Mortgage/Debt → amortization table export (Excel/CSV)~~ ✓
 - Weight Loss Plan → printable PDF or MyFitnessPal-compatible format
 - Days Between / Time Allocation → Google Calendar / iCal (.ics) export
 - ~~Offer exporting to Notion or Obsidian~~ ✓

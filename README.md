@@ -36,11 +36,12 @@ Live demo hosted on Vercel [What-If Dashboard](https://whatifdashboard-react-vit
 - **💾 Persistence**: Automatically saves your progress to `localStorage` so your data remains across reloads and sessions.
 - **🖨️ Professional Reporting**: Optimized print-only CSS for generating clean, white-background PDF or physical reports.
 - **⚡ Real-Time Feedback**: Interactive sliders and charts provide instant visual feedback on scenario changes.
-- **📤 Import / Export**: Save and restore your entire dashboard state as a JSON file for backup or sharing. The Export menu offers four formats:
+- **📤 Import / Export**: Save and restore your entire dashboard state as a JSON file for backup or sharing. The Export menu offers five formats:
   - **🗂️ JSON Backup** — full raw state for import/restore.
   - **📋 Notion (.zip)** — a zip of Markdown files importable via Notion's Merge feature.
   - **💎 Obsidian (.zip)** — same Markdown files with YAML frontmatter (`tags: [whatif]`) for Obsidian vaults.
   - **🤖 MCP / RAG (.json)** — a single human-readable JSON file with labelled inputs and computed results per calculator, optimised for LLM ingestion and RAG pipelines.
+  - **📊 Excel (.xlsx)** — a multi-sheet workbook with one sheet per calculator. Multi-profile calculators (Salary, Mortgage, Investment, Debt, Goals, Time, FIRE, RRSP/TFSA) produce one row per profile; single-entity calculators produce a three-column Section / Field / Value table. Compatible with Excel, Google Sheets, and Numbers.
 - **🏠 Landing Page**: Animated entry page with quick-access cards for each calculator.
 - **🧩 Custom Dashboards**: A fully customizable multi-dashboard workspace at `/multi`:
   - **Multiple named dashboards** — create, rename, and switch between as many dashboards as you need, each with its own independent configuration.

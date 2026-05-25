@@ -1,4 +1,5 @@
 import JSZip from 'jszip';
+import { utils as xlsxUtils, write as xlsxWrite } from 'xlsx';
 
 // ── formatters ───────────────────────────────────────────────────────────────
 
@@ -1818,6 +1819,51 @@ const DATA_MAP: DataEntry[] = [
     { label: 'FIRE / Retirement',       storageKey: 'fire_profiles',           renderData: dataFromFire },
     { label: 'RRSP vs TFSA Optimizer', storageKey: 'rrsp_tfsa_profiles',      renderData: dataFromRrspTfsa },
 ];
+
+export const exportExcel = (): void => {
+    const wb = xlsxUtils.book_new();
+
+    for (const entry of DATA_MAP) {
+        const raw = localStorage.getItem(entry.storageKey);
+        if (!raw) continue;
+        let data: ProfileEntry[] | SingleEntry;
+        try {
+            data = entry.renderData(raw);
+        } catch {
+            continue;
+        }
+
+        const sheetName = entry.label.replace(/[:\\/?*[\]]/g, '-').slice(0, 31);
+
+        if (Array.isArray(data)) {
+            const profiles = data as ProfileEntry[];
+            if (profiles.length === 0) continue;
+            const inputKeys = [...new Set(profiles.flatMap((p) => Object.keys(p.inputs)))];
+            const resultKeys = [...new Set(profiles.flatMap((p) => Object.keys(p.results)))];
+            const header = ['Profile', ...inputKeys, ...resultKeys];
+            const rows = profiles.map((p) => [
+                p.profile,
+                ...inputKeys.map((k) => p.inputs[k] ?? ''),
+                ...resultKeys.map((k) => p.results[k] ?? ''),
+            ]);
+            const ws = xlsxUtils.aoa_to_sheet([header, ...rows]);
+            xlsxUtils.book_append_sheet(wb, ws, sheetName);
+        } else {
+            const single = data as SingleEntry;
+            const rows: string[][] = [['Section', 'Field', 'Value']];
+            for (const [k, v] of Object.entries(single.inputs)) rows.push(['Inputs', k, v]);
+            for (const [k, v] of Object.entries(single.results)) rows.push(['Results', k, v]);
+            const ws = xlsxUtils.aoa_to_sheet(rows);
+            xlsxUtils.book_append_sheet(wb, ws, sheetName);
+        }
+    }
+
+    if (wb.SheetNames.length === 0) return;
+
+    const buf = xlsxWrite(wb, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    triggerDownload(blob, `whatif-${new Date().toISOString().split('T')[0]}.xlsx`);
+};
 
 export const exportMcpRag = (): void => {
     const calculators: Record<string, unknown> = {};

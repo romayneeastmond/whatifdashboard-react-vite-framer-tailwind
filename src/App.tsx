@@ -37,7 +37,7 @@ import {
 	PiggyBank,
 	Landmark,
 } from 'lucide-react';
-import { exportNotion, exportObsidian, exportMcpRag } from './utils/exportMarkdown';
+import { exportNotion, exportObsidian, exportMcpRag, exportExcel } from './utils/exportMarkdown';
 import { BLOG_POSTS } from './components/BlogPosts/registry';
 
 const SalaryCalculator = React.lazy(() => import('./components/calculators/SalaryCalculator').then(m => ({ default: m.SalaryCalculator })));
@@ -635,40 +635,40 @@ const App = () => {
 							transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
 						>
 							<React.Suspense fallback={null}>
-							<Routes>
-								<Route path="/" element={<LandingPage />} />
-								<Route path="/salary" element={<SalaryCalculator />} />
-								<Route path="/mortgage" element={<MortgageCalculator />} />
-								<Route path="/investing" element={<InvestmentCalculator />} />
-								<Route path="/goals" element={<GoalsCalculator />} />
-								<Route path="/time" element={<TimeCalculator />} />
-								<Route path="/bardal" element={<BardalCalculator />} />
-								<Route path="/debt" element={<DebtCalculator />} />
-								<Route path="/daysbetween" element={<DaysBetweenCalculator />} />
-								<Route path="/weightloss" element={<WeightLossCalculator />} />
-								<Route path="/protein" element={<ProteinCalculator />} />
-								<Route path="/calorie" element={<CalorieDeficitCalculator />} />
-								<Route path="/careerpath" element={<CareerPathCalculator />} />
-								<Route path="/wrongfuldismissal" element={<WrongfulDismissalCalculator />} />
-								<Route path="/severanceei" element={<SeveranceEICalculator />} />
-								<Route path="/lowerpayingjob" element={<LowerPayingJobCalculator />} />
-								<Route path="/layoffsurvival" element={<LayoffSurvivalCalculator />} />
-								<Route path="/emergencyfund" element={<EmergencyFundCalculator />} />
-								<Route path="/fire" element={<FireCalculator />} />
-								<Route path="/rrsp-tfsa" element={<RrspTfsaCalculator />} />
-								<Route path="/multi" element={<MultiOptionPage />} />
-								<Route path="/categories" element={<CategoriesPage />} />
-								<Route path="/blog" element={<BlogPage />} />
-								<Route path="/blog/what-your-severance-package-should-really-include" element={<WrongfulDismissalBlogPost />} />
-								<Route path="/blog/career-path-projection-job-hopping-vs-staying-put" element={<CareerPathBlogPost />} />
-								<Route path="/blog/setting-smart-financial-goals-that-actually-stick" element={<GoalsBlogPost />} />
-								<Route path="/blog/master-your-salary-calculator-a-beginners-guide" element={<SalaryBlogPost />} />
-								<Route path="/blog/the-debt-repayment-strategy-that-saved-me-10000" element={<DebtBlogPost />} />
-								<Route path="/blog/compound-interest-the-eighth-wonder-of-the-world" element={<InvestmentBlogPost />} />
-								<Route path="/blog/laid-off-heres-what-youre-actually-owed-in-canada" element={<SeveranceEIBlogPost />} />
-								<Route path="/blog/fire-number-calculator-how-much-do-you-need-to-retire-early" element={<FireRetirementBlogPost />} />
-							</Routes>
-						</React.Suspense>
+								<Routes>
+									<Route path="/" element={<LandingPage />} />
+									<Route path="/salary" element={<SalaryCalculator />} />
+									<Route path="/mortgage" element={<MortgageCalculator />} />
+									<Route path="/investing" element={<InvestmentCalculator />} />
+									<Route path="/goals" element={<GoalsCalculator />} />
+									<Route path="/time" element={<TimeCalculator />} />
+									<Route path="/bardal" element={<BardalCalculator />} />
+									<Route path="/debt" element={<DebtCalculator />} />
+									<Route path="/daysbetween" element={<DaysBetweenCalculator />} />
+									<Route path="/weightloss" element={<WeightLossCalculator />} />
+									<Route path="/protein" element={<ProteinCalculator />} />
+									<Route path="/calorie" element={<CalorieDeficitCalculator />} />
+									<Route path="/careerpath" element={<CareerPathCalculator />} />
+									<Route path="/wrongfuldismissal" element={<WrongfulDismissalCalculator />} />
+									<Route path="/severanceei" element={<SeveranceEICalculator />} />
+									<Route path="/lowerpayingjob" element={<LowerPayingJobCalculator />} />
+									<Route path="/layoffsurvival" element={<LayoffSurvivalCalculator />} />
+									<Route path="/emergencyfund" element={<EmergencyFundCalculator />} />
+									<Route path="/fire" element={<FireCalculator />} />
+									<Route path="/rrsp-tfsa" element={<RrspTfsaCalculator />} />
+									<Route path="/multi" element={<MultiOptionPage />} />
+									<Route path="/categories" element={<CategoriesPage />} />
+									<Route path="/blog" element={<BlogPage />} />
+									<Route path="/blog/what-your-severance-package-should-really-include" element={<WrongfulDismissalBlogPost />} />
+									<Route path="/blog/career-path-projection-job-hopping-vs-staying-put" element={<CareerPathBlogPost />} />
+									<Route path="/blog/setting-smart-financial-goals-that-actually-stick" element={<GoalsBlogPost />} />
+									<Route path="/blog/master-your-salary-calculator-a-beginners-guide" element={<SalaryBlogPost />} />
+									<Route path="/blog/the-debt-repayment-strategy-that-saved-me-10000" element={<DebtBlogPost />} />
+									<Route path="/blog/compound-interest-the-eighth-wonder-of-the-world" element={<InvestmentBlogPost />} />
+									<Route path="/blog/laid-off-heres-what-youre-actually-owed-in-canada" element={<SeveranceEIBlogPost />} />
+									<Route path="/blog/fire-number-calculator-how-much-do-you-need-to-retire-early" element={<FireRetirementBlogPost />} />
+								</Routes>
+							</React.Suspense>
 						</motion.div>
 					</AnimatePresence>
 
@@ -710,6 +710,7 @@ const App = () => {
 													>
 														{([
 															{ label: '🗂️  JSON Backup', action: () => { handleExport(); setShowExportMenu(false); } },
+															{ label: '📊  Excel (.xlsx)', action: () => { exportExcel(); setShowExportMenu(false); } },
 															{ label: '📋  Notion (.zip)', action: () => { exportNotion().then(() => setShowExportMenu(false)); } },
 															{ label: '💎  Obsidian (.zip)', action: () => { exportObsidian().then(() => setShowExportMenu(false)); } },
 															{ label: '🤖  MCP / RAG (.json)', action: () => { exportMcpRag(); setShowExportMenu(false); } },
