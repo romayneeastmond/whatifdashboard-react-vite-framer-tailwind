@@ -1044,6 +1044,84 @@ const renderFire = (raw: string): string => {
     }).join(`\n${hr}\n`);
 };
 
+// ── RRSP vs TFSA Optimizer ───────────────────────────────────────────────────
+
+interface RrspTfsaData {
+    currentAge: number; retirementAge: number; annualContribution: number;
+    currentTaxRate: number; retirementTaxRate: number;
+    currentRrspBalance: number; currentTfsaBalance: number; expectedReturn: number;
+}
+interface RrspTfsaProfile { id: string; name: string; data: RrspTfsaData }
+
+const rrspFv = (balance: number, annualContrib: number, r: number, n: number): number => {
+    if (n <= 0) return balance;
+    const growth = Math.pow(1 + r, n);
+    return balance * growth + (r === 0 ? annualContrib * n : annualContrib * (growth - 1) / r);
+};
+
+const renderRrspTfsa = (raw: string): string => {
+    const profiles: RrspTfsaProfile[] = JSON.parse(raw);
+    return profiles.map((p) => {
+        const d = p.data;
+        const years = Math.max(d.retirementAge - d.currentAge, 0);
+        const r = d.expectedReturn / 100;
+        const tCurr = d.currentTaxRate / 100;
+        const tRet = d.retirementTaxRate / 100;
+        const annualRefund = d.annualContribution * tCurr;
+
+        const rrspFV = rrspFv(d.currentRrspBalance, d.annualContribution, r, years);
+        const tfsaRefundFV = rrspFv(d.currentTfsaBalance, annualRefund, r, years);
+        const rrspStrategyTotal = rrspFV * (1 - tRet) + tfsaRefundFV;
+
+        const tfsaFV = rrspFv(d.currentTfsaBalance, d.annualContribution, r, years);
+        const rrspExistingFV = rrspFv(d.currentRrspBalance, 0, r, years);
+        const tfsaStrategyTotal = tfsaFV + rrspExistingFV * (1 - tRet);
+
+        const advantage = rrspStrategyTotal - tfsaStrategyTotal;
+        const recommended = advantage >= 0 ? 'RRSP-First' : 'TFSA-First';
+
+        return [
+            h2(p.name),
+            '',
+            h3('Inputs'),
+            table([
+                ['Current Age', `${d.currentAge} years`],
+                ['Retirement Age', `${d.retirementAge} years`],
+                ['Years to Retirement', `${years} years`],
+                ['Annual Contribution', $(d.annualContribution)],
+                ['Current RRSP Balance', $(d.currentRrspBalance)],
+                ['Current TFSA Balance', $(d.currentTfsaBalance)],
+                ['Current Marginal Tax Rate', pct(d.currentTaxRate)],
+                ['Expected Retirement Tax Rate', pct(d.retirementTaxRate)],
+                ['Expected Annual Return', pct(d.expectedReturn)],
+            ]),
+            '',
+            h3('RRSP-First Strategy'),
+            table([
+                ['Annual RRSP Tax Refund (reinvested)', $(annualRefund)],
+                ['RRSP Balance at Retirement (pre-tax)', $(rrspFV)],
+                ['RRSP Balance at Retirement (after-tax)', $(rrspFV * (1 - tRet))],
+                ['TFSA from Reinvested Refunds', $(tfsaRefundFV)],
+                ['Total After-Tax Value', $(rrspStrategyTotal)],
+            ]),
+            '',
+            h3('TFSA-First Strategy'),
+            table([
+                ['TFSA Balance at Retirement', $(tfsaFV)],
+                ['Existing RRSP at Retirement (after-tax)', $(rrspExistingFV * (1 - tRet))],
+                ['Total After-Tax Value', $(tfsaStrategyTotal)],
+            ]),
+            '',
+            h3('Recommendation'),
+            table([
+                ['Recommended Strategy', recommended],
+                ['Advantage', `${$(Math.abs(advantage))} more after-tax`],
+                ['Reason', d.currentTaxRate > d.retirementTaxRate ? 'Tax rate drops in retirement — RRSP saves more' : d.currentTaxRate < d.retirementTaxRate ? 'Tax rate rises in retirement — TFSA avoids future tax' : 'Equal rates — TFSA preferred for simplicity'],
+            ]),
+        ].join('\n');
+    }).join(`\n${hr}\n`);
+};
+
 // ── zip builder ──────────────────────────────────────────────────────────────
 
 interface FileEntry {
@@ -1071,6 +1149,7 @@ const FILE_MAP: FileEntry[] = [
     { filename: 'Layoff Survival.md',          storageKey: 'layoff_survival_data',   render: renderLayoffSurvival },
     { filename: 'Emergency Fund Runway.md',    storageKey: 'emergency_fund_data',    render: renderEmergencyFund },
     { filename: 'FIRE Retirement.md',          storageKey: 'fire_profiles',           render: renderFire },
+    { filename: 'RRSP vs TFSA Optimizer.md',  storageKey: 'rrsp_tfsa_profiles',      render: renderRrspTfsa },
 ];
 
 const buildZip = async (frontmatter: string | null): Promise<Blob> => {
@@ -1675,6 +1754,43 @@ const dataFromFire = (raw: string): ProfileEntry[] =>
         };
     });
 
+const dataFromRrspTfsa = (raw: string): ProfileEntry[] =>
+    (JSON.parse(raw) as RrspTfsaProfile[]).map((p) => {
+        const d = p.data;
+        const years = Math.max(d.retirementAge - d.currentAge, 0);
+        const r = d.expectedReturn / 100;
+        const tCurr = d.currentTaxRate / 100;
+        const tRet = d.retirementTaxRate / 100;
+        const annualRefund = d.annualContribution * tCurr;
+        const rrspFV = rrspFv(d.currentRrspBalance, d.annualContribution, r, years);
+        const tfsaRefundFV = rrspFv(d.currentTfsaBalance, annualRefund, r, years);
+        const rrspStrategyTotal = rrspFV * (1 - tRet) + tfsaRefundFV;
+        const tfsaFV = rrspFv(d.currentTfsaBalance, d.annualContribution, r, years);
+        const rrspExistingFV = rrspFv(d.currentRrspBalance, 0, r, years);
+        const tfsaStrategyTotal = tfsaFV + rrspExistingFV * (1 - tRet);
+        const advantage = rrspStrategyTotal - tfsaStrategyTotal;
+        return {
+            profile: p.name,
+            inputs: {
+                'Current Age': `${d.currentAge} years`,
+                'Retirement Age': `${d.retirementAge} years`,
+                'Annual Contribution': $(d.annualContribution),
+                'Current RRSP Balance': $(d.currentRrspBalance),
+                'Current TFSA Balance': $(d.currentTfsaBalance),
+                'Current Marginal Tax Rate': pct(d.currentTaxRate),
+                'Expected Retirement Tax Rate': pct(d.retirementTaxRate),
+                'Expected Annual Return': pct(d.expectedReturn),
+            },
+            results: {
+                'RRSP Strategy After-Tax Value': $(rrspStrategyTotal),
+                'TFSA Strategy After-Tax Value': $(tfsaStrategyTotal),
+                'Annual RRSP Tax Refund': $(annualRefund),
+                'Recommended Strategy': advantage >= 0 ? 'RRSP-First' : 'TFSA-First',
+                'Advantage': $(Math.abs(advantage)),
+            },
+        };
+    });
+
 interface DataEntry {
     label: string;
     storageKey: string;
@@ -1700,6 +1816,7 @@ const DATA_MAP: DataEntry[] = [
     { label: 'Layoff Survival',         storageKey: 'layoff_survival_data',   renderData: dataFromLayoffSurvival },
     { label: 'Emergency Fund Runway',   storageKey: 'emergency_fund_data',    renderData: dataFromEmergencyFund },
     { label: 'FIRE / Retirement',       storageKey: 'fire_profiles',           renderData: dataFromFire },
+    { label: 'RRSP vs TFSA Optimizer', storageKey: 'rrsp_tfsa_profiles',      renderData: dataFromRrspTfsa },
 ];
 
 export const exportMcpRag = (): void => {

@@ -35,6 +35,7 @@ import {
 	LifeBuoy,
 	ShieldCheck,
 	PiggyBank,
+	Landmark,
 } from 'lucide-react';
 import { exportNotion, exportObsidian, exportMcpRag } from './utils/exportMarkdown';
 import { BLOG_POSTS } from './components/BlogPosts/registry';
@@ -60,6 +61,7 @@ const LowerPayingJobCalculator = React.lazy(() => import('./components/calculato
 const LayoffSurvivalCalculator = React.lazy(() => import('./components/calculators/LayoffSurvivalCalculator').then(m => ({ default: m.LayoffSurvivalCalculator })));
 const EmergencyFundCalculator = React.lazy(() => import('./components/calculators/EmergencyFundCalculator').then(m => ({ default: m.EmergencyFundCalculator })));
 const FireCalculator = React.lazy(() => import('./components/calculators/FireCalculator').then(m => ({ default: m.FireCalculator })));
+const RrspTfsaCalculator = React.lazy(() => import('./components/calculators/RrspTfsaCalculator').then(m => ({ default: m.RrspTfsaCalculator })));
 const CookieBanner = React.lazy(() => import('./components/CookieBanner').then(m => ({ default: m.CookieBanner })));
 const BlogPage = React.lazy(() => import('./components/BlogPage').then(m => ({ default: m.BlogPage })));
 const BlogPostPage = React.lazy(() => import('./components/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
@@ -93,9 +95,11 @@ const MORE_ITEMS: MoreEntry[] = [
 	{ path: '/daysbetween', label: 'Days Between', icon: CalendarDays },
 	{ path: '/emergencyfund', label: 'Emergency Fund', icon: ShieldCheck },
 	{ path: '/fire', label: 'FIRE / Retirement', icon: PiggyBank },
+	{ path: '/rrsp-tfsa', label: 'RRSP vs TFSA', icon: Landmark },
 	{ path: '/layoffsurvival', label: 'Layoff Survival', icon: LifeBuoy },
 	{ path: '/lowerpayingjob', label: 'Lower-Paying Job', icon: TrendingDown },
 	{ path: '/protein', label: 'Protein Intake', icon: Dumbbell },
+	{ path: '/rrsp-tfsa', label: 'RRSP vs TFSA', icon: Landmark },
 	{ path: '/severanceei', label: 'Severance & EI', icon: Banknote },
 	{ path: '/time', label: 'Time Allocation', icon: Clock },
 	{ path: '/weightloss', label: 'Weight Loss', icon: Flame },
@@ -117,6 +121,7 @@ const CALCULATOR_LABELS: Record<string, string> = {
 	'/debt': 'Debt Repayment',
 	'/emergencyfund': 'Emergency Fund Runway',
 	'/fire': 'FIRE / Retirement Calculator',
+	'/rrsp-tfsa': 'RRSP vs TFSA Optimizer',
 	'/goals': 'Goals Tracking',
 	'/investing': 'Wealth Growth',
 	'/layoffsurvival': 'Layoff Survival Simulator',
@@ -132,7 +137,7 @@ const CALCULATOR_LABELS: Record<string, string> = {
 
 const CATEGORIES_MAP = [
 	{ name: 'Career', paths: ['/careerpath', '/lowerpayingjob', '/salary'] },
-	{ name: 'Finance', paths: ['/debt', '/emergencyfund', '/fire', '/goals', '/layoffsurvival', '/mortgage', '/investing'] },
+	{ name: 'Finance', paths: ['/debt', '/emergencyfund', '/fire', '/goals', '/layoffsurvival', '/mortgage', '/investing', '/rrsp-tfsa'] },
 	{ name: 'Fitness', paths: ['/calorie', '/protein', '/weightloss'] },
 	{ name: 'Legal', paths: ['/bardal', '/wrongfuldismissal', '/severanceei'] },
 	{ name: 'Productivity', paths: ['/daysbetween', '/time'] },
@@ -329,7 +334,7 @@ const App = () => {
 		}
 	}, [isDarkMode]);
 
-	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/calorie', '/careerpath', '/wrongfuldismissal', '/severanceei', '/lowerpayingjob', '/fire', '/multi', '/categories', '/blog'];
+	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/calorie', '/careerpath', '/wrongfuldismissal', '/severanceei', '/lowerpayingjob', '/fire', '/rrsp-tfsa', '/multi', '/categories', '/blog'];
 
 	React.useEffect(() => {
 		let styleEl: HTMLStyleElement | null = null;
@@ -649,6 +654,7 @@ const App = () => {
 								<Route path="/layoffsurvival" element={<LayoffSurvivalCalculator />} />
 								<Route path="/emergencyfund" element={<EmergencyFundCalculator />} />
 								<Route path="/fire" element={<FireCalculator />} />
+								<Route path="/rrsp-tfsa" element={<RrspTfsaCalculator />} />
 								<Route path="/multi" element={<MultiOptionPage />} />
 								<Route path="/categories" element={<CategoriesPage />} />
 								<Route path="/blog" element={<BlogPage />} />

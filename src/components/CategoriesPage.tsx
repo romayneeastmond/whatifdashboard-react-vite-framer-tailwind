@@ -7,7 +7,7 @@ import {
     Flame, Dumbbell, Utensils,
     Clock, CalendarDays,
     Scale, ShieldAlert, Banknote,
-    TrendingUp, TrendingDown, LifeBuoy, ShieldCheck, PiggyBank,
+    TrendingUp, TrendingDown, LifeBuoy, ShieldCheck, PiggyBank, Landmark,
     ArrowRight, Search,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -117,6 +117,14 @@ const CATEGORIES: Category[] = [
                 color: 'text-orange-600 dark:text-orange-400',
                 bg: 'bg-orange-50 dark:bg-orange-950/40',
                 description: 'Find out how long your savings and severance will last after a job loss. Model your runway, burn rate, and break-even income — then see how cutting expenses or adding side income extends your timeline.',
+            },
+            {
+                path: '/rrsp-tfsa',
+                label: 'RRSP vs TFSA Optimizer',
+                icon: Landmark,
+                color: 'text-indigo-600 dark:text-indigo-400',
+                bg: 'bg-indigo-50 dark:bg-indigo-950/40',
+                description: 'Decide whether to prioritize RRSP or TFSA contributions based on your current and expected retirement tax rates. Compares after-tax retirement wealth for each strategy and recommends the better option.',
             },
         ],
     },

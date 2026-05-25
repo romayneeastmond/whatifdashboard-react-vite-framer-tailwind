@@ -1,7 +1,7 @@
 ﻿
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert, Banknote, TrendingDown, LifeBuoy, ShieldCheck, PiggyBank } from 'lucide-react';
+import { BarChart3, Home, Wallet, Clock, Target, ArrowRight, ChevronDown, Scale, CreditCard, LayoutGrid, Dumbbell, Flame, CalendarDays, LayoutList, FolderOpen, Utensils, TrendingUp, ShieldAlert, Banknote, TrendingDown, LifeBuoy, ShieldCheck, PiggyBank, Landmark } from 'lucide-react';
 import { useState } from 'react';
 
 const TOOLS = [
@@ -168,6 +168,15 @@ const TOOLS = [
 			'Estimate your Canadian severance package and Employment Insurance benefits after a job loss. Calculates ESA termination and severance pay by province, EI eligibility, weekly benefit, duration, and your total income runway.',
 	},
 	{
+		path: '/rrsp-tfsa',
+		label: 'RRSP vs TFSA Optimizer',
+		icon: Landmark,
+		color: 'text-indigo-600 dark:text-indigo-400',
+		bg: 'bg-indigo-50 dark:bg-indigo-950/40',
+		description:
+			'Decide whether to prioritize RRSP or TFSA contributions based on your current and expected retirement tax rates. Compares after-tax retirement wealth for each strategy and recommends the better option.',
+	},
+	{
 		path: '/multi',
 		label: 'Multi-Option Dashboard',
 		icon: LayoutGrid,
@@ -239,7 +248,7 @@ const FaqItem = ({ q, a }: { q: string; a: string }) => {
 
 const CATEGORIES = [
 	{ name: 'Career', color: 'text-teal-600 dark:text-teal-400', paths: ['/careerpath', '/lowerpayingjob', '/salary'] },
-	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/emergencyfund', '/fire', '/goals', '/layoffsurvival', '/mortgage', '/investing'] },
+	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/emergencyfund', '/fire', '/goals', '/layoffsurvival', '/mortgage', '/investing', '/rrsp-tfsa'] },
 	{ name: 'Fitness', color: 'text-orange-600 dark:text-orange-400', paths: ['/calorie', '/protein', '/weightloss'] },
 	{ name: 'Legal', color: 'text-slate-600 dark:text-slate-400', paths: ['/bardal', '/wrongfuldismissal', '/severanceei'] },
 	{ name: 'Productivity', color: 'text-amber-600 dark:text-amber-400', paths: ['/daysbetween', '/time'] },

@@ -22,7 +22,7 @@
 
 - Net Worth Projection
 - ~~FIRE / Retirement Calculator~~ ✓
-- RRSP vs TFSA Optimizer
+- ~~RRSP vs TFSA Optimizer~~ ✓
 - Rent vs Buy Calculator
 - ~~Emergency Fund Runway~~ ✓
 - Job Offer Comparator
