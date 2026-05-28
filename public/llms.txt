@@ -19,6 +19,7 @@
 
 ### Career
 - [Career Path Projection](/careerpath) — Project lifetime earnings across job-hopping vs. staying-put scenarios.
+- [Total Compensation](/total-comp) — Calculate total compensation including salary and the estimated value of dental, medical, vision, life insurance, disability, and RRSP / 401k match benefits.
 
 ### Legal
 - [Bardal Factor](/bardal) — Estimate wrongful dismissal notice periods using Canadian Bardal factors.

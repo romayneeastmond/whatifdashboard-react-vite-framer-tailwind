@@ -186,6 +186,15 @@ const TOOLS = [
 			'Track your total net worth and project how it grows over time. Enter all your assets and liabilities, set your monthly savings rate and expected growth, and see your trajectory over up to 40 years. Supports multiple profiles for couples.',
 	},
 	{
+		path: '/total-comp',
+		label: 'Total Compensation',
+		icon: Wallet,
+		color: 'text-violet-600 dark:text-violet-400',
+		bg: 'bg-violet-50 dark:bg-violet-950/40',
+		description:
+			'See the true value of a job offer beyond the base salary. Add dental, medical, vision, life insurance, disability, and RRSP / 401k match to calculate your full compensation package and how much your benefits are worth.',
+	},
+	{
 		path: '/multi',
 		label: 'Multi-Option Dashboard',
 		icon: LayoutGrid,
@@ -256,7 +265,7 @@ const FaqItem = ({ q, a }: { q: string; a: string }) => {
 }
 
 const CATEGORIES = [
-	{ name: 'Career', color: 'text-teal-600 dark:text-teal-400', paths: ['/careerpath', '/lowerpayingjob', '/salary'] },
+	{ name: 'Career', color: 'text-teal-600 dark:text-teal-400', paths: ['/careerpath', '/lowerpayingjob', '/salary', '/total-comp'] },
 	{ name: 'Finance', color: 'text-emerald-600 dark:text-emerald-400', paths: ['/debt', '/emergencyfund', '/fire', '/goals', '/layoffsurvival', '/mortgage', '/networth', '/investing', '/rrsp-tfsa'] },
 	{ name: 'Fitness', color: 'text-orange-600 dark:text-orange-400', paths: ['/calorie', '/protein', '/weightloss'] },
 	{ name: 'Legal', color: 'text-slate-600 dark:text-slate-400', paths: ['/bardal', '/wrongfuldismissal', '/severanceei'] },

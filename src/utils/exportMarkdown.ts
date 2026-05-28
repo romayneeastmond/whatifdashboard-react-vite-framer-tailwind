@@ -1199,6 +1199,47 @@ const renderNetWorth = (raw: string): string => {
     }).join(`\n${hr}\n`);
 };
 
+const renderTotalCompensation = (raw: string): string => {
+    const d = JSON.parse(raw);
+    const gross: number = d.grossSalary ?? 0;
+    const benefits = d.benefits ?? {};
+    const values = d.values ?? {};
+    const retirementMatchValue = benefits.retirementMatch ? gross * ((values.retirementMatchPct ?? 0) / 100) : 0;
+    const totalBenefits =
+        (benefits.dental        ? (values.dentalValue        ?? 0) : 0) +
+        (benefits.medical       ? (values.medicalValue       ?? 0) : 0) +
+        (benefits.vision        ? (values.visionValue        ?? 0) : 0) +
+        (benefits.lifeInsurance ? (values.lifeInsuranceValue ?? 0) : 0) +
+        (benefits.disability    ? (values.disabilityValue    ?? 0) : 0) +
+        retirementMatchValue +
+        (benefits.misc          ? (values.miscValue          ?? 0) : 0);
+    const totalComp = gross + totalBenefits;
+    const breakdown: [string, string][] = [
+        ...(benefits.dental        ? [['Dental',               $(values.dentalValue        ?? 0)] as [string, string]] : []),
+        ...(benefits.medical       ? [['Medical / Health',     $(values.medicalValue       ?? 0)] as [string, string]] : []),
+        ...(benefits.vision        ? [['Vision',               $(values.visionValue        ?? 0)] as [string, string]] : []),
+        ...(benefits.lifeInsurance ? [['Life Insurance',       $(values.lifeInsuranceValue ?? 0)] as [string, string]] : []),
+        ...(benefits.disability    ? [['Disability Insurance', $(values.disabilityValue    ?? 0)] as [string, string]] : []),
+        ...(benefits.retirementMatch ? [['RRSP / 401k Match',  $(retirementMatchValue)] as [string, string]] : []),
+        ...(benefits.misc          ? [['Other Benefits',       $(values.miscValue          ?? 0)] as [string, string]] : []),
+    ];
+    const benefitsPct = gross > 0 ? (totalBenefits / gross * 100).toFixed(1) : '0.0';
+    return [
+        h2('Inputs'),
+        table([['Gross Annual Salary', $(gross)]]),
+        '',
+        h2('Benefits'),
+        breakdown.length > 0 ? table(breakdown) : '_No benefits selected._',
+        '',
+        h2('Results'),
+        table([
+            ['Total Benefits Value', $(totalBenefits)],
+            ['Total Compensation',   $(totalComp)],
+            ['Benefits vs Salary',   `${benefitsPct}%`],
+        ]),
+    ].join('\n');
+};
+
 // ── zip builder ──────────────────────────────────────────────────────────────
 
 interface FileEntry {
@@ -1228,6 +1269,7 @@ const FILE_MAP: FileEntry[] = [
     { filename: 'FIRE Retirement.md',          storageKey: 'fire_profiles',           render: renderFire },
     { filename: 'RRSP vs TFSA Optimizer.md',  storageKey: 'rrsp_tfsa_profiles',      render: renderRrspTfsa },
     { filename: 'Net Worth Projection.md',    storageKey: 'networth_profiles',       render: renderNetWorth },
+    { filename: 'Total Compensation.md',      storageKey: 'total_comp_data',         render: renderTotalCompensation },
 ];
 
 const buildZip = async (frontmatter: string | null): Promise<Blob> => {
@@ -1911,6 +1953,41 @@ const dataFromNetWorth = (raw: string): ProfileEntry[] =>
         };
     });
 
+const dataFromTotalCompensation = (raw: string): SingleEntry => {
+    const d = JSON.parse(raw);
+    const gross: number = d.grossSalary ?? 0;
+    const benefits = d.benefits ?? {};
+    const values = d.values ?? {};
+    const retirementMatchValue = benefits.retirementMatch ? gross * ((values.retirementMatchPct ?? 0) / 100) : 0;
+    const totalBenefits =
+        (benefits.dental        ? (values.dentalValue        ?? 0) : 0) +
+        (benefits.medical       ? (values.medicalValue       ?? 0) : 0) +
+        (benefits.vision        ? (values.visionValue        ?? 0) : 0) +
+        (benefits.lifeInsurance ? (values.lifeInsuranceValue ?? 0) : 0) +
+        (benefits.disability    ? (values.disabilityValue    ?? 0) : 0) +
+        retirementMatchValue +
+        (benefits.misc          ? (values.miscValue          ?? 0) : 0);
+    const totalComp = gross + totalBenefits;
+    const benefitsPct = gross > 0 ? (totalBenefits / gross * 100).toFixed(1) : '0.0';
+    return {
+        inputs: {
+            'Gross Annual Salary':    $(gross),
+            'Dental':                 benefits.dental        ? $(values.dentalValue        ?? 0) : 'Not included',
+            'Medical / Health':       benefits.medical       ? $(values.medicalValue       ?? 0) : 'Not included',
+            'Vision':                 benefits.vision        ? $(values.visionValue        ?? 0) : 'Not included',
+            'Life Insurance':         benefits.lifeInsurance ? $(values.lifeInsuranceValue ?? 0) : 'Not included',
+            'Disability Insurance':   benefits.disability    ? $(values.disabilityValue    ?? 0) : 'Not included',
+            'RRSP / 401k Match':      benefits.retirementMatch ? `${values.retirementMatchPct ?? 0}% (${$(retirementMatchValue)})` : 'Not included',
+            'Other Benefits':         benefits.misc          ? $(values.miscValue          ?? 0) : 'Not included',
+        },
+        results: {
+            'Total Benefits Value': $(totalBenefits),
+            'Total Compensation':   $(totalComp),
+            'Benefits vs Salary':   `${benefitsPct}%`,
+        },
+    };
+};
+
 interface DataEntry {
     label: string;
     storageKey: string;
@@ -1938,6 +2015,7 @@ const DATA_MAP: DataEntry[] = [
     { label: 'FIRE / Retirement',       storageKey: 'fire_profiles',           renderData: dataFromFire },
     { label: 'RRSP vs TFSA Optimizer', storageKey: 'rrsp_tfsa_profiles',      renderData: dataFromRrspTfsa },
     { label: 'Net Worth Projection',   storageKey: 'networth_profiles',       renderData: dataFromNetWorth },
+    { label: 'Total Compensation',     storageKey: 'total_comp_data',         renderData: dataFromTotalCompensation },
 ];
 
 export const exportExcel = (): void => {

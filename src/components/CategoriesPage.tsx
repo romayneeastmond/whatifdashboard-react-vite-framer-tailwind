@@ -56,6 +56,14 @@ const CATEGORIES: Category[] = [
                 bg: 'bg-emerald-50 dark:bg-emerald-950/40',
                 description: 'Model your take-home pay. Adjust gross salary, tax rate, retirement contribution, and monthly expenses to see exactly what lands in your pocket.',
             },
+            {
+                path: '/total-comp',
+                label: 'Total Compensation',
+                icon: Wallet,
+                color: 'text-violet-600 dark:text-violet-400',
+                bg: 'bg-violet-50 dark:bg-violet-950/40',
+                description: 'See the true value of a job offer beyond the base salary. Add dental, medical, vision, life insurance, disability, and RRSP / 401k match to calculate your full compensation package and how much your benefits are worth.',
+            },
         ],
     },
     {

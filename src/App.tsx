@@ -64,6 +64,7 @@ const EmergencyFundCalculator = React.lazy(() => import('./components/calculator
 const FireCalculator = React.lazy(() => import('./components/calculators/FireCalculator').then(m => ({ default: m.FireCalculator })));
 const RrspTfsaCalculator = React.lazy(() => import('./components/calculators/RrspTfsaCalculator').then(m => ({ default: m.RrspTfsaCalculator })));
 const NetWorthCalculator = React.lazy(() => import('./components/calculators/NetWorthCalculator').then(m => ({ default: m.NetWorthCalculator })));
+const TotalCompensationCalculator = React.lazy(() => import('./components/calculators/TotalCompensationCalculator').then(m => ({ default: m.TotalCompensationCalculator })));
 const CookieBanner = React.lazy(() => import('./components/CookieBanner').then(m => ({ default: m.CookieBanner })));
 const BlogPage = React.lazy(() => import('./components/BlogPage').then(m => ({ default: m.BlogPage })));
 const BlogPostPage = React.lazy(() => import('./components/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
@@ -103,9 +104,9 @@ const MORE_ITEMS: MoreEntry[] = [
 	{ path: '/lowerpayingjob', label: 'Lower-Paying Job', icon: TrendingDown },
 	{ path: '/networth', label: 'Net Worth Projection', icon: CircleDollarSign },
 	{ path: '/protein', label: 'Protein Intake', icon: Dumbbell },
-	{ path: '/rrsp-tfsa', label: 'RRSP vs TFSA', icon: Landmark },
 	{ path: '/severanceei', label: 'Severance & EI', icon: Banknote },
 	{ path: '/time', label: 'Time Allocation', icon: Clock },
+	{ path: '/total-comp', label: 'Total Compensation', icon: CircleDollarSign },
 	{ path: '/weightloss', label: 'Weight Loss', icon: Flame },
 	{ path: '/wrongfuldismissal', label: 'Wrongful Dismissal', icon: ShieldAlert },
 	{ divider: true },
@@ -137,11 +138,12 @@ const CALCULATOR_LABELS: Record<string, string> = {
 	'/severanceei': 'Severance & EI Estimator',
 	'/time': 'Time Allocation',
 	'/weightloss': 'Weight Loss',
+	'/total-comp': 'Total Compensation',
 	'/wrongfuldismissal': 'Wrongful Dismissal',
 };
 
 const CATEGORIES_MAP = [
-	{ name: 'Career', paths: ['/careerpath', '/lowerpayingjob', '/salary'] },
+	{ name: 'Career', paths: ['/careerpath', '/lowerpayingjob', '/salary', '/total-comp'] },
 	{ name: 'Finance', paths: ['/debt', '/emergencyfund', '/fire', '/goals', '/layoffsurvival', '/mortgage', '/networth', '/investing', '/rrsp-tfsa'] },
 	{ name: 'Fitness', paths: ['/calorie', '/protein', '/weightloss'] },
 	{ name: 'Legal', paths: ['/bardal', '/wrongfuldismissal', '/severanceei'] },
@@ -339,7 +341,7 @@ const App = () => {
 		}
 	}, [isDarkMode]);
 
-	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/calorie', '/careerpath', '/wrongfuldismissal', '/severanceei', '/lowerpayingjob', '/fire', '/rrsp-tfsa', '/networth', '/multi', '/categories', '/blog'];
+	const CALCULATOR_PATHS = ['/salary', '/mortgage', '/debt', '/investing', '/goals', '/bardal', '/time', '/daysbetween', '/weightloss', '/protein', '/calorie', '/careerpath', '/wrongfuldismissal', '/severanceei', '/lowerpayingjob', '/fire', '/rrsp-tfsa', '/networth', '/total-comp', '/multi', '/categories', '/blog'];
 
 	React.useEffect(() => {
 		let styleEl: HTMLStyleElement | null = null;
@@ -661,6 +663,7 @@ const App = () => {
 									<Route path="/fire" element={<FireCalculator />} />
 									<Route path="/rrsp-tfsa" element={<RrspTfsaCalculator />} />
 									<Route path="/networth" element={<NetWorthCalculator />} />
+									<Route path="/total-comp" element={<TotalCompensationCalculator />} />
 									<Route path="/multi" element={<MultiOptionPage />} />
 									<Route path="/categories" element={<CategoriesPage />} />
 									<Route path="/blog" element={<BlogPage />} />
