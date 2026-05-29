@@ -37,6 +37,7 @@ import {
 	PiggyBank,
 	Landmark,
 	CircleDollarSign,
+	Database,
 } from 'lucide-react';
 import { exportNotion, exportObsidian, exportMcpRag, exportExcel } from './utils/exportMarkdown';
 import { BLOG_POSTS } from './components/BlogPosts/registry';
@@ -65,6 +66,7 @@ const FireCalculator = React.lazy(() => import('./components/calculators/FireCal
 const RrspTfsaCalculator = React.lazy(() => import('./components/calculators/RrspTfsaCalculator').then(m => ({ default: m.RrspTfsaCalculator })));
 const NetWorthCalculator = React.lazy(() => import('./components/calculators/NetWorthCalculator').then(m => ({ default: m.NetWorthCalculator })));
 const TotalCompensationCalculator = React.lazy(() => import('./components/calculators/TotalCompensationCalculator').then(m => ({ default: m.TotalCompensationCalculator })));
+const DataPage = React.lazy(() => import('./components/DataPage').then(m => ({ default: m.DataPage })));
 const CookieBanner = React.lazy(() => import('./components/CookieBanner').then(m => ({ default: m.CookieBanner })));
 const BlogPage = React.lazy(() => import('./components/BlogPage').then(m => ({ default: m.BlogPage })));
 const BlogPostPage = React.lazy(() => import('./components/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
@@ -112,6 +114,8 @@ const MORE_ITEMS: MoreEntry[] = [
 	{ divider: true },
 	{ path: '/multi', label: 'Multi-Option', icon: LayoutGrid },
 	{ path: '/categories', label: 'Categories', icon: FolderOpen },
+	{ divider: true },
+	{ path: '/data', label: 'Data', icon: Database },
 ];
 
 const MORE_PATHS = MORE_ITEMS
@@ -666,6 +670,7 @@ const App = () => {
 									<Route path="/total-comp" element={<TotalCompensationCalculator />} />
 									<Route path="/multi" element={<MultiOptionPage />} />
 									<Route path="/categories" element={<CategoriesPage />} />
+								<Route path="/data" element={<DataPage />} />
 									<Route path="/blog" element={<BlogPage />} />
 									<Route path="/blog/what-your-severance-package-should-really-include" element={<WrongfulDismissalBlogPost />} />
 									<Route path="/blog/career-path-projection-job-hopping-vs-staying-put" element={<CareerPathBlogPost />} />
