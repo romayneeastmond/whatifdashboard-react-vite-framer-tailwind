@@ -127,7 +127,7 @@ export const LayoffSurvivalCalculator = () => {
                                 min={0}
                                 max={200000}
                                 step={1000}
-                                suffix="$"
+                                prefix="$"
                                 onChange={upd('savings')}
                             />
                             <Slider
@@ -136,7 +136,7 @@ export const LayoffSurvivalCalculator = () => {
                                 min={0}
                                 max={500000}
                                 step={500}
-                                suffix="$"
+                                prefix="$"
                                 onChange={upd('severance')}
                             />
                         </CardContent>
@@ -153,7 +153,7 @@ export const LayoffSurvivalCalculator = () => {
                                 min={0}
                                 max={5000}
                                 step={50}
-                                suffix="$"
+                                prefix="$"
                                 onChange={upd('eiMonthly')}
                             />
                             <Slider
@@ -171,7 +171,7 @@ export const LayoffSurvivalCalculator = () => {
                                 min={0}
                                 max={5000}
                                 step={100}
-                                suffix="$"
+                                prefix="$"
                                 onChange={upd('sideIncome')}
                             />
                         </CardContent>
@@ -188,7 +188,7 @@ export const LayoffSurvivalCalculator = () => {
                                 min={0}
                                 max={8000}
                                 step={100}
-                                suffix="$"
+                                prefix="$"
                                 onChange={upd('fixedExpenses')}
                             />
                             <Slider
@@ -197,7 +197,7 @@ export const LayoffSurvivalCalculator = () => {
                                 min={0}
                                 max={5000}
                                 step={50}
-                                suffix="$"
+                                prefix="$"
                                 onChange={upd('variableExpenses')}
                             />
                         </CardContent>

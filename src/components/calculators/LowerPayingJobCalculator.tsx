@@ -84,7 +84,7 @@ const JobPanel = ({
                         min={30000}
                         max={500000}
                         step={1000}
-                        suffix="$"
+                        prefix="$"
                         onChange={(v) => onUpdate({ ...data, annualSalary: v })}
                     />
                     <Slider
@@ -116,7 +116,7 @@ const JobPanel = ({
                         min={500}
                         max={12000}
                         step={100}
-                        suffix="$"
+                        prefix="$"
                         onChange={(v) => onUpdate({ ...data, monthlyExpenses: v })}
                     />
                     <Slider
@@ -125,7 +125,7 @@ const JobPanel = ({
                         min={0}
                         max={2000}
                         step={50}
-                        suffix="$"
+                        prefix="$"
                         onChange={(v) => onUpdate({ ...data, monthlyBenefitsValue: v })}
                     />
                 </CardContent>

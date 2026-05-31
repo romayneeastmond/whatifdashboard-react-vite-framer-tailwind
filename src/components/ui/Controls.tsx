@@ -48,7 +48,8 @@ export const Slider = ({
     max,
     step = 1,
     onChange,
-    suffix = ""
+    suffix = "",
+    prefix = ""
 }: {
     label: string;
     value: number;
@@ -57,6 +58,7 @@ export const Slider = ({
     step?: number;
     onChange: (val: number) => void;
     suffix?: string;
+    prefix?: string;
 }) => {
     const decrement = () => onChange(Math.max(min, parseFloat((value - step).toFixed(10))));
     const increment = () => onChange(Math.min(max, parseFloat((value + step).toFixed(10))));
@@ -76,7 +78,7 @@ export const Slider = ({
                         −
                     </button>
                     <span className="text-xs font-mono font-medium text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded-md min-w-[4rem] text-center">
-                        {value.toLocaleString()}{suffix}
+                        {prefix}{value.toLocaleString()}{suffix}
                     </span>
                     <button
                         type="button"

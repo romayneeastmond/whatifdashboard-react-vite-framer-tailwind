@@ -91,7 +91,7 @@ export const CareerPathCalculator = ({ compact }: { compact?: boolean }) => {
                             <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Current Position</h2>
                         </CardHeader>
                         <CardContent>
-                            <Slider label="Current Annual Salary" value={data.currentSalary} min={30000} max={500000} step={1000} suffix="$" onChange={v => update({ currentSalary: v })} />
+                            <Slider label="Current Annual Salary" value={data.currentSalary} min={30000} max={500000} step={1000} prefix="$" onChange={v => update({ currentSalary: v })} />
                             <Slider label="Annual Raise %" value={data.annualRaise} min={0} max={15} step={0.5} suffix="%" onChange={v => update({ annualRaise: v })} />
                             <Slider label="Years to Model" value={data.yearsToModel} min={5} max={40} suffix=" yrs" onChange={v => update({ yearsToModel: v })} />
                         </CardContent>

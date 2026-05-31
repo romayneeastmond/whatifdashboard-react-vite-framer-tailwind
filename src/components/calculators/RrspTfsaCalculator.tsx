@@ -159,7 +159,7 @@ const RrspTfsaPersonView = ({
                             min={500}
                             max={30000}
                             step={500}
-                            suffix="$"
+                            prefix="$"
                             onChange={(v) => onUpdate({ ...d, annualContribution: v })}
                         />
                         <Slider
@@ -203,7 +203,7 @@ const RrspTfsaPersonView = ({
                             min={0}
                             max={500000}
                             step={1000}
-                            suffix="$"
+                            prefix="$"
                             onChange={(v) => onUpdate({ ...d, currentRrspBalance: v })}
                         />
                         <Slider
@@ -212,7 +212,7 @@ const RrspTfsaPersonView = ({
                             min={0}
                             max={200000}
                             step={1000}
-                            suffix="$"
+                            prefix="$"
                             onChange={(v) => onUpdate({ ...d, currentTfsaBalance: v })}
                         />
                     </CardContent>

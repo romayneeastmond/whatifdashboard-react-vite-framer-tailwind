@@ -92,7 +92,7 @@ const MortgagePersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                             min={100000}
                             max={2000000}
                             step={5000}
-                            suffix="$"
+                            prefix="$"
                             onChange={(v) => onUpdate({ ...data, homePrice: v })}
                         />
                         <Slider
@@ -101,7 +101,7 @@ const MortgagePersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                             min={0}
                             max={data.homePrice}
                             step={1000}
-                            suffix="$"
+                            prefix="$"
                             onChange={(v) => onUpdate({ ...data, downPayment: v })}
                         />
                         <Slider

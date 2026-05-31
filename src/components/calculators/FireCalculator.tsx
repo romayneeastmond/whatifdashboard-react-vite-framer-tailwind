@@ -126,11 +126,11 @@ const FirePersonView = ({
                             onChange={(v) => up({ currentAge: v, retirementAge: Math.max(data.retirementAge, v + 1) })} />
                         <Slider label="Target Retirement Age" value={data.retirementAge} min={data.currentAge + 1} max={80} step={1}
                             onChange={(v) => up({ retirementAge: v })} />
-                        <Slider label="Current Portfolio" value={data.currentPortfolio} min={0} max={2000000} step={5000} suffix="$"
+                        <Slider label="Current Portfolio" value={data.currentPortfolio} min={0} max={2000000} step={5000} prefix="$"
                             onChange={(v) => up({ currentPortfolio: v })} />
-                        <Slider label="Monthly Contribution" value={data.monthlyContribution} min={0} max={10000} step={100} suffix="$"
+                        <Slider label="Monthly Contribution" value={data.monthlyContribution} min={0} max={10000} step={100} prefix="$"
                             onChange={(v) => up({ monthlyContribution: v })} />
-                        <Slider label="Annual Retirement Expenses" value={data.annualRetirementExpenses} min={12000} max={200000} step={1000} suffix="$"
+                        <Slider label="Annual Retirement Expenses" value={data.annualRetirementExpenses} min={12000} max={200000} step={1000} prefix="$"
                             onChange={(v) => up({ annualRetirementExpenses: v })} />
                         <Slider label="Expected Annual Return" value={data.annualReturn} min={1} max={12} step={0.5} suffix="%"
                             onChange={(v) => up({ annualReturn: v })} />

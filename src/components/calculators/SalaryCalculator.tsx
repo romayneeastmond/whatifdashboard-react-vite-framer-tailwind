@@ -79,7 +79,7 @@ const SalaryPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                             min={30000}
                             max={500000}
                             step={1000}
-                            suffix="$"
+                            prefix="$"
                             onChange={(v) => onUpdate({ ...data, annualGross: v })}
                         />
                         <Slider
@@ -104,7 +104,7 @@ const SalaryPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                             min={0}
                             max={10000}
                             step={100}
-                            suffix="$"
+                            prefix="$"
                             onChange={(v) => onUpdate({ ...data, monthlyExpenses: v })}
                         />
                     </CardContent>

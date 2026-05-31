@@ -181,7 +181,7 @@ export const SeveranceEICalculator = ({ compact }: { compact?: boolean }) => {
                             <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Employment Details</h2>
                         </CardHeader>
                         <CardContent>
-                            <Slider label="Annual Salary" value={data.annualSalary} min={25000} max={300000} step={1000} suffix="$" onChange={v => update({ annualSalary: v })} />
+                            <Slider label="Annual Salary" value={data.annualSalary} min={25000} max={300000} step={1000} prefix="$" onChange={v => update({ annualSalary: v })} />
                             <Slider label="Years of Service" value={data.yearsOfService} min={0} max={40} suffix=" yrs" onChange={v => update({ yearsOfService: v })} />
                             <ButtonGroup label="Province" options={PROVINCES} value={data.province} onChange={v => update({ province: v })} />
                             {province.sevLargeEmployer && (

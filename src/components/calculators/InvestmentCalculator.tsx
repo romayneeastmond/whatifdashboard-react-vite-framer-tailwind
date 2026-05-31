@@ -85,7 +85,7 @@ const InvestmentPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                             min={0}
                             max={1000000}
                             step={5000}
-                            suffix="$"
+                            prefix="$"
                             onChange={(v) => onUpdate({ ...data, initialAmount: v })}
                         />
                         <Slider
@@ -94,7 +94,7 @@ const InvestmentPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                             min={0}
                             max={10000}
                             step={100}
-                            suffix="$"
+                            prefix="$"
                             onChange={(v) => onUpdate({ ...data, monthlyContribution: v })}
                         />
                         <Slider

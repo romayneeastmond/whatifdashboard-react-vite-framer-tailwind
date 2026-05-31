@@ -121,11 +121,11 @@ const NetWorthPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                             <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Assets</h3>
                         </CardHeader>
                         <CardContent>
-                            <Slider label="Cash & Savings" value={data.cashSavings} min={0} max={500000} step={500} suffix="$" onChange={(v) => onUpdate({ ...data, cashSavings: v })} />
-                            <Slider label="Investments" value={data.investments} min={0} max={1000000} step={1000} suffix="$" onChange={(v) => onUpdate({ ...data, investments: v })} />
-                            <Slider label="Real Estate Value" value={data.realEstate} min={0} max={2000000} step={5000} suffix="$" onChange={(v) => onUpdate({ ...data, realEstate: v })} />
-                            <Slider label="Vehicles" value={data.vehicles} min={0} max={200000} step={500} suffix="$" onChange={(v) => onUpdate({ ...data, vehicles: v })} />
-                            <Slider label="Other Assets" value={data.otherAssets} min={0} max={500000} step={500} suffix="$" onChange={(v) => onUpdate({ ...data, otherAssets: v })} />
+                            <Slider label="Cash & Savings" value={data.cashSavings} min={0} max={500000} step={500} prefix="$" onChange={(v) => onUpdate({ ...data, cashSavings: v })} />
+                            <Slider label="Investments" value={data.investments} min={0} max={1000000} step={1000} prefix="$" onChange={(v) => onUpdate({ ...data, investments: v })} />
+                            <Slider label="Real Estate Value" value={data.realEstate} min={0} max={2000000} step={5000} prefix="$" onChange={(v) => onUpdate({ ...data, realEstate: v })} />
+                            <Slider label="Vehicles" value={data.vehicles} min={0} max={200000} step={500} prefix="$" onChange={(v) => onUpdate({ ...data, vehicles: v })} />
+                            <Slider label="Other Assets" value={data.otherAssets} min={0} max={500000} step={500} prefix="$" onChange={(v) => onUpdate({ ...data, otherAssets: v })} />
                         </CardContent>
                     </Card>
 
@@ -134,11 +134,11 @@ const NetWorthPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                             <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Liabilities</h3>
                         </CardHeader>
                         <CardContent>
-                            <Slider label="Mortgage Balance" value={data.mortgageBalance} min={0} max={1500000} step={5000} suffix="$" onChange={(v) => onUpdate({ ...data, mortgageBalance: v })} />
-                            <Slider label="Car Loans" value={data.carLoans} min={0} max={100000} step={500} suffix="$" onChange={(v) => onUpdate({ ...data, carLoans: v })} />
-                            <Slider label="Student Loans" value={data.studentLoans} min={0} max={200000} step={500} suffix="$" onChange={(v) => onUpdate({ ...data, studentLoans: v })} />
-                            <Slider label="Credit Card Debt" value={data.creditCardDebt} min={0} max={50000} step={100} suffix="$" onChange={(v) => onUpdate({ ...data, creditCardDebt: v })} />
-                            <Slider label="Other Debt" value={data.otherDebt} min={0} max={200000} step={500} suffix="$" onChange={(v) => onUpdate({ ...data, otherDebt: v })} />
+                            <Slider label="Mortgage Balance" value={data.mortgageBalance} min={0} max={1500000} step={5000} prefix="$" onChange={(v) => onUpdate({ ...data, mortgageBalance: v })} />
+                            <Slider label="Car Loans" value={data.carLoans} min={0} max={100000} step={500} prefix="$" onChange={(v) => onUpdate({ ...data, carLoans: v })} />
+                            <Slider label="Student Loans" value={data.studentLoans} min={0} max={200000} step={500} prefix="$" onChange={(v) => onUpdate({ ...data, studentLoans: v })} />
+                            <Slider label="Credit Card Debt" value={data.creditCardDebt} min={0} max={50000} step={100} prefix="$" onChange={(v) => onUpdate({ ...data, creditCardDebt: v })} />
+                            <Slider label="Other Debt" value={data.otherDebt} min={0} max={200000} step={500} prefix="$" onChange={(v) => onUpdate({ ...data, otherDebt: v })} />
                         </CardContent>
                     </Card>
 
@@ -147,7 +147,7 @@ const NetWorthPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                             <h3 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Projection</h3>
                         </CardHeader>
                         <CardContent>
-                            <Slider label="Monthly Net Savings" value={data.monthlyNetSavings} min={0} max={10000} step={50} suffix="$" onChange={(v) => onUpdate({ ...data, monthlyNetSavings: v })} />
+                            <Slider label="Monthly Net Savings" value={data.monthlyNetSavings} min={0} max={10000} step={50} prefix="$" onChange={(v) => onUpdate({ ...data, monthlyNetSavings: v })} />
                             <Slider label="Annual Growth Rate" value={data.annualGrowthRate} min={0} max={15} step={0.5} suffix="%" onChange={(v) => onUpdate({ ...data, annualGrowthRate: v })} />
                             <Slider label="Projection Years" value={data.projectionYears} min={1} max={40} step={1} suffix=" yr" onChange={(v) => onUpdate({ ...data, projectionYears: v })} />
                         </CardContent>

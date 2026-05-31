@@ -195,7 +195,7 @@ export const WrongfulDismissalCalculator = ({ compact }: { compact?: boolean }) 
                             <h2 className="text-xs font-normal text-[#8f969d] dark:text-white/40 uppercase tracking-[0.2em] leading-none py-1">Employment Details</h2>
                         </CardHeader>
                         <CardContent>
-                            <Slider label="Annual Salary" value={data.annualSalary} min={30000} max={500000} step={1000} suffix="$" onChange={v => update({ annualSalary: v })} />
+                            <Slider label="Annual Salary" value={data.annualSalary} min={30000} max={500000} step={1000} prefix="$" onChange={v => update({ annualSalary: v })} />
                             <Slider label="Age" value={data.age} min={18} max={75} suffix=" yrs" onChange={v => update({ age: v })} />
                             <Slider label="Years of Service" value={data.yearsOfService} min={0} max={40} suffix=" yrs" onChange={v => update({ yearsOfService: v })} />
                             <ButtonGroup label="Character of Employment" options={POSITION_LEVELS} value={data.positionLevel} onChange={v => update({ positionLevel: v })} />
@@ -244,7 +244,7 @@ export const WrongfulDismissalCalculator = ({ compact }: { compact?: boolean }) 
                             {data.feeType === 'contingency' ? (
                                 <Slider label="Contingency Rate" value={data.contingencyPct} min={20} max={45} suffix="%" onChange={v => update({ contingencyPct: v })} />
                             ) : (
-                                <Slider label="Flat Fee" value={data.flatFee} min={2500} max={50000} step={500} suffix="$" onChange={v => update({ flatFee: v })} />
+                                <Slider label="Flat Fee" value={data.flatFee} min={2500} max={50000} step={500} prefix="$" onChange={v => update({ flatFee: v })} />
                             )}
                         </CardContent>
                     </Card>

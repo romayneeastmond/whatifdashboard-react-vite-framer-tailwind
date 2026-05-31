@@ -149,7 +149,7 @@ export const TotalCompensationCalculator = () => {
 							min={20000}
 							max={500000}
 							step={1000}
-							suffix="$"
+							prefix="$"
 							onChange={(v) => setData(prev => ({ ...prev, grossSalary: v }))}
 						/>
 					</CardContent>

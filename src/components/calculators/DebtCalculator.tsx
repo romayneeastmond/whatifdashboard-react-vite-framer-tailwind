@@ -100,7 +100,7 @@ const DebtScenarioView = ({
                             min={500}
                             max={500000}
                             step={500}
-                            suffix="$"
+                            prefix="$"
                             onChange={v => onUpdate({ ...data, balance: v })}
                         />
                         <Slider
@@ -118,7 +118,7 @@ const DebtScenarioView = ({
                             min={10}
                             max={10000}
                             step={10}
-                            suffix="$"
+                            prefix="$"
                             onChange={v => onUpdate({ ...data, monthlyPayment: v })}
                         />
 

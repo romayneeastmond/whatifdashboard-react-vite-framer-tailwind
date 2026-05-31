@@ -122,7 +122,7 @@ export const EmergencyFundCalculator = () => {
                                 min={0}
                                 max={100000}
                                 step={500}
-                                suffix="$"
+                                prefix="$"
                                 onChange={upd('currentSavings')}
                             />
                             <Slider
@@ -131,7 +131,7 @@ export const EmergencyFundCalculator = () => {
                                 min={500}
                                 max={15000}
                                 step={100}
-                                suffix="$"
+                                prefix="$"
                                 onChange={upd('monthlyExpenses')}
                             />
                         </CardContent>
@@ -165,7 +165,7 @@ export const EmergencyFundCalculator = () => {
                                 min={0}
                                 max={5000}
                                 step={50}
-                                suffix="$"
+                                prefix="$"
                                 onChange={upd('monthlyContribution')}
                             />
                             <Slider
@@ -174,7 +174,7 @@ export const EmergencyFundCalculator = () => {
                                 min={0}
                                 max={5000}
                                 step={100}
-                                suffix="$"
+                                prefix="$"
                                 onChange={upd('sideIncome')}
                             />
                             <Slider

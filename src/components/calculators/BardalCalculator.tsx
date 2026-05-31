@@ -138,7 +138,7 @@ export const BardalCalculator = ({ compact }: { compact?: boolean }) => {
                             min={30000}
                             max={500000}
                             step={1000}
-                            suffix="$"
+                            prefix="$"
                             onChange={(v) => update({ annualSalary: v })}
                         />
                         <Slider

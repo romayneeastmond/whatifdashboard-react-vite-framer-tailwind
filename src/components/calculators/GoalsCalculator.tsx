@@ -171,7 +171,7 @@ const GoalsPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                                                     min={0}
                                                     max={goal.target || 100}
                                                     step={Math.max(1, Math.floor(goal.target / 100))}
-                                                    suffix="$"
+                                                    prefix="$"
                                                     onChange={(v) => updateGoal(goal.id, { current: v })}
                                                 />
                                             </div>
