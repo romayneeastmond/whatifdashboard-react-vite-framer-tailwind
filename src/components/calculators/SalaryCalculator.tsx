@@ -101,7 +101,7 @@ const SalaryPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                         <Slider
                             label="Essential Expenses"
                             value={data.monthlyExpenses}
-                            min={500}
+                            min={0}
                             max={10000}
                             step={100}
                             suffix="$"
