@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
 import { Slider, Card, CardHeader, CardContent } from '../ui/Controls';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { Link2, Link2Off } from 'lucide-react';
+import { Link2, Link2Off, ArrowLeftRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 interface JobData {
     annualSalary: number;
+    annualBonusPct: number;
     taxRate: number;
     retirementPct: number;
     monthlyExpenses: number;
@@ -21,6 +22,7 @@ interface LowerPayingJobData {
 const DEFAULT_DATA: LowerPayingJobData = {
     currentJob: {
         annualSalary: 100000,
+        annualBonusPct: 0,
         taxRate: 28,
         retirementPct: 8,
         monthlyExpenses: 3500,
@@ -28,6 +30,7 @@ const DEFAULT_DATA: LowerPayingJobData = {
     },
     newJob: {
         annualSalary: 78000,
+        annualBonusPct: 0,
         taxRate: 25,
         retirementPct: 6,
         monthlyExpenses: 3500,
@@ -42,7 +45,8 @@ const calcJob = (d: JobData) => {
     const monthlyTax = (annualTaxable * d.taxRate) / 100 / 12;
     const takeHomeMonthly = annualTaxable / 12 - monthlyTax;
     const monthlySurplus = takeHomeMonthly + d.monthlyBenefitsValue - d.monthlyExpenses;
-    return { monthlyRetirement, monthlyTax, takeHomeMonthly, monthlySurplus };
+    const annualBonusNet = d.annualSalary * (d.annualBonusPct / 100) * (1 - d.taxRate / 100);
+    return { monthlyRetirement, monthlyTax, takeHomeMonthly, monthlySurplus, annualBonusNet };
 };
 
 const projectWealth = (monthlyContrib: number, annualReturn: number, years: number): number => {
@@ -86,6 +90,15 @@ const JobPanel = ({
                         step={1000}
                         prefix="$"
                         onChange={(v) => onUpdate({ ...data, annualSalary: v })}
+                    />
+                    <Slider
+                        label="Annual Bonus"
+                        value={data.annualBonusPct}
+                        min={0}
+                        max={100}
+                        step={1}
+                        suffix="%"
+                        onChange={(v) => onUpdate({ ...data, annualBonusPct: v })}
                     />
                     <Slider
                         label="Estimated Tax Rate"
@@ -147,6 +160,12 @@ const JobPanel = ({
                             </p>
                         </div>
                     </div>
+                    {res.annualBonusNet > 0 && (
+                        <div className="mt-3 pt-3 border-t border-white/10 flex justify-between items-center">
+                            <p className="text-white/40 text-[10px] uppercase tracking-widest font-normal">Annual Bonus (after tax)</p>
+                            <p className="text-sm font-light text-white/70">{fmt(res.annualBonusNet)}</p>
+                        </div>
+                    )}
                     {synced && (
                         <p className="mt-3 text-[10px] text-white/30 uppercase tracking-widest">Synced inputs active — salary edits independently</p>
                     )}
@@ -159,7 +178,15 @@ const JobPanel = ({
 export const LowerPayingJobCalculator = () => {
     const [data, setData] = React.useState<LowerPayingJobData>(() => {
         const saved = localStorage.getItem('lowerpayingjob_data');
-        if (saved) return JSON.parse(saved);
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            return {
+                ...DEFAULT_DATA,
+                ...parsed,
+                currentJob: { ...DEFAULT_DATA.currentJob, ...parsed.currentJob, annualBonusPct: parsed.currentJob?.annualBonusPct ?? 0 },
+                newJob: { ...DEFAULT_DATA.newJob, ...parsed.newJob, annualBonusPct: parsed.newJob?.annualBonusPct ?? 0 },
+            };
+        }
         return DEFAULT_DATA;
     });
 
@@ -207,20 +234,20 @@ export const LowerPayingJobCalculator = () => {
         const annualTakeHomeDiff = monthlyTakeHomeDiff * 12;
 
         const surplusDiff = nj.monthlySurplus - cur.monthlySurplus;
-        const surplusNewSafe = Math.max(0, nj.monthlySurplus);
-        const surplusCurSafe = Math.max(0, cur.monthlySurplus);
+        const surplusCurEffective = Math.max(0, cur.monthlySurplus) + cur.annualBonusNet / 12;
+        const surplusNewEffective = Math.max(0, nj.monthlySurplus) + nj.annualBonusNet / 12;
 
-        const wealth5Cur = projectWealth(surplusCurSafe, data.investmentReturn, 5);
-        const wealth5New = projectWealth(surplusNewSafe, data.investmentReturn, 5);
-        const wealth10Cur = projectWealth(surplusCurSafe, data.investmentReturn, 10);
-        const wealth10New = projectWealth(surplusNewSafe, data.investmentReturn, 10);
+        const wealth5Cur = projectWealth(surplusCurEffective, data.investmentReturn, 5);
+        const wealth5New = projectWealth(surplusNewEffective, data.investmentReturn, 5);
+        const wealth10Cur = projectWealth(surplusCurEffective, data.investmentReturn, 10);
+        const wealth10New = projectWealth(surplusNewEffective, data.investmentReturn, 10);
         const wealth5Diff = wealth5New - wealth5Cur;
         const wealth10Diff = wealth10New - wealth10Cur;
 
         const chartData = [
-            { name: '1 Year', Current: Math.round(surplusCurSafe * 12), 'Lower-Pay': Math.round(surplusNewSafe * 12) },
-            { name: '5 Years', Current: Math.round(wealth5Cur), 'Lower-Pay': Math.round(wealth5New) },
-            { name: '10 Years', Current: Math.round(wealth10Cur), 'Lower-Pay': Math.round(wealth10New) },
+            { name: '1 Year', Current: Math.round(surplusCurEffective * 12), 'Other Job': Math.round(surplusNewEffective * 12) },
+            { name: '5 Years', Current: Math.round(wealth5Cur), 'Other Job': Math.round(wealth5New) },
+            { name: '10 Years', Current: Math.round(wealth10Cur), 'Other Job': Math.round(wealth10New) },
         ];
 
         return {
@@ -248,7 +275,15 @@ export const LowerPayingJobCalculator = () => {
     return (
         <div className="space-y-16">
             <div className="space-y-4">
-                <div className="flex justify-end">
+                <div className="flex justify-end gap-2">
+                    <button
+                        onClick={() => setData(prev => ({ ...prev, currentJob: prev.newJob, newJob: prev.currentJob }))}
+                        aria-label="Flip job inputs"
+                        className="flex items-center gap-2 px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] border transition-colors border-slate-200 dark:border-white/10 text-slate-400 dark:text-white/30 hover:border-slate-400 dark:hover:border-white/30"
+                    >
+                        <ArrowLeftRight size={11} />
+                        Flip
+                    </button>
                     <button
                         onClick={() => setSyncEnabled(v => !v)}
                         aria-pressed={syncEnabled}
@@ -273,7 +308,7 @@ export const LowerPayingJobCalculator = () => {
                         synced={syncEnabled}
                     />
                     <JobPanel
-                        title="Lower-Paying Job"
+                        title="Other Job"
                         data={data.newJob}
                         onUpdate={updateNew}
                         accentClass="text-emerald-600 dark:text-emerald-400"
@@ -334,7 +369,7 @@ export const LowerPayingJobCalculator = () => {
                                         />
                                         <Legend wrapperStyle={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em' }} />
                                         <Bar dataKey="Current" fill="var(--chart-secondary)" radius={[4, 4, 0, 0]} />
-                                        <Bar dataKey="Lower-Pay" fill="var(--chart-primary)" radius={[4, 4, 0, 0]} />
+                                        <Bar dataKey="Other Job" fill="var(--chart-primary)" radius={[4, 4, 0, 0]} />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
@@ -345,9 +380,9 @@ export const LowerPayingJobCalculator = () => {
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     {[
                         { label: 'Current Take-Home', value: fmt(comparison.cur.takeHomeMonthly), sub: '/mo' },
-                        { label: 'New Take-Home', value: fmt(comparison.nj.takeHomeMonthly), sub: '/mo' },
+                        { label: 'Other Job Take-Home', value: fmt(comparison.nj.takeHomeMonthly), sub: '/mo' },
                         { label: '10-Year Current Wealth', value: fmt(comparison.wealth10Cur), sub: 'projected' },
-                        { label: '10-Year New Wealth', value: fmt(comparison.wealth10New), sub: 'projected' },
+                        { label: '10-Year Other Job Wealth', value: fmt(comparison.wealth10New), sub: 'projected' },
                     ].map(({ label, value, sub }) => (
                         <Card key={label}>
                             <CardContent>
