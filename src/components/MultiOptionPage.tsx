@@ -5,6 +5,7 @@ import {
     Wallet, Home, BarChart3, Target, Clock, Scale, CreditCard, Check,
     Dumbbell, Flame, CalendarDays, Utensils, TrendingUp, ShieldAlert, Banknote,
     Plus, Pencil, Trash2,
+    TrendingDown, ShieldCheck, PiggyBank, LifeBuoy, Landmark, CircleDollarSign,
 } from 'lucide-react';
 import { SalaryCalculator } from './calculators/SalaryCalculator';
 import { MortgageCalculator } from './calculators/MortgageCalculator';
@@ -20,6 +21,13 @@ import { CalorieDeficitCalculator } from './calculators/CalorieDeficitCalculator
 import { CareerPathCalculator } from './calculators/CareerPathCalculator';
 import { WrongfulDismissalCalculator } from './calculators/WrongfulDismissalCalculator';
 import { SeveranceEICalculator } from './calculators/SeveranceEICalculator';
+import { LowerPayingJobCalculator } from './calculators/LowerPayingJobCalculator';
+import { LayoffSurvivalCalculator } from './calculators/LayoffSurvivalCalculator';
+import { EmergencyFundCalculator } from './calculators/EmergencyFundCalculator';
+import { FireCalculator } from './calculators/FireCalculator';
+import { RrspTfsaCalculator } from './calculators/RrspTfsaCalculator';
+import { NetWorthCalculator } from './calculators/NetWorthCalculator';
+import { TotalCompensationCalculator } from './calculators/TotalCompensationCalculator';
 import { Modal } from './ui/Controls';
 import { cn } from '../lib/utils';
 
@@ -38,6 +46,13 @@ const REGISTRY = [
     { id: 'careerpath',        label: 'Career Path',       icon: TrendingUp,  component: CareerPathCalculator       },
     { id: 'wrongfuldismissal', label: 'Wrongful Dismissal',icon: ShieldAlert, component: WrongfulDismissalCalculator},
     { id: 'severanceei',       label: 'Severance & EI',    icon: Banknote,    component: SeveranceEICalculator      },
+    { id: 'lowerpayingjob',    label: 'Lower-Paying Job',  icon: TrendingDown,component: LowerPayingJobCalculator   },
+    { id: 'layoffsurvival',    label: 'Layoff Survival',   icon: LifeBuoy,    component: LayoffSurvivalCalculator   },
+    { id: 'emergencyfund',     label: 'Emergency Fund',    icon: ShieldCheck, component: EmergencyFundCalculator    },
+    { id: 'fire',              label: 'FIRE / Retirement', icon: PiggyBank,   component: FireCalculator             },
+    { id: 'rrsp-tfsa',         label: 'RRSP vs TFSA',      icon: Landmark,    component: RrspTfsaCalculator         },
+    { id: 'networth',          label: 'Net Worth',         icon: CircleDollarSign, component: NetWorthCalculator    },
+    { id: 'total-comp',        label: 'Total Compensation',icon: Wallet,      component: TotalCompensationCalculator},
 ] as const;
 
 type CalcId = typeof REGISTRY[number]['id'];
