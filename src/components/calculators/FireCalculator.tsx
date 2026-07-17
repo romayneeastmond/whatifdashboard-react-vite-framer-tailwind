@@ -160,7 +160,7 @@ const FirePersonView = ({
                                         tickFormatter={(v) => `${v}`} label={{ value: 'Age', position: 'insideBottom', offset: -2, fontSize: 9, fill: 'currentColor', opacity: 0.4 }} />
                                     <YAxis tickFormatter={fmt} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} width={52} />
                                     <Tooltip
-                                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 'bold', color: '#0F172A' }}
+                                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 'normal', color: '#0F172A' }}
                                         formatter={(v: number) => [fmtFull(v), 'Portfolio']}
                                         labelFormatter={(l) => `Age ${l}`}
                                     />

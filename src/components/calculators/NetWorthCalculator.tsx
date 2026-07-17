@@ -187,7 +187,7 @@ const NetWorthPersonView = ({ profile, onUpdate, onRemove, isOnly }: {
                                     <XAxis dataKey="year" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
                                     <YAxis tick={{ fontSize: 10 }} tickLine={false} axisLine={false} tickFormatter={fmt} width={60} />
                                     <Tooltip
-                                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 'bold', color: '#0F172A' }}
+                                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 'normal', color: '#0F172A' }}
                                         formatter={(value: number) => [fmtFull(value), 'Net Worth']}
                                     />
                                     <ReferenceLine y={0} stroke="var(--chart-tertiary)" strokeDasharray="4 4" />

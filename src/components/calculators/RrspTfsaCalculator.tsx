@@ -243,7 +243,7 @@ const RrspTfsaPersonView = ({
                                     width={55}
                                 />
                                 <Tooltip
-                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 'bold', color: '#0F172A' }}
+                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 'normal', color: '#0F172A' }}
                                     formatter={(value: number, name: string) => [
                                         fmt(value),
                                         name === 'rrsp' ? 'RRSP Strategy' : 'TFSA Strategy',
